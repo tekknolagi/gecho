@@ -10,11 +10,6 @@ TODO:
 
 */
 
-typedef struct {
-	const char *key;
-	int value;
-} item;
-
 item cmdTable[] = {
 	//{"push",   12}, /* pushes number onto stack */
 	//{"pop",    1}, /* pops number from stack */
@@ -26,23 +21,9 @@ item cmdTable[] = {
 	{"dec",    7}, /* decrements top element */
 	{"inc",    8}, /* increments top element */
 	//{"++",     9}, /* sums the elements in the stack */
-	{"while", 10}, /* to be implemented */
+	{"while", 10} /* to be implemented */
 	//{"*",     11},
-	{NULL,    -1}
 };
-
-int look(const char *key) {
-	size_t i = 0;
-	while (cmdTable[i].key != NULL) {
-		if (strcmp(key, cmdTable[i].key) == 0) {
-			return cmdTable[i].value;
-		}
-		else {
-			i++;
-		}
-	}
-	return -1;
-}
 
 void error(char* msg) { printf("error: %s\n", msg); }
 
