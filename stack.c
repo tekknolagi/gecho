@@ -175,7 +175,16 @@ int eval(stackT *res, char cmd[], int top) {
 			a = res->contents[res->top - 1];
 			StackPush(res, a);
 		}
-		//else if
+		else if (strcmp(cmd, "wover") == 0) {
+			a = res->contents[res->top - 2];
+			StackPush(res, a);
+		}
+		/*
+		else if (strcmp(cmd, "while") == 0) {
+			a = 
+		}
+		*/
+		// LOOK AHEAD WORD
 		else {
 			if (!(b = look(cmd, top))) {
 				a = StackPop(res);
