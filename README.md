@@ -28,6 +28,8 @@ This stack-based language is very similar to FORTH.
     * Pushes NUM to the stack.
 13. `**`
     * Pops all the elements from the stack and multiplies them; pushes result.
+14. `<varname>`
+    * Pop element from stack; set variable to popped value.
 
 # Examples
 
@@ -47,3 +49,6 @@ This stack-based language is very similar to FORTH.
 
 8. `1 5 range ** .` == `120`
 	** Factorial :)
+
+9. `3 4 5 ++ a` == `None`
+    ** Doesn't return anything; sets `a` to the sum of `3, 4, 5`
