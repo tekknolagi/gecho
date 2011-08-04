@@ -30,6 +30,9 @@ This stack-based language is very similar to FORTH.
     * Pops all the elements from the stack and multiplies them; pushes result.
 14. `<varname>`
     * Pop element from stack; set variable to popped value.
+15. `wover`
+    * a = pop(); b = pop(); push(b); push(a); push(b);
+    * ( a1 a2 -- a1 a2 a1)
 
 # Examples
 

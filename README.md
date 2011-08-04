@@ -55,3 +55,6 @@ This stack-based language is very similar to FORTH.
 
 9. `3 4 5 ++ a` == `None`
     ** Doesn't return anything; sets `a` to the sum of `3, 4, 5`
+
+10. `1 1 dup wover + dup wover + dup wover + show` == `[ 1, 1, 2, 3, 5 ]`
+    ** Fibonacci :)
