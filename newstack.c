@@ -123,7 +123,7 @@ void eval(stackT *res, char cmd[]) {
 			}
 		}
 		else if(strcmp(cmd, "jump") == 0) {
-			a = (int) res->contents[res->top];
+		        a = StackPop(res)+1;
 			if (a > res->top) {
 				error("not enough frames!");
 			}
