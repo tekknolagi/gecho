@@ -1,9 +1,0 @@
-#include <stdio.h>
-#include <limits.h>
-#include <ctype.h>
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
-#include <stdlib.h>
-#define DIM2 10
-#define RES_SIZE 1000
