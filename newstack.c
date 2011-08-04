@@ -45,14 +45,10 @@ int look(const char *key) {
 	return -1;
 }
 
-double shell(char* cmd, double arg) {
+double shell(char* cmd) {
 	printf(">   ");
-	scanf("%s%*c", cmd);
-	if (StringEqual(cmd, "push") || StringEqual(cmd, "jump") || StringEqual(cmd, "ifeq")) {
-		scanf("%lf", &arg);
-		return arg;
-	}
-	return 0;
+	int b;
+	b = scanf("%s", cmd);
 }
 
 void error(char* msg) { printf("error: %s\n", msg); }
@@ -66,108 +62,18 @@ void stack(stackT *res, double frame) {
 	}
 }
 
-void eval(stackT *res, char cmd[], double arg) {
-	int a, b;
-	switch(look(cmd)) {
-		case 12: //push
-			StackPush(res, arg);
-			break;
-		case 1: //pop
-			StackPop(res);
-			break;
-		case 2: //add
-			if (res->top <= 0) {
-				error("not enough frames!");
-			}
-			else {
-				b = StackPop(res);
-				a = StackPop(res);
-				StackPush(res, a+b);
-			}
-			break;
-		case 3: //ifeq
-		case 4: //jump
-			if (res->top < (int) arg) {
-				error("invalid frame!");
-			}
-			else {
-				stack(res, arg);
-			}
-			break;
-		case 5: //print
-			if (StackIsEmpty(res)) {
-				error("stack is empty!");
-			}
-			else {
-				stack(res, res->top);
-			}
-			break;
-		case 6: //dup
-			if (StackIsEmpty(res)) {
-				error("stack is empty!");
-			}
-			else {
-				StackPush(res, res->contents[res->top]);
-			}
-			break;
-		case 7: //dec
-			if (StackIsEmpty(res)) {
-				error("stack is empty!");
-			}
-			else {
-				res->contents[res->top] -= 1;
-			}
-			break;
-		case 8: //inc
-			if (StackIsEmpty(res)) {
-				error("stack is empty!");
-			}
-			else {
-				res->contents[res->top] += 1;
-			}
-			break;
-		case 9: //sum
-			while (res->top != 0) {
-				b = StackPop(res);
-				a = StackPop(res);
-				StackPush(res, a+b);
-			}
-			break;
-			/*
-		case 10: //while
-			if (StackIsEmpty(&res)) {
-				error("stack is empty!");
-			}
-			else {
-				while ((a = res.contents[res.top]) != 0) {
-					//do something with a... what?
-				}
-			}
-			*/
-		case 11:
-			if (StackIsEmpty(res)) {
-				error("stack is empty!");
-			}
-			else {
-				b = StackPop(res);
-				a = StackPop(res);
-				StackPush(res, a*b);
-			}
-			break;
-		default: //not found
-			error("command not found!");
-			break;
-	}
+void eval(stackT *res, char cmd[]) {
+	return 1;
 }
 
 int main() {
 	stackT res;
 	StackInit(&res, RES_SIZE);
-	char cmd[DIM2]; double arg = 0;
+	char cmd[DIM2];
 	while (1) {
-		arg = shell(cmd, arg);
-		eval(&res, cmd, arg);
-		StackShow(&res);
+		shell(cmd);
+		//eval(&res, cmd, arg);
+		//StackShow(&res);
 		printf("\n");
 	}
 }
