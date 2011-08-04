@@ -45,35 +45,39 @@ int look(const char *key) {
 	return -1;
 }
 
-double shell(char* cmd) {
-	printf(">   ");
-	int b;
-	b = scanf("%s", cmd);
-}
-
 void error(char* msg) { printf("error: %s\n", msg); }
 
-void stack(stackT *res, double frame) {
-	if ((int) frame == res->top) {
-		printf("stack[top] == %d\n", (int) res->contents[res->top]);	
+void eval(stackT *res, char cmd[]) {
+	int a, b, c;
+	if (atoi(cmd)) {
+		StackPush(res, atoi(cmd));
 	}
 	else {
-		printf("stack[%d] == %d\n", (int) frame, (int) res->contents[(int) frame]);
+		if (strcmp(cmd, "+") == 0) {
+			b = StackPop(res);
+			a = StackPop(res);
+			StackPush(res, a+b);
+		}
+		else if (strcmp(cmd, "++") == 0) {
+			while (res->top != 0) {
+				b = StackPop(res);
+				a = StackPop(res);
+				StackPush(res, a+b);
+			}
+		}
+		else if (strcmp(cmd, ".") == 0) {
+			a = StackPop(res);
+			printf(">  %d\n\n", a);
+		}
 	}
-}
-
-void eval(stackT *res, char cmd[]) {
-	return 1;
 }
 
 int main() {
 	stackT res;
 	StackInit(&res, RES_SIZE);
 	char cmd[DIM2];
-	while (1) {
-		shell(cmd);
-		//eval(&res, cmd, arg);
-		//StackShow(&res);
-		printf("\n");
+	while(cmd != "quit") {
+		scanf("%s", cmd);
+		eval(&res, cmd);
 	}
 }
