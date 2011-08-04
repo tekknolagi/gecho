@@ -1,4 +1,6 @@
 #include "usefunc.h"
+#define DIM2 10
+#define RES_SIZE 1000
 
 typedef struct {
   double *contents;

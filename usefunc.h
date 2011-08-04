@@ -5,3 +5,5 @@
 #include <time.h>
 #include <math.h>
 #include <stdlib.h>
+#define DIM2 10
+#define RES_SIZE 100000
