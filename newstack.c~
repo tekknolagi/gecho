@@ -61,18 +61,6 @@ void eval(stackT *res, char cmd[]) {
 				}
 			}
 		}
-		else if (strcmp(cmd, "**") == 0) {
-		  if (StackIsEmpty(res)) {
-		    error("stack is empty!");
-		  }
-		  else {
-		    while (res->top != 0) {
-		      b = StackPop(res);
-		      a = StackPop(res);
-		      StackPush(res, a*b);
-		    }
-		  }
-		}
 		else if (strcmp(cmd, ".") == 0) {
 			if (StackIsEmpty(res)) {
 				error("stack is empty!");
