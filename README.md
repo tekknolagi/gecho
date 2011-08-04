@@ -45,5 +45,5 @@ This stack-based language is very similar to FORTH.
 
 7. `0 10 range 3 jump` == `4`
 
-8. `1 6 range ** .` == `120`
+8. `1 5 range ** .` == `120`
 	** Factorial :)

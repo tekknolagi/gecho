@@ -126,13 +126,13 @@ void eval(stackT *res, char cmd[]) {
 		else if (strcmp(cmd, "range") == 0) {
 		  b = StackPop(res);
 		  a = StackPop(res);
-		  if (a > b) {
-		    for (c = b; c < a; c++) {
+		  if (a < b) {
+		    for (c = a; c <= b; c++) {
 		      StackPush(res, c);
 		    }
 		  }
-		  else if (b > a) {
-		    for (c = a; c < b; c++) {
+		  else if (a > b) {
+		    for (c = a; c >= b; c--) {
 		      StackPush(res, c);
 		    }
 		  }
