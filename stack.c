@@ -30,6 +30,7 @@ typedef struct {
   bool save;
 } loopstack;
 
+/*
 variable Table[VAR_SIZE];
 
 void TableInit() {
@@ -49,10 +50,11 @@ int look(const char *key, int top) {
   }
   return 0;
 }
+*/
 
 void error(char* msg) { printf("error: %s\n", msg); }
 
-int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
+int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
   int a, b, c, ind, con;
   char msg[30];
   if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
@@ -255,7 +257,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       if (loopStack->index <= loopStack->control) {
 	for (c = 0; c < loopStack->bufsize; c++) {
 	  //printf("%s\n", loopStack->buffer[c]);
-	  top = eval(dataStack, loopStack, (loopStack->buffer[c]), top);
+	  eval(dataStack, loopStack, (loopStack->buffer[c]));
 	}
       }
       else {
@@ -268,6 +270,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       //loopStack->save = false;
     }
     else {
+      /*
       if (!(b = look(cmd, top))) {
 	if (!StackIsEmpty(dataStack)) {
 	  a = StackPop(dataStack);
@@ -291,15 +294,14 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	//Table[b].key = cmd;
 	//Table[b].value = a;
       }
-      /*
+      */
 	sprintf(msg, "%s - unknown command!", cmd);
 	error(msg);
-      */
     }
     if(loopStack->save) {
       *loopStack->buffer[loopStack->bufsize++] = *cmd;
     }
-    return top;
+    //return top;
   }
 }
 
@@ -308,12 +310,12 @@ int main() {
   loopstack loopStack;
   loopStack.bufsize = 0;
   loopStack.save = false;
-  TableInit();
-  int top = 0;
+  //TableInit();
+  //int top = 0;
   StackInit(&dataStack, RES_SIZE);
   char cmd[DIM2];
   while(1) {
     scanf("%s", cmd);
-    top = eval(&dataStack, &loopStack, cmd, top);
+    eval(&dataStack, &loopStack, cmd);
   }
 }
