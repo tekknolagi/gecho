@@ -184,7 +184,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
     }
     else if (strcmp(cmd, "drop") == 0) {
-      printf(">   %d\n", (int) StackPop(dataStack));
+      printf(">   %.0f\n", StackPop(dataStack));
     }
     else if (strcmp(cmd, "over") == 0) {
       a = dataStack->contents[dataStack->top - 1];
@@ -201,8 +201,8 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       printf(">   %c\n", (int) StackPop(dataStack));
     }
     else if (strcmp(cmd, "[") == 0) {
-      loopStack->index = StackPop(dataStack);
-      loopStack->control = StackPop(dataStack);
+      loopStack->index = (int) StackPop(dataStack);
+      loopStack->control = (int) StackPop(dataStack);
       loopStack->save = true;
     }
     else if (strcmp(cmd, "i") == 0) {
