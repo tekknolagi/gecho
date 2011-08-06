@@ -77,7 +77,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	error("not enough frames!");
       }
       else {
-	while (dataStack->top != 0) {
+	while (dataStack->top >= 0) {
 	  b = StackPop(dataStack);
 	  a = StackPop(dataStack);
 	  StackPush(dataStack, a+b);
@@ -89,7 +89,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	error("not enough frames!");
       }
       else {
-	while (dataStack->top != 0) {
+	while (dataStack->top >= 0) {
 	  b = StackPop(dataStack);
 	  a = StackPop(dataStack);
 	  StackPush(dataStack, a*b);
@@ -120,7 +120,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	error("stack is empty!");
       }
       else {
-	while (dataStack->top != -1) {
+	while (dataStack->top > -1) {
 	  StackPop(dataStack);
 	}
       }
@@ -258,7 +258,7 @@ FIX ARRAY ACCESS BOUNDS CHECKING
       loopStack->index++;
       printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
       if (loopStack->index <= loopStack->control) {
-	for (c = 0; c <= loopStack->bufsize; c++) {
+	for (c = 0; c < loopStack->bufsize; c++) {
 	  printf("%s\n", loopStack->buffer[0]);
 	  top = eval(dataStack, loopStack, (loopStack->buffer[c]), top);
 	}
