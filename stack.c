@@ -13,10 +13,22 @@ TODO:
 
 */
 
+typedef enum {
+	false, true
+} bool;
+
 typedef struct {
 	const char *key;
 	int value;
 } variable;
+
+typedef struct {
+	int index;
+	int control;
+	size_t bufsize;
+	char buffer[RES_SIZE][DIM2];
+	bool save;
+} loopstack;
 
 variable Table[VAR_SIZE];
 
@@ -40,145 +52,164 @@ int look(const char *key, int top) {
 
 void error(char* msg) { printf("error: %s\n", msg); }
 
-int eval(stackT *res, char cmd[], int top) {
-	int a, b, c;
+int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
+	int a, b, c, ind, con;
 	char msg[30];
 	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
-		StackPush(res, atoi(cmd));
+		StackPush(dataStack, atoi(cmd));
 	}
 	else {
+		for(c = 0; c < strlen(cmd); c++) {
+			cmd[c] = tolower(cmd[c]);
+		}
 		if (strcmp(cmd, "+") == 0) {
-			if (StackIsEmpty(res)) {
+			if (StackIsEmpty(dataStack)) {
 				error("stack is empty!");
 			}
 			else {
-				b = StackPop(res);
-				a = StackPop(res);
-				StackPush(res, a+b);
+				b = StackPop(dataStack);
+				a = StackPop(dataStack);
+				StackPush(dataStack, a+b);
 			}
 		}
 		else if (strcmp(cmd, "++") == 0) {
-			if (StackIsEmpty(res)) {
+			if (StackIsEmpty(dataStack)) {
 				error("stack is empty!");
 			}
 			else {
-				while (res->top != 0) {
-					b = StackPop(res);
-					a = StackPop(res);
-					StackPush(res, a+b);
+				while (dataStack->top != 0) {
+					b = StackPop(dataStack);
+					a = StackPop(dataStack);
+					StackPush(dataStack, a+b);
 				}
 			}
 		}
 		else if (strcmp(cmd, "**") == 0) {
-		  if (StackIsEmpty(res)) {
+		  if (StackIsEmpty(dataStack)) {
 			error("stack is empty!");
 		  }
 		  else {
-			while (res->top != 0) {
-			  b = StackPop(res);
-			  a = StackPop(res);
-			  StackPush(res, a*b);
+			while (dataStack->top != 0) {
+			  b = StackPop(dataStack);
+			  a = StackPop(dataStack);
+			  StackPush(dataStack, a*b);
 			}
 		  }
 		}
 		else if (strcmp(cmd, ".") == 0) {
-			if (StackIsEmpty(res)) {
+			if (StackIsEmpty(dataStack)) {
 				error("stack is empty!");
 			}
 			else {
-				//a = StackPop(res);
-				printf(">  %d\n", (int) res->contents[res->top]);
+				//a = StackPop(dataStack);
+				printf(">  %d\n", (int) dataStack->contents[dataStack->top]);
 			}
 		}
 		else if (strcmp(cmd, "*") == 0) {
-			if (StackIsEmpty(res)) {
+			if (StackIsEmpty(dataStack)) {
 				error("stack is empty!");
 			}
 			else {
-				b = StackPop(res);
-				a = StackPop(res);
-				StackPush(res, a*b);
+				b = StackPop(dataStack);
+				a = StackPop(dataStack);
+				StackPush(dataStack, a*b);
 			}
 		}
 		else if (strcmp(cmd, "..") == 0) {
-			if (StackIsEmpty(res)) {
+			if (StackIsEmpty(dataStack)) {
 				error("stack is empty!");
 			}
 			else {
-				while (res->top != -1) {
-					StackPop(res);
+				while (dataStack->top != -1) {
+					StackPop(dataStack);
 				}
 			}
 		}
 		else if (strcmp(cmd, "show") == 0) {
-			printf(">  "); StackShow(res);
+			printf(">  "); StackShow(dataStack);
 		}
 		else if (strcmp(cmd, "-") == 0) {
-			if (StackIsEmpty(res)) {
+			if (StackIsEmpty(dataStack)) {
 				error("stack is empty!");
 			}
 			else {
-				b = StackPop(res);
-				a = StackPop(res);
-				StackPush(res, a-b);
+				b = StackPop(dataStack);
+				a = StackPop(dataStack);
+				StackPush(dataStack, a-b);
 			}
 		}
 		else if (strcmp(cmd, "swap") == 0) {
-			if (res->top < 1) {
+			if (dataStack->top < 1) {
 				error("not enough frames!");
 			}
 			else {
-				b = StackPop(res);
-				a = StackPop(res);
-				StackPush(res, b);
-				StackPush(res, a);
+				b = StackPop(dataStack);
+				a = StackPop(dataStack);
+				StackPush(dataStack, b);
+				StackPush(dataStack, a);
 			}
 		}
 		else if (strcmp(cmd, "dup") == 0) {
-			if (StackIsEmpty(res)) {
+			if (StackIsEmpty(dataStack)) {
 				error("stack is empty!");
 			}
 			else {
-				StackPush(res, res->contents[res->top]);
+				StackPush(dataStack, dataStack->contents[dataStack->top]);
 			}
 		}
 		else if(strcmp(cmd, "jump") == 0) {
-				a = StackPop(res)+1;
-			if (a > res->top) {
+				a = StackPop(dataStack)+1;
+			if (a > dataStack->top) {
 				error("not enough frames!");
 			}
 			else {
-				printf(">  %d\n", (int) res->contents[a]); // jumps to value of top integer
+				printf(">  %d\n", (int) dataStack->contents[a]); // jumps to value of top integer
 			}
 		}
 		else if (strcmp(cmd, "range") == 0) {
-		  b = StackPop(res);
-		  a = StackPop(res);
+		  b = StackPop(dataStack);
+		  a = StackPop(dataStack);
 		  if (a < b) {
 			for (c = a; c <= b; c++) {
-			  StackPush(res, c);
+			  StackPush(dataStack, c);
 			}
 		  }
 		  else if (a > b) {
 			for (c = a; c >= b; c--) {
-			  StackPush(res, c);
+			  StackPush(dataStack, c);
 			}
 		  }
 		  else if (a == b) {
-			StackPush(res, a);
+			StackPush(dataStack, a);
 		  }
 		}
 		else if (strcmp(cmd, "drop") == 0) {
-			printf("%d\n", StackPop(res));
+			printf("%d\n", StackPop(dataStack));
 		}
 		else if (strcmp(cmd, "over") == 0) {
-			a = res->contents[res->top - 1];
-			StackPush(res, a);
+			a = dataStack->contents[dataStack->top - 1];
+			StackPush(dataStack, a);
 		}
 		else if (strcmp(cmd, "wover") == 0) {
-			a = res->contents[res->top - 2];
-			StackPush(res, a);
+			a = dataStack->contents[dataStack->top - 2];
+			StackPush(dataStack, a);
 		}
+		/*
+		else if (strcmp(cmd, "do") == 0) {
+			loopStack->index = StackPop(dataStack);
+			loopStack->control = StackPop(dataStack);
+			loopStack->save = true;
+		}*/
+		/*
+		is it always `I` in a loop???
+		*/
+		/*
+		else if (strcmp(cmd, "loop")) {
+			for (c = 0; c <= loopStack->bufsize; c++) {
+				top = eval(dataStack, loopStack, loopStack->buffer[c], top);
+			}
+		}
+		*/
 		/*
 		else if (strcmp(cmd, "while") == 0) {
 			a = 
@@ -187,13 +218,13 @@ int eval(stackT *res, char cmd[], int top) {
 		// LOOK AHEAD WORD
 		else {
 			if (!(b = look(cmd, top))) {
-				a = StackPop(res);
+				a = StackPop(dataStack);
 				top++;
 				Table[top].key = cmd;
 				Table[top].value = a;
 			}
 			else {
-				StackPush(res, Table[b].value);
+				StackPush(dataStack, Table[b].value);
 				//Table[b].key = cmd;
 				//Table[b].value = a;
 			}
@@ -203,18 +234,25 @@ int eval(stackT *res, char cmd[], int top) {
 			*/
 		}
 		return top;
+		/*
+		if(loopStack->save && (strcmp(cmd, "do") != 0)) {
+			loopStack->buffer[loopStack->bufsize++] = cmd;
+		}
+		*/
 	}
 }
 
 int main() {
-	stackT res;
+	stackT dataStack;
 	variable Table;
+	loopstack loopStack;
+	loopStack.bufsize = 0;
 	TableInit();
 	int top = 0;
-	StackInit(&res, RES_SIZE);
+	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2];
 	while(1) {
 		scanf("%s", cmd);
-		top = eval(&res, cmd, top);
+		top = eval(&dataStack, &loopStack, cmd, top);
 	}
 }

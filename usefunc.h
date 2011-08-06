@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include <math.h>
 #include <stdlib.h>
 #define DIM2 10
