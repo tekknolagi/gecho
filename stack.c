@@ -77,7 +77,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	error("not enough frames!");
       }
       else {
-	while (dataStack->top >= 0) {
+	while (dataStack->top >= 1) {
 	  b = StackPop(dataStack);
 	  a = StackPop(dataStack);
 	  StackPush(dataStack, a+b);
@@ -89,7 +89,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	error("not enough frames!");
       }
       else {
-	while (dataStack->top >= 0) {
+	while (dataStack->top >= 1) {
 	  b = StackPop(dataStack);
 	  a = StackPop(dataStack);
 	  StackPush(dataStack, a*b);
