@@ -184,7 +184,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
     }
     else if (strcmp(cmd, "drop") == 0) {
-      printf("%d\n", (int) StackPop(dataStack));
+      printf(">   %d\n", (int) StackPop(dataStack));
     }
     else if (strcmp(cmd, "over") == 0) {
       a = dataStack->contents[dataStack->top - 1];
@@ -196,6 +196,9 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
     }
     else if (strcmp(cmd, "top") == 0) {
       StackPush(dataStack, dataStack->top);
+    }
+    else if (strcmp(cmd, "outascii") == 0) {
+      printf(">   %c\n", (int) StackPop(dataStack));
     }
     else if (strcmp(cmd, "[") == 0) {
       loopStack->index = StackPop(dataStack);
