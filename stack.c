@@ -63,8 +63,8 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       cmd[c] = tolower(cmd[c]);
     }
     if (strcmp(cmd, "+") == 0) {
-      if (StackIsEmpty(dataStack)) {
-	error("stack is empty!");
+      if (dataStack->top < 1) {
+	error("not enough frames!");
       }
       else {
 	b = StackPop(dataStack);
@@ -73,8 +73,8 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
     }
     else if (strcmp(cmd, "++") == 0) {
-      if (StackIsEmpty(dataStack)) {
-	error("stack is empty!");
+      if (dataStack->top < 1) {
+	error("not enough frames!");
       }
       else {
 	while (dataStack->top != 0) {
@@ -85,8 +85,8 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
     }
     else if (strcmp(cmd, "**") == 0) {
-      if (StackIsEmpty(dataStack)) {
-	error("stack is empty!");
+      if (dataStack->top < 1) {
+	error("not enough frames!");
       }
       else {
 	while (dataStack->top != 0) {
@@ -106,8 +106,8 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
     }
     else if (strcmp(cmd, "*") == 0) {
-      if (StackIsEmpty(dataStack)) {
-	error("stack is empty!");
+      if (dataStack->top < 1) {
+	error("not enough frames!");
       }
       else {
 	b = StackPop(dataStack);
@@ -191,8 +191,8 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	error("not enough frames!");
       }
       else {
-      a = dataStack->contents[dataStack->top - 1];
-      StackPush(dataStack, a);
+	a = dataStack->contents[dataStack->top - 1];
+	StackPush(dataStack, a);
       }
     }
     else if (strcmp(cmd, "wover") == 0) {
@@ -200,8 +200,8 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	error("not enough frames!");
       }
       else {
-      a = dataStack->contents[dataStack->top - 2];
-      StackPush(dataStack, a);
+	a = dataStack->contents[dataStack->top - 2];
+	StackPush(dataStack, a);
       }
     }
     else if (strcmp(cmd, "top") == 0) {
@@ -237,18 +237,25 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
     }
     else {
       if (!(b = look(cmd, top))) {
-	a = StackPop(dataStack);
-	if (top+1 < VAR_SIZE) {
-	  top++;
-	  Table[top].key = cmd;
-	  Table[top].value = a;
-	}
-	else {
-	  error("var stack full!");
+	if (!StackIsEmpty(dataStack)) {
+	  a = StackPop(dataStack);
+	  if (top+1 < VAR_SIZE) {
+	    top++;
+	    Table[top].key = cmd;
+	    Table[top].value = a;
+	  }
+	  else {
+	    error("var stack full!");
+	  }
 	}
       }
       else {
-	StackPush(dataStack, Table[b].value);
+	if (b <= top) {
+	  StackPush(dataStack, Table[b].value);
+	}
+	else {
+	  error("var does not exist!");
+	}
 	//Table[b].key = cmd;
 	//Table[b].value = a;
       }
