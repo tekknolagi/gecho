@@ -25,7 +25,7 @@ typedef struct {
 typedef struct {
   int index;
   int control;
-  size_t bufsize;
+  int bufsize;
   char buffer[RES_SIZE][DIM2];
   bool save;
 } loopstack;
@@ -194,7 +194,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       a = dataStack->contents[dataStack->top - 2];
       StackPush(dataStack, a);
     }
-    else if (strcmp(cmd, "do") == 0) {
+    else if (strcmp(cmd, "[") == 0) {
       loopStack->index = StackPop(dataStack);
       loopStack->control = StackPop(dataStack);
       loopStack->save = true;
@@ -202,10 +202,12 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
     else if (strcmp(cmd, "i") == 0) {
       StackPush(dataStack, loopStack->index);
     }
-    else if (strcmp(cmd, "loop")) {
+    else if (strcmp(cmd, "]")) {
+      loopStack->save = false;
       loopStack->index++;
       if (loopStack->index < loopStack->control) {
 	for (c = 0; c <= loopStack->bufsize; c++) {
+	  printf("%s\n", loopStack->buffer[0]);
 	  top = eval(dataStack, loopStack, loopStack->buffer[c], top);
 	}
       }
@@ -214,7 +216,6 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	loopStack->control = 0;
 	memset( (void *) loopStack->buffer, '\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);
 	loopStack->bufsize = 0;
-	loopStack->save = 0;
       }
     }
     /*
@@ -241,7 +242,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       */
     }
     return top;
-    if(loopStack->save && (strcmp(cmd, "do") != 0) && (strcmp(cmd, "loop") != 0)) {
+    if(loopStack->save && (strcmp(cmd, "do") != 0)) {
       *loopStack->buffer[loopStack->bufsize++] = *cmd;
     }
   }
@@ -252,6 +253,7 @@ int main() {
   variable Table;
   loopstack loopStack;
   loopStack.bufsize = 0;
+  loopStack.save = false;
   TableInit();
   int top = 0;
   StackInit(&dataStack, RES_SIZE);
