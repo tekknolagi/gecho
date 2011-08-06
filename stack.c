@@ -102,7 +102,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
       else {
 	//a = StackPop(dataStack);
-	printf(">  %d\n", (int) dataStack->contents[dataStack->top]);
+	printf(">  %.0f\n", dataStack->contents[dataStack->top]);
       }
     }
     else if (strcmp(cmd, "*") == 0) {
@@ -163,7 +163,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	error("not enough frames!");
       }
       else {
-	printf(">  %d\n", (int) dataStack->contents[a]); // jumps to value of top integer
+	printf(">  %.0f\n", dataStack->contents[a]); // jumps to value of top integer
       }
     }
     else if (strcmp(cmd, "range") == 0) {
