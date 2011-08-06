@@ -24,12 +24,12 @@ This stack-based language is very similar to FORTH.
     * Pops an element from the stack (a) and prints stack[a]
 11. `range`
     * Pops two elements from the stack (a, b) and prints range(b, a); starts at b, increments by one until a, pushes the array onto the stack.
-12. `<NUM>`
-    * Pushes `<NUM>` to the stack.
+12. `<num>`
+    * Pushes `<num>` to the stack.
 13. `**`
     * Pops all the elements from the stack and multiplies them; pushes result.
 14. `<varname>`
-    * Pop element from stack; set variable to popped value.
+    * Pop element from stack; set `<varname>` to popped value.
 15. `wover`
     * a = pop(); b = pop(); push(b); push(a); push(b);
     * ( a1 a2 -- a1 a2 a1)
