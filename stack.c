@@ -214,7 +214,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       if (loopStack->index < loopStack->control) {
 	for (c = 0; c <= loopStack->bufsize; c++) {
 	  printf("%s\n", loopStack->buffer[0]);
-	  top = eval(dataStack, loopStack, loopStack->buffer[c], top);
+	  top = eval(dataStack, loopStack, (loopStack->buffer[c]), top);
 	}
       }
       else {
@@ -256,7 +256,6 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 
 int main() {
   stackT dataStack;
-  variable Table;
   loopstack loopStack;
   loopStack.bufsize = 0;
   loopStack.save = false;
