@@ -236,11 +236,6 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
     }
     else if (strcmp(cmd, "[") == 0) {
-      /*
-
-FIX ARRAY ACCESS BOUNDS CHECKING
-
-      */
       if (dataStack->top < 1) {
 	error("not enough frames!");
       }
@@ -254,21 +249,23 @@ FIX ARRAY ACCESS BOUNDS CHECKING
       StackPush(dataStack, loopStack->index);
     }
     else if (strcmp(cmd, "]") == 0) {
-      loopStack->save = false;
+      //loopStack->save = false;
       loopStack->index++;
       printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
       if (loopStack->index <= loopStack->control) {
 	for (c = 0; c < loopStack->bufsize; c++) {
-	  printf("%s\n", loopStack->buffer[0]);
+	  //printf("%s\n", loopStack->buffer[c]);
 	  top = eval(dataStack, loopStack, (loopStack->buffer[c]), top);
 	}
       }
       else {
+	loopStack->save = false;
 	loopStack->index = 0;
 	loopStack->control = 0;
 	memset( (void *) loopStack->buffer, '\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);
 	loopStack->bufsize = 0;
       }
+      //loopStack->save = false;
     }
     else {
       if (!(b = look(cmd, top))) {
@@ -299,10 +296,10 @@ FIX ARRAY ACCESS BOUNDS CHECKING
 	error(msg);
       */
     }
-    return top;
-    if(loopStack->save && (strcmp(cmd, "do") != 0)) {
+    if(loopStack->save) {
       *loopStack->buffer[loopStack->bufsize++] = *cmd;
     }
+    return top;
   }
 }
 
