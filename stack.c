@@ -208,10 +208,11 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
     else if (strcmp(cmd, "i") == 0) {
       StackPush(dataStack, loopStack->index);
     }
-    else if (strcmp(cmd, "]")) {
+    else if (strcmp(cmd, "]") == 0) {
       loopStack->save = false;
       loopStack->index++;
-      if (loopStack->index < loopStack->control) {
+      printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
+      if (loopStack->index <= loopStack->control) {
 	for (c = 0; c <= loopStack->bufsize; c++) {
 	  printf("%s\n", loopStack->buffer[0]);
 	  top = eval(dataStack, loopStack, (loopStack->buffer[c]), top);
@@ -224,18 +225,17 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
 	loopStack->bufsize = 0;
       }
     }
-    /*
-      else if (strcmp(cmd, "while") == 0) {
-      a = 
-      }
-    */
-    // LOOK AHEAD WORD
     else {
       if (!(b = look(cmd, top))) {
 	a = StackPop(dataStack);
+	if (top+1 < VAR_SIZE) {
 	top++;
 	Table[top].key = cmd;
 	Table[top].value = a;
+	}
+	else {
+	  error("var stack full!");
+	}
       }
       else {
 	StackPush(dataStack, Table[b].value);
