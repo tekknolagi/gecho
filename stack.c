@@ -31,25 +31,25 @@ typedef struct {
 } loopstack;
 
 /*
-variable Table[VAR_SIZE];
+  variable Table[VAR_SIZE];
 
-void TableInit() {
+  void TableInit() {
   Table[0].key = NULL;
   Table[0].value = 0;
-}
+  }
 
-int look(const char *key, int top) {
+  int look(const char *key, int top) {
   size_t i = top;
   while (Table[i].key != NULL) {
-    if (strcmp(key, Table[i].key) == 0) {
-      return Table[i].value;
-    }
-    else {
-      i--;
-    }
+  if (strcmp(key, Table[i].key) == 0) {
+  return Table[i].value;
+  }
+  else {
+  i--;
+  }
   }
   return 0;
-}
+  }
 */
 
 void error(char* msg) { printf("error: %s\n", msg); }
@@ -205,7 +205,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 	error("stack is empty!");
       }
       else {
-      printf(">   %.0f\n", StackPop(dataStack));
+	printf(">   %.0f\n", StackPop(dataStack));
       }
     }
     else if (strcmp(cmd, "over") == 0) {
@@ -234,7 +234,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 	error("stack is empty!");
       }
       else {
-      printf(">   %c\n", (unsigned char) StackPop(dataStack));
+	printf(">   %c\n", (unsigned char) StackPop(dataStack));
       }
     }
     else if (strcmp(cmd, "[") == 0) {
@@ -251,7 +251,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
       StackPush(dataStack, loopStack->index);
     }
     else if (strcmp(cmd, "]") == 0) {
-      //loopStack->save = false;
+      loopStack->save = false; 
       loopStack->index++;
       printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
       if (loopStack->index <= loopStack->control) {
@@ -261,44 +261,43 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 	}
       }
       else {
-	loopStack->save = false;
+	//loopStack->save = false;
 	loopStack->index = 0;
 	loopStack->control = 0;
 	memset( (void *) loopStack->buffer, '\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);
 	loopStack->bufsize = 0;
       }
-      //loopStack->save = false;
     }
     else {
       /*
-      if (!(b = look(cmd, top))) {
+	if (!(b = look(cmd, top))) {
 	if (!StackIsEmpty(dataStack)) {
-	  a = StackPop(dataStack);
-	  if (top+1 < VAR_SIZE) {
-	    top++;
-	    Table[top].key = cmd;
-	    Table[top].value = a;
-	  }
-	  else {
-	    error("var stack full!");
-	  }
-	}
-      }
-      else {
-	if (b <= top) {
-	  StackPush(dataStack, Table[b].value);
+	a = StackPop(dataStack);
+	if (top+1 < VAR_SIZE) {
+	top++;
+	Table[top].key = cmd;
+	Table[top].value = a;
 	}
 	else {
-	  error("var does not exist!");
+	error("var stack full!");
+	}
+	}
+	}
+	else {
+	if (b <= top) {
+	StackPush(dataStack, Table[b].value);
+	}
+	else {
+	error("var does not exist!");
 	}
 	//Table[b].key = cmd;
 	//Table[b].value = a;
-      }
+	}
       */
-	sprintf(msg, "%s - unknown command!", cmd);
-	error(msg);
+      sprintf(msg, "%s - unknown command!", cmd);
+      error(msg);
     }
-    if(loopStack->save) {
+    if (loopStack->save) {
       *loopStack->buffer[loopStack->bufsize++] = *cmd;
     }
     //return top;
