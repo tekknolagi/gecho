@@ -126,7 +126,12 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
     }
     else if (strcmp(cmd, "show") == 0) {
-      printf(">  "); StackShow(dataStack);
+      if (StackIsEmpty(dataStack)) {
+	error("stack is empty!");
+      }
+      else {
+	printf(">  "); StackShow(dataStack);
+      }
     }
     else if (strcmp(cmd, "-") == 0) {
       if (dataStack->top < 1) {
@@ -158,33 +163,48 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       }
     }
     else if(strcmp(cmd, "jump") == 0) {
-      a = StackPop(dataStack)+1;
-      if (a > dataStack->top) {
-	error("not enough frames!");
+      if (StackIsEmpty(dataStack)) {
+	error("stack is empty!");
       }
       else {
-	printf(">  %.0f\n", dataStack->contents[a]); // jumps to value of top integer
+	a = StackPop(dataStack)+1;
+	if (a > dataStack->top) {
+	  error("not enough frames!");
+	}
+	else {
+	  printf(">  %.0f\n", dataStack->contents[a]); // jumps to value of top integer
+	}
       }
     }
     else if (strcmp(cmd, "range") == 0) {
-      b = StackPop(dataStack);
-      a = StackPop(dataStack);
-      if (a < b) {
-	for (c = a; c <= b; c++) {
-	  StackPush(dataStack, c);
-	}
+      if (dataStack->top < 1) {
+	error("not enough frames!");
       }
-      else if (a > b) {
-	for (c = a; c >= b; c--) {
-	  StackPush(dataStack, c);
+      else {
+	b = StackPop(dataStack);
+	a = StackPop(dataStack);
+	if (a < b) {
+	  for (c = a; c <= b; c++) {
+	    StackPush(dataStack, c);
+	  }
 	}
-      }
-      else if (a == b) {
-	StackPush(dataStack, a);
+	else if (a > b) {
+	  for (c = a; c >= b; c--) {
+	    StackPush(dataStack, c);
+	  }
+	}
+	else if (a == b) {
+	  StackPush(dataStack, a);
+	}
       }
     }
     else if (strcmp(cmd, "drop") == 0) {
+      if (StackIsEmpty(dataStack)) {
+	error("stack is empty!");
+      }
+      else {
       printf(">   %.0f\n", StackPop(dataStack));
+      }
     }
     else if (strcmp(cmd, "over") == 0) {
       if (dataStack->top < 1) {
@@ -208,12 +228,27 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       StackPush(dataStack, dataStack->top);
     }
     else if (strcmp(cmd, "outascii") == 0) {
+      if (StackIsEmpty(dataStack)) {
+	error("stack is empty!");
+      }
+      else {
       printf(">   %c\n", (unsigned char) StackPop(dataStack));
+      }
     }
     else if (strcmp(cmd, "[") == 0) {
-      loopStack->index = (int) StackPop(dataStack);
-      loopStack->control = (int) StackPop(dataStack);
-      loopStack->save = true;
+      /*
+
+FIX ARRAY ACCESS BOUNDS CHECKING
+
+      */
+      if (dataStack->top < 1) {
+	error("not enough frames!");
+      }
+      else {
+	loopStack->index = (int) StackPop(dataStack);
+	loopStack->control = (int) StackPop(dataStack);
+	loopStack->save = true;
+      }
     }
     else if (strcmp(cmd, "i") == 0) {
       StackPush(dataStack, loopStack->index);
