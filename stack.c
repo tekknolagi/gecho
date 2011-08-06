@@ -194,6 +194,9 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[], int top) {
       a = dataStack->contents[dataStack->top - 2];
       StackPush(dataStack, a);
     }
+    else if (strcmp(cmd, "top") == 0) {
+      StackPush(dataStack, dataStack->top);
+    }
     else if (strcmp(cmd, "[") == 0) {
       loopStack->index = StackPop(dataStack);
       loopStack->control = StackPop(dataStack);
