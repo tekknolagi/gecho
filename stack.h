@@ -43,6 +43,7 @@ double StackPop(stackT *stackP) {
     fprintf(stderr, "Can't pop element: stack is empty.\n");
     exit(1);
   }
+  //printf("%.0f\n", stackP->contents[stackP->top-1]);
   return stackP->contents[stackP->top--];
 }
 

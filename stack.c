@@ -6,10 +6,37 @@
   TODO:
   - Comments
   - File reading
-  - While loop
   - More basic math
   - Lookahead words...needed for function definitions
-  -recursion
+  - recursion
+  - weird loop issue:
+  5 1 [ i * show ]
+  >  [ 1 ]
+  >  [ 2 ]
+  >  [ 6 ]
+  >  [ 24 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  >  [ 120 ]
+  - another weird loop issue:
+  for some reason only realizes first character of operator
+  5 0 [ i show ]
+  >  [ 0 ]
+  error: s - unknown command!
+  error: s - unknown command!
+  error: s - unknown command!
+  error: s - unknown command!
+  error: s - unknown command!
+  error: s - unknown command!
 
 */
 
@@ -66,7 +93,9 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
     }
     if (strcmp(cmd, "+") == 0) {
       if (dataStack->top < 1) {
-	error("not enough frames!");
+	//error("not enough frames!");
+	StackPush(dataStack, 0);
+	eval(dataStack, loopStack, cmd);
       }
       else {
 	b = StackPop(dataStack);
@@ -76,7 +105,9 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
     }
     else if (strcmp(cmd, "++") == 0) {
       if (dataStack->top < 1) {
-	error("not enough frames!");
+	StackPush(dataStack, 0);
+	//error("not enough frames!");
+	eval(dataStack, loopStack, cmd);
       }
       else {
 	while (dataStack->top >= 1) {
@@ -88,7 +119,9 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
     }
     else if (strcmp(cmd, "**") == 0) {
       if (dataStack->top < 1) {
-	error("not enough frames!");
+	//error("not enough frames!");
+	StackPush(dataStack, 1);
+	eval(dataStack, loopStack, cmd);
       }
       else {
 	while (dataStack->top >= 1) {
@@ -104,12 +137,14 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
       }
       else {
 	//a = StackPop(dataStack);
-	printf(">  %.0f\n", dataStack->contents[dataStack->top]);
+	printf(">  %f\n", dataStack->contents[dataStack->top]);
       }
     }
     else if (strcmp(cmd, "*") == 0) {
       if (dataStack->top < 1) {
-	error("not enough frames!");
+	//error("not enough frames!");
+	StackPush(dataStack, 1);
+	eval(dataStack, loopStack, cmd);
       }
       else {
 	b = StackPop(dataStack);
@@ -127,17 +162,19 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 	}
       }
     }
-    else if (strcmp(cmd, "show") == 0) {
-      if (StackIsEmpty(dataStack)) {
-	error("stack is empty!");
-      }
-      else {
-	printf(">  "); StackShow(dataStack);
-      }
+    else if ((strcmp(cmd, "show") == 0)) {// || (strcmp(cmd, "s") == 0)) {
+      //if (StackIsEmpty(dataStack)) {
+      //error("stack is empty!");
+      //}
+      //else {
+      printf(">  "); StackShow(dataStack);
+      //}
     }
     else if (strcmp(cmd, "-") == 0) {
       if (dataStack->top < 1) {
-	error("not enough frames!");
+	//error("not enough frames!");
+	StackPush(dataStack, 0);
+	eval(dataStack, loopStack, cmd);
       }
       else {
 	b = StackPop(dataStack);
@@ -174,7 +211,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 	  error("not enough frames!");
 	}
 	else {
-	  printf(">  %.0f\n", dataStack->contents[a]); // jumps to value of top integer
+	  printf(">  %f\n", dataStack->contents[a]); // jumps to value of top integer
 	}
       }
     }
@@ -205,7 +242,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 	error("stack is empty!");
       }
       else {
-	printf(">   %.0f\n", StackPop(dataStack));
+	printf(">   %f\n", StackPop(dataStack));
       }
     }
     else if (strcmp(cmd, "over") == 0) {
@@ -237,31 +274,45 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 	printf(">   %c\n", (unsigned char) StackPop(dataStack));
       }
     }
+    else if (strcmp(cmd, "/") == 0) {
+      if (dataStack->top < 1) {
+	StackPush(dataStack, 1);
+	eval(dataStack, loopStack, "swap");
+      }
+      else {
+	b = StackPop(dataStack);
+	a = StackPop(dataStack);
+	StackPush(dataStack, (double) a/b);
+      }
+    }
     else if (strcmp(cmd, "[") == 0) {
       if (dataStack->top < 1) {
 	error("not enough frames!");
       }
       else {
 	loopStack->index = (int) StackPop(dataStack);
-	loopStack->control = (int) StackPop(dataStack);
-	loopStack->save = true;
+	loopStack->control = (int) StackPop(dataStack) + 1;
       }
     }
     else if (strcmp(cmd, "i") == 0) {
-      StackPush(dataStack, loopStack->index);
+      if (loopStack->index < loopStack->control) {
+	StackPush(dataStack, loopStack->index++);
+	loopStack->save = true;
+      }
+      else {
+	loopStack->save = false;
+      }
     }
     else if (strcmp(cmd, "]") == 0) {
-      loopStack->save = false; 
-      loopStack->index++;
-      printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
-      if (loopStack->index <= loopStack->control) {
+      loopStack->save = false;
+      //printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
+      if (loopStack->index < loopStack->control) {
 	for (c = 0; c < loopStack->bufsize; c++) {
-	  //printf("%s\n", loopStack->buffer[c]);
-	  eval(dataStack, loopStack, (loopStack->buffer[c]));
+	  printf("%s\n", loopStack->buffer[c]);
+	  eval(dataStack, loopStack, loopStack->buffer[c]);
 	}
       }
       else {
-	//loopStack->save = false;
 	loopStack->index = 0;
 	loopStack->control = 0;
 	memset( (void *) loopStack->buffer, '\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);
