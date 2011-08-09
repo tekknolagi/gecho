@@ -77,4 +77,4 @@ This stack-based language is very similar to FORTH.
 
 14. `97 98 99 outascii outascii outascii` == `cba`
 
-15. `1 2 /` == `0.5`
+15. `1 2 / .` == `0.5`
