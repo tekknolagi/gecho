@@ -19,7 +19,7 @@ This stack-based language is very similar to FORTH.
 8. `swap`
     * Pops two elements from the stack, and pushes back in each other's places.
 9. `-`
-    * Pops two elements from the stack, subtracts the second from the first, and pushes the result.
+    * Pops two elements from the stack, subtracts the upper from the lower, and pushes the result.
 10. `jump`
     * Pops an element from the stack (a) and prints stack[a]
 11. `range`
@@ -33,6 +33,16 @@ This stack-based language is very similar to FORTH.
 15. `wover`
     * a = pop(); b = pop(); push(b); push(a); push(b);
     * ( a1 a2 -- a1 a2 a1)
+16. `drop`
+    * Pop top element from stack, show value.
+17. `top`
+    * Push the index of the top of the stack to the stack.
+18. `outascii`
+    * Pop top element of stack and print ASCII character that corresponds to decimal.
+19. `allascii`
+    * Pop all elements of stack and prints ASCII characters that correspond to decimal.
+20. `/`
+    * Pop top two elements from stack; divide lower element by upper element.
 
 # Examples
 
@@ -58,3 +68,13 @@ This stack-based language is very similar to FORTH.
 
 10. `1 1 dup wover + dup wover + dup wover + show` == `[ 1, 1, 2, 3, 5 ]`
     ** Fibonacci :)
+
+11. `1 2 3 4 show drop show` == `[1, 2, 3, 4], [1, 2, 3]`
+
+12. `1 2 3 top .` == `2`
+
+13. `97 97 25 + range allascii` == `abc...z`
+
+14. `97 98 99` == `cba`
+
+15. `1 2 /` == `0.5`

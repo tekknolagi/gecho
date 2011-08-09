@@ -175,9 +175,12 @@ void allascii(stackT *dataStack) {
 		error("not enough frames!");
 	}
 	else {
-		for (a = 0; a < dataStack->top; a++) {
-			outascii(dataStack);
+		printf(">  ");
+		for (a = 0; a < dataStack->top+1; a++) {
+			printf("%c", (unsigned char) dataStack->contents[a]);
 		}
+		printf("\n");
+		delstack(dataStack);
 	}
 }
 
