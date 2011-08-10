@@ -1,3 +1,5 @@
+#include "usefunc.h"
+
 typedef enum {
   false, true
 } bool;

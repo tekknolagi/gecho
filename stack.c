@@ -1,7 +1,5 @@
-#include "stack.h"
-#include "structs.h"
-#define VAR_SIZE 100
-
+int a, b, c, ind, con;
+#include "functions.h"
 /*
 
   TODO:
@@ -64,10 +62,6 @@
   return 0;
   }
 */
-
-int a, b, c, ind, con;
-
-#include "functions.h"
 
 int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
   char msg[30];
@@ -188,7 +182,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
       else {
         loopStack->index = 0;
         loopStack->control = 0;
-        memset( (void *) loopStack->buffer, '\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);
+        memset(loopStack->buffer, '\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);
         loopStack->bufsize = 0;
       }
     }

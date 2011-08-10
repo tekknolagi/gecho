@@ -1,3 +1,5 @@
+#include "stack_imp.h"
+
 void error(char* msg) {
 	printf("error: %s\n", msg);
 }
