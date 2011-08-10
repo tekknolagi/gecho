@@ -1,67 +1,8 @@
+#define PKGNAME "StackBased"
+#define VERSION 0.1
+
 int a, b, c, ind, con;
 #include "functions.h"
-/*
-
-  TODO:
-  - Comments
-  - File reading
-  - More basic math
-  - Lookahead words...needed for function definitions
-  - recursion
-  - weird loop issue:
-  5 1 [ i * show ]
-  >  [ 1 ]
-  >  [ 2 ]
-  >  [ 6 ]
-  >  [ 24 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  >  [ 120 ]
-  - another weird loop issue:
-  for some reason only realizes first character of operator >> FIXXXX
-  5 0 [ i show ]
-  >  [ 0 ]
-  error: s - unknown command!
-  error: s - unknown command!
-  error: s - unknown command!
-  error: s - unknown command!
-  error: s - unknown command!
-  error: s - unknown command!
-
-*/
-
-
-
-/*
-  variable Table[VAR_SIZE];
-
-  void TableInit() {
-  Table[0].key = NULL;
-  Table[0].value = 0;
-  }
-
-  int look(const char *key, int top) {
-  size_t i = top;
-  while (Table[i].key != NULL) {
-  if (strcmp(key, Table[i].key) == 0) {
-  return Table[i].value;
-  }
-  else {
-  i--;
-  }
-  }
-  return 0;
-  }
-*/
 
 int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
   char msg[30];
@@ -226,7 +167,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 }
 
 int main() {
-  puts("Welcome to " PACKAGE_STRING "!\n");
+  printf("Welcome to %s %f", PKGNAME, VERSION);
   stackT dataStack;
   loopstack loopStack;
   loopStack.bufsize = 0;

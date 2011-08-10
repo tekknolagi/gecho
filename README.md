@@ -2,10 +2,10 @@ This stack-based language is very similar to FORTH.
 
 # Install
 
-1. `make COMPILER=<compiler of choice>`
-    * You can use whatever C compiler you want
+1. `make CC=<compiler of choice>`
+    * You can use whatever C compiler you want, defaults to `cc`
 2. `sudo make install`
-    * Moves it to /usr/bin/
+    * Moves it to `/usr/bin/`
 
 # Commands
 

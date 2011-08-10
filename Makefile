@@ -1,8 +1,8 @@
 all:
-	$(COMPILER) src/stack.c -o stack
+	$(CC) src/stack.c -o stack
 
 clean:
-	-rm stack *~
+	-rm -f stack *~
 
 install:
 	mv stack /usr/bin/
