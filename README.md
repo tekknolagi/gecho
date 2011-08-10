@@ -1,5 +1,11 @@
 This stack-based language is very similar to FORTH.
 
+# Install
+
+1. `./configure`
+2. `make`
+3. `sudo make install`
+
 # Commands
 
 1. `+`
