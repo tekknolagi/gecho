@@ -108,10 +108,10 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 
 		else if (strcmp(cmd, "]") == 0) {
 			loopStack->index += 1;
-			printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
-			if (loopStack->index < loopStack->control) {
+			//printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
+			if (loopStack->index <= loopStack->control) {
 				for (c = 0; c < loopStack->bufsize; c++) {
-					//printf("%s\n", loopStack->buffer);
+					//printf("%s\n", loopStack->buffer[c]);
 					eval(dataStack, loopStack, loopStack->buffer[c]);
 				}
 			}
@@ -153,7 +153,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 			sprintf(msg, "%s - unknown command!", cmd);
 			error(msg);
 		}
-		if (loopStack->save) {
+		if (loopStack->save && (strcmp(cmd, "[") != 0)) {
 			//printf("cmd: %s\n", cmd);
 			//printf("ptr: %d\n", *cmd);
 			*loopStack->buffer[loopStack->bufsize++] = *cmd;
