@@ -6,6 +6,7 @@ int a, b, c, ind, con;
 
 int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
   char msg[30];
+  printf("cmd: %s\n", cmd);
   if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
     StackPush(dataStack, atoi(cmd));
   }
@@ -98,21 +99,15 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
         loopStack->index = (int) StackPop(dataStack);
         loopStack->control = (int) StackPop(dataStack) + 1;
       }
+	  loopStack->save = true;
     }
 
     else if (strcmp(cmd, "i") == 0) {
-      //printf("command: %s\n", cmd);
-      if (loopStack->index < loopStack->control) {
-        StackPush(dataStack, loopStack->index++);
-        loopStack->save = true;
-      }
-      else {
-        loopStack->save = false;
-      }
+		StackPush(dataStack, loopStack->index);
     }
 
     else if (strcmp(cmd, "]") == 0) {
-      loopStack->save = false;
+	  loopStack->index += 1;
       //printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
       if (loopStack->index < loopStack->control) {
         for (c = 0; c < loopStack->bufsize; c++) {
@@ -125,6 +120,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
         loopStack->control = 0;
         memset(loopStack->buffer, '\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);
         loopStack->bufsize = 0;
+		loopStack->save = false;
       }
     }
 
@@ -167,7 +163,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 }
 
 int main() {
-  printf("Welcome to %s %f", PKGNAME, VERSION);
+  printf("Welcome to %s %.1f\n\n", PKGNAME, VERSION);
   stackT dataStack;
   loopstack loopStack;
   loopStack.bufsize = 0;
@@ -177,7 +173,7 @@ int main() {
   StackInit(&dataStack, RES_SIZE);
   char cmd[DIM2];
   while(1) {
-    printf("s>   ");
+	  //printf("s>   ");
     scanf("%s", cmd);
     eval(&dataStack, &loopStack, cmd);
   }
