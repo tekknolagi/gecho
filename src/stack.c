@@ -1,16 +1,14 @@
 #define PKGNAME "StackBased"
 #define VERSION 0.1
 
-char *mode;
-
 int a, b, c, ind, con;
 #include "functions.h"
 
-int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
+int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd[]) {
 	char msg[30];
-	printf("cmd: %s\n", cmd);
-	printf("mode: %s\n", mode);
-	printf("cmd[0]: %c\n", cmd[0]);
+	//printf("cmd: %s\n", cmd);
+	//printf("mode: %s\n", globals->mode);
+	//printf("cmd[0]: %c\n", cmd[0]);
 	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
 		StackPush(dataStack, atoi(cmd));
 	}
@@ -19,88 +17,92 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 			cmd[c] = tolower(cmd[c]);
 		}
 
-		if (cmd[0] == '$') {
-			mode = cmd;
-			printf("mode: %s\n", mode);
+		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
+			//mode = cmd;
+			printf("SETTING MODE TO %s\n", cmd);
+			globals->mode = cmd;
+			//printf("mode: %s\n", dataStack->mode);
 		}
-
-		else if (strcmp(cmd, "+") == 0) {
+		else if (!strcmp(cmd, "mode")) {
+			printf("mode: %s\n", globals->mode);
+}
+		else if (!strcmp(cmd, "+")) {
 			plus(dataStack);
 		}
 
-		else if (strcmp(cmd, "++") == 0) {
+		else if (!strcmp(cmd, "++")) {
 			plusplus(dataStack);
 		}
 
-		else if (strcmp(cmd, "**") == 0) {
+		else if (!strcmp(cmd, "**")) {
 			mulmul(dataStack);
 		}
 
-		else if (strcmp(cmd, ".") == 0) {
+		else if (!strcmp(cmd, ".")) {
 			showtop(dataStack);
 		}
 
-		else if (strcmp(cmd, "*") == 0) {
+		else if (!strcmp(cmd, "*")) {
 			mul(dataStack);
 		}
 
-		else if (strcmp(cmd, "..") == 0) {
+		else if (!strcmp(cmd, "..")) {
 			delstack(dataStack);
 		}
 
-		else if ((strcmp(cmd, "show") == 0)) {
+		else if (!strcmp(cmd, "show")) {
 			show(dataStack);
 		}
 
-		else if (strcmp(cmd, "-") == 0) {
+		else if (!strcmp(cmd, "-")) {
 			sub(dataStack);
 		}
 
-		else if (strcmp(cmd, "swap") == 0) {
+		else if (!strcmp(cmd, "swap")) {
 			swap(dataStack);
 		}
 
-		else if (strcmp(cmd, "dup") == 0) {
+		else if (!strcmp(cmd, "dup")) {
 			duplicate(dataStack, 0);
 		}
 
-		else if(strcmp(cmd, "jump") == 0) {
+		else if(!strcmp(cmd, "jump")) {
 			jump(dataStack);
 		}
 
-		else if (strcmp(cmd, "range") == 0) {
+		else if (!strcmp(cmd, "range")) {
 			range(dataStack);
 		}
 
-		else if (strcmp(cmd, "drop") == 0) {
+		else if (!strcmp(cmd, "drop")) {
 			drop(dataStack, true);
 		}
 
-		else if (strcmp(cmd, "over") == 0) {
+		else if (!strcmp(cmd, "over")) {
 			duplicate(dataStack, 1);
 		}
 
-		else if (strcmp(cmd, "wover") == 0) {
+		else if (!strcmp(cmd, "wover")) {
 			duplicate(dataStack, 2);
 		}
 
-		else if (strcmp(cmd, "top") == 0) {
+		else if (!strcmp(cmd, "top")) {
 			StackPush(dataStack, dataStack->top);
 		}
 
-		else if (strcmp(cmd, "outascii") == 0) {
+		else if (!strcmp(cmd, "outascii")) {
 			outascii(dataStack);
 		}
 
-		else if (strcmp(cmd, "allascii") == 0) {
+		else if (!strcmp(cmd, "allascii")) {
 			allascii(dataStack);
 		}
 
-		else if (strcmp(cmd, "/") == 0) {
+		else if (!strcmp(cmd, "/")) {
 			divide(dataStack);
 		}
 
-		else if (strcmp(cmd, "[") == 0) {
+		else if (!strcmp(cmd, "[")) {
 			if (dataStack->top < 1) {
 				error("not enough frames!");
 			}
@@ -111,7 +113,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 			loopStack->save = true;
 		}
 
-		else if (strcmp(cmd, "i") == 0) {
+		else if (!strcmp(cmd, "i")) {
 			StackPush(dataStack, loopStack->index);
 		}
 
@@ -121,7 +123,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 			if (loopStack->index <= loopStack->control) {
 				for (c = 0; c < loopStack->bufsize; c++) {
 					//printf("%s\n", loopStack->buffer[c]);
-					eval(dataStack, loopStack, loopStack->buffer[c]);
+					eval(dataStack, loopStack, globals, loopStack->buffer[c]);
 				}
 			}
 			else {
@@ -159,7 +161,7 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 			  //Table[b].value = a;
 			  }
 			*/
-			if (cmd[0] != '$') {
+			if (cmd[0] != '@') {
 				sprintf(msg, "%s - unknown command!", cmd);
 				error(msg);
 			}
@@ -169,7 +171,10 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 			//printf("ptr: %d\n", *cmd);
 			*loopStack->buffer[loopStack->bufsize++] = *cmd;
 		}
-		if (strcmp(mode, "$transparent") == 0) {
+		if (!strcmp(globals->mode, "@default")) {
+			;
+		}
+		else if (!strcmp(globals->mode, "@transparent")) {
 			StackShow(dataStack);
 		}
 		//return top;
@@ -180,15 +185,17 @@ int main() {
 	printf("Welcome to %s %.1f\n\n", PKGNAME, VERSION);
 	stackT dataStack;
 	loopstack loopStack;
+	global_vars globals;
 	loopStack.bufsize = 0;
 	loopStack.save = false;
 	//TableInit();
 	//int top = 0;
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2];
+	globals.mode = "@default";
 	while(1) {
 		//printf("s>   ");
 		scanf("%s", cmd);
-		eval(&dataStack, &loopStack, cmd);
+		eval(&dataStack, &loopStack, &globals, cmd);
 	}
 }

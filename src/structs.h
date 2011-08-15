@@ -16,3 +16,7 @@ typedef struct {
   char buffer[RES_SIZE][DIM2];
   bool save;
 } loopstack;
+
+typedef struct {
+  char *mode;
+} global_vars;

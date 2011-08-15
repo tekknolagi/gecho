@@ -4,6 +4,7 @@ typedef struct {
   double *contents;
   int maxSize;
   int top;
+  char *mode;
 } stackT;
 
 void StackInit(stackT *stackP, int maxSize) {
