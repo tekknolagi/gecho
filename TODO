@@ -1,4 +1,4 @@
-TODO:
+ TODO:
   - Comments
   - File reading
   - More basic math
@@ -54,3 +54,7 @@ TODO:
   }
   return 0;
   }
+
+-----------------------------
+
+modes!

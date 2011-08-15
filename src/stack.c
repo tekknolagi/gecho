@@ -1,12 +1,32 @@
 #define PKGNAME "StackBased"
 #define VERSION 0.1
 
+char *mode;
+
 int a, b, c, ind, con;
 #include "functions.h"
+
+int substr(char dest[], char src[], int position) {
+	int i, j;
+	if (position == strlen(src)) {
+		dest[0] = (char) src[position];
+		dest[1] = '\0';
+		return 1;
+	}
+	else if (position > strlen(src)) return 0;
+	else {
+		for (j = 0, i = position; i < strlen(src); i++, j++) {
+			dest[j] = src[i];
+		}
+		dest[j+1] = '\0';
+		return 1;
+	}
+}
 
 int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 	char msg[30];
 	printf("cmd: %s\n", cmd);
+	printf("mode: %s\n", mode);
 	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
 		StackPush(dataStack, atoi(cmd));
 	}
@@ -15,7 +35,17 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 			cmd[c] = tolower(cmd[c]);
 		}
 
-		if (strcmp(cmd, "+") == 0) {
+		if (cmd[0] == '$') {
+			//if(!substr(mode, cmd, 1)) {
+			//	error("invalid mode!");
+			//}
+			for (a = 0; a < strlen(cmd); a++) {
+				mode[a] = cmd[a];
+			}
+			//printf("mode: %s\n", mode);
+		}
+
+		else if (strcmp(cmd, "+") == 0) {
 			plus(dataStack);
 		}
 
@@ -150,13 +180,18 @@ int eval(stackT *dataStack, loopstack *loopStack, char cmd[]) {
 			  //Table[b].value = a;
 			  }
 			*/
-			sprintf(msg, "%s - unknown command!", cmd);
-			error(msg);
+			if (cmd[0] != '$') {
+				sprintf(msg, "%s - unknown command!", cmd);
+				error(msg);
+			}
 		}
 		if (loopStack->save && (strcmp(cmd, "[") != 0)) {
 			//printf("cmd: %s\n", cmd);
 			//printf("ptr: %d\n", *cmd);
 			*loopStack->buffer[loopStack->bufsize++] = *cmd;
+		}
+		if (strcmp(mode, "transparent") == 0) {
+			StackShow(dataStack);
 		}
 		//return top;
 	}
