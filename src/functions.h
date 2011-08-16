@@ -5,7 +5,7 @@ void error(char* msg) {
 }
 
 void ret(double msg) {
-	printf(">  %f\n", msg);
+	printf(">  %.2f\n", msg);
 }
 
 void plus(stackT *dataStack) {

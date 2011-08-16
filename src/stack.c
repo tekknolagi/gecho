@@ -1,5 +1,28 @@
 #define PKGNAME "gecho"
 #define VERSION 0.2
+#if defined _WIN32 || defined _WIN64
+#define OPSYS "Windows"
+#endif
+
+#ifdef __unix__
+#define OPSYS "Unix"
+#endif
+
+#ifdef NeXTBSD
+
+#ifndef __APPLE__
+#define OPSYS "Mac OS 9 or earlier"
+#endif
+
+#ifdef __APPLE__
+#define OPSYS "Mac OS X"
+#endif
+
+#endif
+
+#ifndef OPSYS
+#define OPSYS "unsupported system"
+#endif
 
 int a, b, c, ind, con;
 #include "functions.h"
@@ -144,14 +167,16 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 			*loopStack->buffer[loopStack->bufsize++] = *cmd;
 		}
 	}
-	if (!strcmp(globals->mode, "@transparent")) {
-		printf("%s ", cmd);
-		StackShow(dataStack);
+	if (cmd[0] != '@') {
+		if (!strcmp(globals->mode, "@transparent") && strcmp(cmd, "show")) {
+			printf("%s ", cmd);
+			StackShow(dataStack);
+		}
 	}
 }
 
 int main() {
-	printf("%s %.1f\n\n", PKGNAME, VERSION);
+	printf("%s %.1f on %s\n\n", PKGNAME, VERSION, OPSYS);
 	stackT dataStack;
 	loopstack loopStack;
 	global_vars globals;
