@@ -23,10 +23,10 @@ void plus(stackT *dataStack) {
 void plusplus(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		StackPush(dataStack, 0);
-		plusplus(dataStack);
+		plus(dataStack);
 	}
 	else {
-		while (dataStack->top <= 1) {
+		while (dataStack->top >= 1) {
 			plus(dataStack);
 		}
 	}

@@ -8,8 +8,6 @@ int a, b, c, ind, con;
 int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd[]) {
 	char msg[30];
 	//printf("cmd: %s\n", cmd);
-	//printf("mode: %s\n", globals->mode);
-	//printf("cmd[0]: %c\n", cmd[0]);
 	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
 		StackPush(dataStack, atoi(cmd));
 	}
@@ -18,16 +16,15 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 			cmd[c] = tolower(cmd[c]);
 		}
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
-			//mode = cmd;
 			printf("--MODE %s--\n", cmd);
-			for (a = 0; a < strlen(cmd)-1; a++) {
+			for (a = 0; a < strlen(cmd); a++) {
 				globals->mode[a] = cmd[a];
 			}
-			//printf("mode: %s\n", dataStack->mode);
+			globals->mode[strlen(cmd)] = '\0';
 		}
 		else if (!strcmp(cmd, "mode")) {
 			printf("mode: %s\n", globals->mode);
-}
+		}
 		else if (!strcmp(cmd, "+")) {
 			plus(dataStack);
 		}
@@ -143,15 +140,13 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 				error(msg);
 			}
 		}
-		if (loopStack->save && (strcmp(cmd, "[") != 0)) {
-			//printf("cmd: %s\n", cmd);
-			//printf("ptr: %d\n", *cmd);
+		if (loopStack->save && strcmp(cmd, "[")) {
 			*loopStack->buffer[loopStack->bufsize++] = *cmd;
 		}
-		else if (!strcmp(globals->mode, "@transp")) {
-			StackShow(dataStack);
-		}
-		//return top;
+	}
+	if (!strcmp(globals->mode, "@transparent")) {
+		printf("%s ", cmd);
+		StackShow(dataStack);
 	}
 }
 
