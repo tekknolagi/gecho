@@ -1,8 +1,9 @@
-#define PKGNAME "StackBased"
-#define VERSION 0.1
+#define PKGNAME "gecho"
+#define VERSION 0.2
 
 int a, b, c, ind, con;
 #include "functions.h"
+
 
 int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd[]) {
 	char msg[30];
@@ -16,11 +17,12 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 		for(c = 0; c < strlen(cmd); c++) {
 			cmd[c] = tolower(cmd[c]);
 		}
-
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
 			//mode = cmd;
-			printf("SETTING MODE TO %s\n", cmd);
-			globals->mode = cmd;
+			printf("--MODE %s--\n", cmd);
+			for (a = 0; a < strlen(cmd)-1; a++) {
+				globals->mode[a] = cmd[a];
+			}
 			//printf("mode: %s\n", dataStack->mode);
 		}
 		else if (!strcmp(cmd, "mode")) {
@@ -136,31 +138,6 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 		}
 
 		else {
-			/*
-			  if (!(b = look(cmd, top))) {
-			  if (!StackIsEmpty(dataStack)) {
-			  a = StackPop(dataStack);
-			  if (top+1 < VAR_SIZE) {
-			  top++;
-			  Table[top].key = cmd;
-			  Table[top].value = a;
-			  }
-			  else {
-			  error("var stack full!");
-			  }
-			  }
-			  }
-			  else {
-			  if (b <= top) {
-			  StackPush(dataStack, Table[b].value);
-			  }
-			  else {
-			  error("var does not exist!");
-			  }
-			  //Table[b].key = cmd;
-			  //Table[b].value = a;
-			  }
-			*/
 			if (cmd[0] != '@') {
 				sprintf(msg, "%s - unknown command!", cmd);
 				error(msg);
@@ -171,10 +148,7 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 			//printf("ptr: %d\n", *cmd);
 			*loopStack->buffer[loopStack->bufsize++] = *cmd;
 		}
-		if (!strcmp(globals->mode, "@default")) {
-			;
-		}
-		else if (!strcmp(globals->mode, "@transparent")) {
+		else if (!strcmp(globals->mode, "@transp")) {
 			StackShow(dataStack);
 		}
 		//return top;
@@ -182,7 +156,7 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 }
 
 int main() {
-	printf("Welcome to %s %.1f\n\n", PKGNAME, VERSION);
+	printf("%s %.1f\n\n", PKGNAME, VERSION);
 	stackT dataStack;
 	loopstack loopStack;
 	global_vars globals;
@@ -192,7 +166,7 @@ int main() {
 	//int top = 0;
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2];
-	globals.mode = "@default";
+	//globals.mode = "@default";
 	while(1) {
 		//printf("s>   ");
 		scanf("%s", cmd);

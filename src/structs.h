@@ -18,5 +18,5 @@ typedef struct {
 } loopstack;
 
 typedef struct {
-  char *mode;
+  char mode[20];
 } global_vars;
