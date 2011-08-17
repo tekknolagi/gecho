@@ -54,3 +54,11 @@
   }
   return 0;
   }
+
+---------------------------
+
+modes
+@default:1   @transparent:0   
+error: is_enabled error: no such mode!
+
+-what?!

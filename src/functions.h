@@ -1,13 +1,16 @@
 #include "stack_imp.h"
 
+//Easier error management.
 void error(char* msg) {
 	printf("error: %s\n", msg);
 }
 
+//Easier return management.
 void ret(double msg) {
 	printf(">  %.2f\n", msg);
 }
 
+//Adds two numbers. If only one is on the stack, adds 0 to it.
 void plus(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		StackPush(dataStack, 0);
@@ -20,6 +23,7 @@ void plus(stackT *dataStack) {
 	}
 }
 
+//Adds all the numbers on the stack. If only one is on the stack, pushes a 0.
 void plusplus(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		StackPush(dataStack, 0);
@@ -32,6 +36,7 @@ void plusplus(stackT *dataStack) {
 	}
 }
 
+//Multiplies two numbers. If only one is on the stack, multiplies it by 1.
 void mul(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		StackPush(dataStack, 1);
@@ -44,6 +49,7 @@ void mul(stackT *dataStack) {
 	}
 }
 
+//Multiplies all the numbers on the stack. If only one is on the stack, multiplies it by 1.
 void mulmul(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		StackPush(dataStack, 1);
@@ -56,6 +62,7 @@ void mulmul(stackT *dataStack) {
 	}
 }
 
+//Prints the top number on the stack or outputs an error if there are no numbers on the stack.
 void showtop(stackT *dataStack) {
 	if (StackIsEmpty(dataStack)) {
 		error("stack is empty!");
@@ -65,6 +72,7 @@ void showtop(stackT *dataStack) {
 	}
 }
 
+//Pops the top number off the stack, or outputs an error if there are no numbers on the stack.
 void drop(stackT *dataStack, bool show) {
 	if (StackIsEmpty(dataStack)) {
 		error("stack is empty!");
@@ -79,6 +87,7 @@ void drop(stackT *dataStack, bool show) {
 	}
 }
 
+//Pops all numbers off the stack.
 void delstack(stackT *dataStack) {
 	if (!StackIsEmpty(dataStack)) {
 		while (dataStack->top > -1) {
@@ -87,11 +96,13 @@ void delstack(stackT *dataStack) {
 	}
 }
 
+//Pretty-prints the stack.
 void show(stackT *dataStack) {
 	printf(">  ");
 	StackShow(dataStack);
 }
 
+//Subtracts the top two numbers on the stack, or pushes 0 onto the stack and subtracts 0 from the number.
 void sub(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		StackPush(dataStack, 0);
@@ -104,6 +115,7 @@ void sub(stackT *dataStack) {
 	}
 }
 
+//Swaps the places of the top two numbers on the stack.
 void swap(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		error("not enough frames!");
@@ -116,6 +128,7 @@ void swap(stackT *dataStack) {
 	}
 }
 
+//Pushes a copy of the top number onto the stack.
 void duplicate(stackT *dataStack, int num) {
 	if (dataStack->top < num) {
 		error("stack is empty!");
@@ -125,6 +138,7 @@ void duplicate(stackT *dataStack, int num) {
 	}
 }
 
+//Prints the number at the index of the top number on the stack.
 void jump(stackT *dataStack) {
 	if (StackIsEmpty(dataStack)) {
 		error("stack is empty!");
@@ -140,6 +154,7 @@ void jump(stackT *dataStack) {
 	}
 }
 
+//Pushes a range of numbers to the stack in the order they are specified. If the stack is [ 0, 5 ] it will push [ 0,1, 2, 3, 4, 5 ]. If the stack is [ 5, 0] it will push [5, 4, 3, 2, 1, 0 ].
 void range(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		error("not enough frames!");
@@ -163,6 +178,7 @@ void range(stackT *dataStack) {
 	}
 }
 
+//Outputs the ASCII representation of the top number on the stack.
 void outascii(stackT *dataStack) {
 	if (dataStack->top < 0) {
 		error("not enough frames!");
@@ -172,6 +188,7 @@ void outascii(stackT *dataStack) {
 	}
 }
 
+//Outputs all the numbers on the stack as ASCII in the order they appear. [ 87, 98, 99 ] will result in "abc".
 void allascii(stackT *dataStack) {
 	if (dataStack->top < 0) {
 		error("not enough frames!");
@@ -186,6 +203,7 @@ void allascii(stackT *dataStack) {
 	}
 }
 
+//Divides the top two numbers on the stack.
 void divide(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		error("not enough frames!");
@@ -197,6 +215,7 @@ void divide(stackT *dataStack) {
 	}
 }
 
+//Toggles a mode on/off.
 int toggle(mode *list, int index) {
 	if (index < 0) {
 		error("toggle error: no such mode!");
@@ -208,6 +227,7 @@ int toggle(mode *list, int index) {
 	}
 }
 
+//Finds the index of a particular mode.
 int lookup(mode *list, char *mode) {
 	for (a = 0; a < MODETOP; a++) {
 		if (!strcmp(list[ (int) a].mode, mode)) {
@@ -217,6 +237,7 @@ int lookup(mode *list, char *mode) {
 	return -1;
 }
 
+//Checks whether a mode is enabled or not.
 int is_enabled(mode *list, char *mode) {
 	a = lookup(list, mode);
 	if (a < 0) {

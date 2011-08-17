@@ -1,5 +1,6 @@
 #include "structs.h"
 
+//Stack struct.
 typedef struct {
 	double *contents;
 	int maxSize;
@@ -7,6 +8,7 @@ typedef struct {
 	char *mode;
 } stackT;
 
+//Initializes the stack, checking for enough memory.
 void StackInit(stackT *stackP, int maxSize) {
 	double *newContents;
 	newContents = (double *)malloc(sizeof(double)*maxSize);
@@ -19,6 +21,7 @@ void StackInit(stackT *stackP, int maxSize) {
 	stackP->top = -1;
 }
 
+//Destroys the stack and frees the allocated memory.
 void StackDestroy(stackT *stackP) {
 	free(stackP->contents);
 	stackP->contents = NULL;
@@ -26,14 +29,17 @@ void StackDestroy(stackT *stackP) {
 	stackP->top = -1;
 }
 
+//Checks if the stack is empty.
 int StackIsEmpty(stackT *stackP) {
 	return stackP->top < 0;
 }
 
+//Checks if the stack is full.
 int StackIsFull(stackT *stackP) {
 	return stackP->top >= stackP->maxSize-1;
 }
 
+//Pushes a number onto the stack.
 void StackPush(stackT *stackP, double element) {
 	if(StackIsFull(stackP)) {
 		fprintf(stderr, "Can't push element: stack is full.\n");
@@ -42,6 +48,7 @@ void StackPush(stackT *stackP, double element) {
 	stackP->contents[++stackP->top] = element;
 }
 
+//Pops a number from the stack.
 double StackPop(stackT *stackP) {
 	if(StackIsEmpty(stackP)) {
 		fprintf(stderr, "Can't pop element: stack is empty.\n");
@@ -50,6 +57,7 @@ double StackPop(stackT *stackP) {
 	return stackP->contents[stackP->top--];
 }
 
+//Pretty-prints the stack.
 void StackShow(stackT *stackP) {
 	if (stackP->top == -1) {
 		printf("[ ]\n");

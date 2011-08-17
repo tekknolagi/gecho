@@ -1,40 +1,30 @@
-#define PKGNAME "gecho"
-#define VERSION 0.2
-#if defined _WIN32 || defined _WIN64
-#define OPSYS "Windows"
-#endif
-
-#ifdef __unix__
-#define OPSYS "Unix"
-#endif
-
-#ifdef __APPLE__
-#define OPSYS "Mac OS X"
-#endif
-
-#ifndef OPSYS
-#define OPSYS "unsupported system"
-#endif
-
 double a, b, c, ind, con;
 #include "functions.h"
 
+//This is the eval function.
 int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
+	//Holds an error message.
 	char msg[30];
 	//printf("cmd: %s\n", cmd);
+	//Checks if the first digit is a number, and if so, pushes it.
 	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
 		StackPush(dataStack, atof(cmd));
 	}
 	else {
+		//Converts the command to all lowercase.
 		for(c = 0; c < strlen(cmd); c++) {
 			cmd[(int) c] = tolower(cmd[(int) c]);
 		}
+
+		//If it's a mode change...toggle it.
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
 			a = toggle(list, lookup(list, cmd));
 			if (a) {
 				printf("--%s %s--\n", cmd, is_enabled(list, cmd)?"ON":"OFF");
 			}
 		}
+
+		//If the user wants to see the modes enabled.
 		else if (!strcmp(cmd, "mode")) {
 			for (a = 0; a < MODETOP; a++) {
 				if (list[(int) a].enabled) {
@@ -43,12 +33,15 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			}
 			printf("\n");
 		}
+
+		//If the user wants to see all the modes, complete with if they are enabled.
 		else if (!strcmp(cmd, "modes")) {
 			for (a = 0; a < MODETOP; a++) {
-				printf("%s   ", list[(int) a].mode);
+				printf("%s:%d   ", list[(int) a].mode, is_enabled(list, list[(int) a].mode));
 			}
 			printf("\n");
 		}
+
 		else if (!strcmp(cmd, "+")) {
 			plus(dataStack);
 		}
@@ -125,6 +118,7 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			divide(dataStack);
 		}
 
+		//Starting a loop. Interpreted as a word. Saves the index and control, starts saving words to evaluate later.
 		else if (!strcmp(cmd, "[")) {
 			if (dataStack->top < 1) {
 				error("not enough frames!");
@@ -136,10 +130,12 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			loopStack->save = true;
 		}
 
+		//Pushes the index to the dataStack.
 		else if (!strcmp(cmd, "i")) {
 			StackPush(dataStack, loopStack->index);
 		}
 
+		//Increments the index, iterates over the commands if the index < control, otherwise resets the loopStack, and stops saving words.
 		else if (strcmp(cmd, "]") == 0) {
 			loopStack->index += 1;
 			//printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
@@ -158,16 +154,21 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			}
 		}
 
+		//If the command is unrecognized and not a mode setting.
 		else {
 			if (cmd[0] != '@') {
 				sprintf(msg, "%s - unknown command!", cmd);
 				error(msg);
 			}
 		}
+
+		//If in a loop, saves words. LOOK OUT. EVALUATES THE WORDS IN AN ENDLESS RECURSION. SAVES/EVALUATES THEN ADDS IT TO THE BUFFER. FIX!
 		if (loopStack->save && strcmp(cmd, "[")) {
 			*loopStack->buffer[loopStack->bufsize++] = *cmd;
 		}
 	}
+
+	//If not setting the mode, do whatever it is the modes do at the end of the eval() process.
 	if (cmd[0] != '@') {
 		if (is_enabled(list, "@transparent") && strcmp(cmd, "show")) {
 			printf("%s | ", cmd);
@@ -179,14 +180,21 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 	}
 }
 
+//REPL
 int main() {
 	printf("%s %.1f on %s\n\n", PKGNAME, VERSION, OPSYS);
+
+	//Initializing dataStack
 	stackT dataStack;
+
+	//Initializing loop stack
 	loopstack loopStack;
+
+	//Initializing modes list
 	mode list[] = {
 		{"@default", true},
 		{"@transparent", false},
-		{"@separate", false},
+		//{"@separate", false},
 	};
 	loopStack.bufsize = 0;
 	loopStack.save = false;
@@ -194,9 +202,7 @@ int main() {
 	//int top = 0;
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2];
-	//globals.mode = "@default";
 	while(1) {
-		//printf("s>   ");
 		scanf("%s", cmd);
 		eval(&dataStack, &loopStack, list, cmd);
 	}
