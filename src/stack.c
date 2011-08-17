@@ -9,7 +9,7 @@
 #endif
 
 #ifdef __APPLE__
-#define OPSYS "Mac OS XX"
+#define OPSYS "Mac OS X"
 #endif
 
 #ifndef OPSYS
@@ -19,8 +19,7 @@
 int a, b, c, ind, con;
 #include "functions.h"
 
-
-int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd[]) {
+int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
 	char msg[30];
 	//printf("cmd: %s\n", cmd);
 	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
@@ -31,14 +30,20 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 			cmd[c] = tolower(cmd[c]);
 		}
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
-			printf("--MODE %s--\n", cmd);
 			for (a = 0; a < strlen(cmd); a++) {
-				globals->mode[a] = cmd[a];
+				a = toggle(list, lookup(list, cmd));
 			}
-			globals->mode[strlen(cmd)] = '\0';
+			if (a) {
+				printf("--MODE %s--\n", cmd);
+			}
 		}
 		else if (!strcmp(cmd, "mode")) {
-			printf("mode: %s\n", globals->mode);
+			for (a = 0; a < MODETOP; a++) {
+				if (list[a].enabled) {
+					printf("%s   ", list[a].mode);
+				}
+			}
+			printf("\n");
 		}
 		else if (!strcmp(cmd, "+")) {
 			plus(dataStack);
@@ -137,7 +142,7 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 			if (loopStack->index <= loopStack->control) {
 				for (c = 0; c < loopStack->bufsize; c++) {
 					//printf("%s\n", loopStack->buffer[c]);
-					eval(dataStack, loopStack, globals, loopStack->buffer[c]);
+					eval(dataStack, loopStack, list, loopStack->buffer[c]);
 				}
 			}
 			else {
@@ -160,9 +165,12 @@ int eval(stackT *dataStack, loopstack *loopStack, global_vars *globals, char cmd
 		}
 	}
 	if (cmd[0] != '@') {
-		if (!strcmp(globals->mode, "@transparent") && strcmp(cmd, "show")) {
-			printf("%s ", cmd);
+		if (is_enabled(list, "@transparent") && strcmp(cmd, "show")) {
+			printf("%s | ", cmd);
 			StackShow(dataStack);
+		}
+		else if (is_enabled(list,"@separate")) {
+			printf("--------------------\n");
 		}
 	}
 }
@@ -171,7 +179,11 @@ int main() {
 	printf("%s %.1f on %s\n\n", PKGNAME, VERSION, OPSYS);
 	stackT dataStack;
 	loopstack loopStack;
-	global_vars globals;
+	mode list[] = {
+		{"@default", true},
+		{"@default", false},
+		{"@separate", false},
+	};
 	loopStack.bufsize = 0;
 	loopStack.save = false;
 	//TableInit();
@@ -182,6 +194,6 @@ int main() {
 	while(1) {
 		//printf("s>   ");
 		scanf("%s", cmd);
-		eval(&dataStack, &loopStack, &globals, cmd);
+		eval(&dataStack, &loopStack, list, cmd);
 	}
 }

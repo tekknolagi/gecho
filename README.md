@@ -35,8 +35,13 @@ This stack-based language is very similar to FORTH.
     * Pushes `<num>` to the stack.
 13. `**`
     * Pops all the elements from the stack and multiplies them; pushes result.
+
+
 14. `<varname>`
+    * REMOVED FOR NOW. DO NOT USE.
     * Pop element from stack; set `<varname>` to popped value.
+
+
 15. `wover`
     * a = pop(); b = pop(); push(b); push(a); push(b);
     * ( a1 a2 -- a1 a2 a1)
@@ -50,6 +55,9 @@ This stack-based language is very similar to FORTH.
     * Pop all elements of stack and prints ASCII characters that correspond to decimal.
 20. `/`
     * Pop top two elements from stack; divide lower element by upper element.
+21. `@`
+    * Ah, we have modes now. Modes are announced with `@`.
+
 
 # Examples
 
@@ -85,3 +93,5 @@ This stack-based language is very similar to FORTH.
 14. `97 98 99 outascii outascii outascii` == `cba`
 
 15. `1 2 / .` == `0.5`
+
+16. `@transparent` == shows stack after every command

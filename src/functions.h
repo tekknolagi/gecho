@@ -196,3 +196,28 @@ void divide(stackT *dataStack) {
 		StackPush(dataStack, (double) a/b);
 	}
 }
+
+int toggle(mode *list, int index) {
+	if (index < 0) {
+		error("no such mode!");
+		return 0;
+	}
+	else {
+		list[index].enabled = !(list[index].enabled);
+		return 1;
+	}
+}
+
+int lookup(mode *list, char *mode) {
+	int i;
+	for (i = 0; i < MODETOP; i++) {
+		if (!strcmp(list[i].mode, mode)) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+int is_enabled(mode *list, char *mode) {
+	return list[lookup(list, mode)].enabled; 
+}

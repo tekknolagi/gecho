@@ -19,4 +19,8 @@ typedef struct {
 
 typedef struct {
   char mode[20];
-} global_vars;
+  bool enabled;
+} mode;
+
+//int modetop;
+#define MODETOP 2
