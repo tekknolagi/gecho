@@ -56,7 +56,7 @@ This stack-based language is very similar to FORTH.
 20. `/`
     * Pop top two elements from stack; divide lower element by upper element.
 21. `@`
-    * Ah, we have modes now. Modes are announced with `@`.
+    * Ah, we have modes now. Modes are announced with `@`. `@<mode>` toggles `<mode>`.
 
 
 # Examples
@@ -95,3 +95,12 @@ This stack-based language is very similar to FORTH.
 15. `1 2 / .` == `0.5`
 
 16. `@transparent` == shows stack after every command
+
+# Modes
+
+1. `transparent`
+    * Shows the stack after every command.
+2. `default`
+    * Regular interpreter settings.
+3. `separate`
+    * Separates the commands with a dashed (`-`) line. Recommended for use with `transparent`.
