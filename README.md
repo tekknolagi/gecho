@@ -7,7 +7,7 @@ This stack-based language is very similar to FORTH.
 2. `sudo make install`
     * Moves it to `/usr/bin/`
 
-# Stacks
+# Stack Theory
 
 Think of a stack of books. It starts of empty.
 
