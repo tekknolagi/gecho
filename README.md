@@ -26,6 +26,7 @@ Note that `3` is at the top of the stack, and `12` is at the bottom.
 One can also take off (or `pop`) elements from the stack.
 
 `[ 12, 4, 8 ]`
+
 `> 3.00`
 
 The number gets returned as a result of popping it.
