@@ -199,7 +199,7 @@ void divide(stackT *dataStack) {
 
 int toggle(mode *list, int index) {
 	if (index < 0) {
-		error("no such mode!");
+		error("toggle error: no such mode!");
 		return 0;
 	}
 	else {
@@ -209,15 +209,19 @@ int toggle(mode *list, int index) {
 }
 
 int lookup(mode *list, char *mode) {
-	int i;
-	for (i = 0; i < MODETOP; i++) {
-		if (!strcmp(list[i].mode, mode)) {
-			return i;
+	for (a = 0; a < MODETOP; a++) {
+		if (!strcmp(list[a].mode, mode)) {
+			return a;
 		}
 	}
 	return -1;
 }
 
 int is_enabled(mode *list, char *mode) {
+	a = lookup(list, mode);
+	if (a < 0) {
+		error("is_enabled error: no such mode!");
+		return 0;
+	}
 	return list[lookup(list, mode)].enabled; 
 }

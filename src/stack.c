@@ -30,11 +30,9 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			cmd[c] = tolower(cmd[c]);
 		}
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
-			for (a = 0; a < strlen(cmd); a++) {
-				a = toggle(list, lookup(list, cmd));
-			}
+			a = toggle(list, lookup(list, cmd));
 			if (a) {
-				printf("--MODE %s--\n", cmd);
+				printf("--%s %s--\n", cmd, is_enabled(list, cmd)?"ON":"OFF");
 			}
 		}
 		else if (!strcmp(cmd, "mode")) {
@@ -42,6 +40,12 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 				if (list[a].enabled) {
 					printf("%s   ", list[a].mode);
 				}
+			}
+			printf("\n");
+		}
+		else if (!strcmp(cmd, "modes")) {
+			for (a = 0; a < MODETOP; a++) {
+				printf("%s   ", list[a].mode);
 			}
 			printf("\n");
 		}
@@ -169,7 +173,7 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			printf("%s | ", cmd);
 			StackShow(dataStack);
 		}
-		else if (is_enabled(list,"@separate")) {
+		else if (is_enabled(list, "@separate")) {
 			printf("--------------------\n");
 		}
 	}
@@ -181,7 +185,7 @@ int main() {
 	loopstack loopStack;
 	mode list[] = {
 		{"@default", true},
-		{"@default", false},
+		{"@transparent", false},
 		{"@separate", false},
 	};
 	loopStack.bufsize = 0;

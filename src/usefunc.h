@@ -6,6 +6,6 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
-#define DIM2 10
+#define DIM2 30
 #define RES_SIZE 100000
 #define VAR_SIZE 100

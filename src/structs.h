@@ -18,9 +18,9 @@ typedef struct {
 } loopstack;
 
 typedef struct {
-  char mode[20];
+  char mode[30];
   bool enabled;
 } mode;
 
 //int modetop;
-#define MODETOP 2
+#define MODETOP 3
