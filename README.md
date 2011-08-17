@@ -1,4 +1,4 @@
-This stack-based language is very similar to FORTH.
+gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
 # Install
 
