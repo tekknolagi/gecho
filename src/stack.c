@@ -8,16 +8,8 @@
 #define OPSYS "Unix"
 #endif
 
-#ifdef NeXTBSD
-
-#ifndef __APPLE__
-#define OPSYS "Mac OS 9 or earlier"
-#endif
-
 #ifdef __APPLE__
-#define OPSYS "Mac OS X"
-#endif
-
+#define OPSYS "Mac OS XX"
 #endif
 
 #ifndef OPSYS
