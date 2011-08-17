@@ -31,6 +31,14 @@ One can also take off (or `pop`) elements from the stack.
 
 The number gets returned as a result of popping it.
 
+Operands can pop numbers from the stack and interact with them. For example,
+
+`1 2 +`
+
+would push `1`, then push `2`, then pop them both and add them. It will then push the result onto the stack. The stack now looks like this:
+
+`[ 3 ]`
+
 That's stack theory.
 
 # Commands
