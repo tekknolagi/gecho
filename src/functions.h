@@ -135,7 +135,7 @@ void jump(stackT *dataStack) {
 			error("not enough frames!");
 		}
 		else {
-			ret(dataStack->contents[a]);
+			ret(dataStack->contents[(int) a]);
 		}
 	}
 }
@@ -179,7 +179,7 @@ void allascii(stackT *dataStack) {
 	else {
 		printf(">  ");
 		for (a = 0; a < dataStack->top+1; a++) {
-			printf("%c", (unsigned char) dataStack->contents[a]);
+			printf("%c", (unsigned char) dataStack->contents[(int) a]);
 		}
 		printf("\n");
 		delstack(dataStack);
@@ -210,8 +210,8 @@ int toggle(mode *list, int index) {
 
 int lookup(mode *list, char *mode) {
 	for (a = 0; a < MODETOP; a++) {
-		if (!strcmp(list[a].mode, mode)) {
-			return a;
+		if (!strcmp(list[ (int) a].mode, mode)) {
+			return (int) a;
 		}
 	}
 	return -1;

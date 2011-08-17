@@ -16,18 +16,18 @@
 #define OPSYS "unsupported system"
 #endif
 
-int a, b, c, ind, con;
+double a, b, c, ind, con;
 #include "functions.h"
 
 int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
 	char msg[30];
 	//printf("cmd: %s\n", cmd);
 	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
-		StackPush(dataStack, atoi(cmd));
+		StackPush(dataStack, atof(cmd));
 	}
 	else {
 		for(c = 0; c < strlen(cmd); c++) {
-			cmd[c] = tolower(cmd[c]);
+			cmd[(int) c] = tolower(cmd[(int) c]);
 		}
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
 			a = toggle(list, lookup(list, cmd));
@@ -37,15 +37,15 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 		}
 		else if (!strcmp(cmd, "mode")) {
 			for (a = 0; a < MODETOP; a++) {
-				if (list[a].enabled) {
-					printf("%s   ", list[a].mode);
+				if (list[(int) a].enabled) {
+					printf("%s   ", list[(int) a].mode);
 				}
 			}
 			printf("\n");
 		}
 		else if (!strcmp(cmd, "modes")) {
 			for (a = 0; a < MODETOP; a++) {
-				printf("%s   ", list[a].mode);
+				printf("%s   ", list[(int) a].mode);
 			}
 			printf("\n");
 		}
@@ -146,7 +146,7 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			if (loopStack->index <= loopStack->control) {
 				for (c = 0; c < loopStack->bufsize; c++) {
 					//printf("%s\n", loopStack->buffer[c]);
-					eval(dataStack, loopStack, list, loopStack->buffer[c]);
+					eval(dataStack, loopStack, list, loopStack->buffer[(int) c]);
 				}
 			}
 			else {
