@@ -7,6 +7,31 @@ This stack-based language is very similar to FORTH.
 2. `sudo make install`
     * Moves it to `/usr/bin/`
 
+# Stacks
+
+Think of a stack of books. It starts of empty.
+
+`[ ]`
+
+However, when you put (or `push`) a book (number) onto the stack, it gets added to the top.
+
+`[ 12 ]`
+
+Keep adding numbers, and it will soon look like this.
+
+`[ 12, 4, 8, 3 ]`
+
+Note that `3` is at the top of the stack, and `12` is at the bottom.
+
+One can also take off (or `pop`) elements from the stack.
+
+`[ 12, 4, 8 ]`
+`> 3.00`
+
+The number gets returned as a result of popping it.
+
+That's stack theory.
+
 # Commands
 
 1. `+`
