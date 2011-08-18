@@ -121,8 +121,14 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			divide(dataStack);
 		}
 
+		//Prints total commands. Used with @tracker
 		else if (!strcmp(cmd,"tot")) {
 			printf("tot: %d\n", cmds);
+		}
+
+		//Resets number of commands. Used with @tracker
+		else if (!strcmp(cmd, "reset")) {
+			cmds = 0;
 		}
 
 		//Starting a loop. Interpreted as a word. Saves the index and control, starts saving words to evaluate later.
@@ -177,11 +183,11 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 
 	//If not setting the mode, do whatever it is the modes do at the end of the eval() process.
 	if (cmd[0] != '@') {
-		if (is_enabled(list, "@transparent") && strcmp(cmd, "show")) {
+		if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset")) {
 			printf("%s | ", cmd);
 			StackShow(dataStack);
 		}
-		if (is_enabled(list, "@tracker") && (strcmp(cmd, "tot"))) {
+		if (is_enabled(list, "@tracker") && strcmp(cmd, "tot") && strcmp(cmd, "reset")) {
 			cmds++;
 		}
 		if (!is_enabled(list, "@tracker") && (cmds != 0)) {
@@ -216,6 +222,10 @@ int main() {
 	cmds = 0;
 	while(1) {
 		scanf("%s", cmd);
+		if (!strcmp(cmd, "quit") || !strcmp(cmd, "exit")) {
+			printf("\nbye\n");
+			break;
+		}
 		eval(&dataStack, &loopStack, list, cmd);
 	}
 }

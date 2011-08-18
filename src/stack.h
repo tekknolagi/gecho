@@ -69,8 +69,8 @@ void StackShow(stackT *stackP) {
 		int i;
 		printf("[ ");
 		for (i = 0; i < stackP->top; i++) {
-			printf("%d, ", (int) stackP->contents[i]);
+			printf("%.0f, ", stackP->contents[i]);
 		}
-		printf("%d ]\n", (int) stackP->contents[stackP->top]);
+		printf("%.0f ]\n", stackP->contents[stackP->top]);
 	}
 }

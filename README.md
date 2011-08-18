@@ -88,7 +88,7 @@ That's stack theory.
 15. `wover`
     * a = pop(); b = pop(); push(b); push(a); push(b);
     * ( a1 a2 -- a1 a2 a1)
-16. `drop`
+16. `drop` || `pop`
     * Pop top element from stack, show value.
 17. `top`
     * Push the index of the top of the stack to the stack.
@@ -100,6 +100,14 @@ That's stack theory.
     * Pop top two elements from stack; divide lower element by upper element.
 21. `@`
     * Ah, we have modes now. Modes are announced with `@`. `@<mode>` toggles `<mode>`.
+22. `mode`
+    * Prints a list of all enabled modes.
+23. `modes`
+    * Prints all modes, complete with 'enabled' flag.
+24. `tot`
+    * For use with `@tracker`. Prints number of commands so far. Does not count as a command.
+25. `reset`
+    * Resets the command count. For use with `@tracker`. Does not count as a command.
 
 
 # Examples
@@ -145,5 +153,5 @@ That's stack theory.
     * Shows the stack after every command.
 2. `default`
     * Regular interpreter settings.
-3. `separate`
-    * Separates the commands with a dashed (`-`) line. Recommended for use with `transparent`.
+3. `tracker`
+    * After being enabled, counts the commands entered. Can be viewed with `tot`.
