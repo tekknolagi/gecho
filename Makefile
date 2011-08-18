@@ -9,5 +9,6 @@ install:
 	make clean
 
 go:
+	make clean
 	make
 	sudo make install

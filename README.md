@@ -2,10 +2,19 @@ gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
 # Install
 
+Two Options...
+
+FIRST
+
 1. `make CC=<compiler of choice>`
     * You can use whatever C compiler you want, defaults to `cc`
 2. `sudo make install`
     * Moves it to `/usr/bin/`
+
+SECOND
+
+1. `sudo make go`
+    * Just makes and cleans up and moves it to `/usr/bin/` for you. Assumes `cc` is installed.
 
 # Stack Theory
 
