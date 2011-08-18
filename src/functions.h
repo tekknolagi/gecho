@@ -1,4 +1,4 @@
-#include "stack_imp.h"
+#include "stack.h"
 
 //Easier error management.
 void error(char* msg) {

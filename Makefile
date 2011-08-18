@@ -1,8 +1,8 @@
 all:
-	$(CC) src/stack.c -o stack
+	$(CC) src/gecho.c -o gecho
 
 clean:
-	-rm -f stack *~
+	-rm -f gecho *~
 
 install:
-	mv stack /usr/bin/
+	mv gecho /usr/bin/
