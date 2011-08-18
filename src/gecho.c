@@ -211,10 +211,10 @@ int main() {
 		{"@default", true},
 		{"@transparent", false},
 		{"@tracker", false},
-		//{"@separate", false},
 	};
 	loopStack.bufsize = 0;
 	loopStack.save = false;
+	//Variables. Will implement with a & prefix to access and a ! prefix to store.
 	//TableInit();
 	//int top = 0;
 	StackInit(&dataStack, RES_SIZE);
