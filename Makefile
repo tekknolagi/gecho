@@ -6,3 +6,8 @@ clean:
 
 install:
 	mv gecho /usr/bin/
+	make clean
+
+go:
+	make
+	sudo make install

@@ -1,6 +1,9 @@
 double a, b, c, ind, con;
+#define MODETOP 3
+#define PKGNAME "gecho"
+#define VERSION 0.2
 #include "functions.h"
-
+int cmds;
 //This is the eval function.
 int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
 	//Holds an error message.
@@ -90,7 +93,7 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			range(dataStack);
 		}
 
-		else if (!strcmp(cmd, "drop")) {
+		else if (!strcmp(cmd, "drop") || !strcmp(cmd, "pop")) {
 			drop(dataStack, true);
 		}
 
@@ -116,6 +119,10 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 
 		else if (!strcmp(cmd, "/")) {
 			divide(dataStack);
+		}
+
+		else if (!strcmp(cmd,"tot")) {
+			printf("tot: %d\n", cmds);
 		}
 
 		//Starting a loop. Interpreted as a word. Saves the index and control, starts saving words to evaluate later.
@@ -174,8 +181,11 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			printf("%s | ", cmd);
 			StackShow(dataStack);
 		}
-		else if (is_enabled(list, "@separate")) {
-			printf("--------------------\n");
+		if (is_enabled(list, "@tracker") && (strcmp(cmd, "tot"))) {
+			cmds++;
+		}
+		if (!is_enabled(list, "@tracker") && (cmds != 0)) {
+			cmds = 0;
 		}
 	}
 }
@@ -194,6 +204,7 @@ int main() {
 	mode list[] = {
 		{"@default", true},
 		{"@transparent", false},
+		{"@tracker", false},
 		//{"@separate", false},
 	};
 	loopStack.bufsize = 0;
@@ -202,6 +213,7 @@ int main() {
 	//int top = 0;
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2];
+	cmds = 0;
 	while(1) {
 		scanf("%s", cmd);
 		eval(&dataStack, &loopStack, list, cmd);

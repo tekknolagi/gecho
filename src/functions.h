@@ -241,7 +241,7 @@ int lookup(mode *list, char *mode) {
 int is_enabled(mode *list, char *mode) {
 	a = lookup(list, mode);
 	if (a < 0) {
-		error("is_enabled error: no such mode!");
+		printf("error: is_enabled error: %s -  no such mode!", mode);
 		return 0;
 	}
 	return list[lookup(list, mode)].enabled; 

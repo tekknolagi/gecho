@@ -9,9 +9,6 @@
 #define DIM2 30
 #define RES_SIZE 100000
 #define VAR_SIZE 100
-#define MODETOP 2
-#define PKGNAME "gecho"
-#define VERSION 0.2
 
 #if defined _WIN32 || defined _WIN64
 #define OPSYS "Windows"
