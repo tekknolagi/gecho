@@ -61,6 +61,7 @@ That's stack theory.
 3. FILE READ THEN SHELL
     * run `gecho <filename> --shell` (or `./gecho <filename> --shell`)
 
+###### Whitespace does not matter!
 
 # Commands
 

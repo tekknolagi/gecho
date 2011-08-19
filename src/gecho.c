@@ -221,6 +221,10 @@ int main(int argc, char *argv[]) {
 	char cmd[DIM2] = "00";
 	cmds = 0;
 	if (argc > 1) {
+		if (str_in_arr(argc, argv, "-v") || str_in_arr(argc, argv, "--version")) {
+			printf("%s %.1f on %s\n", PKGNAME, VERSION, OPSYS);
+			exit(1);
+		}
 		fp = fopen(argv[1], "r");
 		if (fp != NULL) {
 			while (strcmp(cmd, "end")) {
