@@ -2,7 +2,7 @@ gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
 # Install
 
-Two Options...
+Four Options...
 
 FIRST
 
@@ -19,7 +19,7 @@ SECOND
 THIRD
 
 1. `sudo make asm CC=<compiler of choice>`
-    * Translates to assembly and then assembles it. Compiler defaults to `cc`.
+    * Compiles into assembly and then assembles it. Compiler defaults to `cc`.
 
 FOURTH
 
