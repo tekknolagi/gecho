@@ -222,12 +222,18 @@ int main(int argc, char *argv[]) {
 	cmds = 0;
 	if (argc > 1) {
 		fp = fopen(argv[1], "r");
-		while (strcmp(cmd, "end")) {
-			fscanf(fp, "%s", cmd);
-			eval(&dataStack, &loopStack, list, cmd);
+		if (fp != NULL) {
+			while (strcmp(cmd, "end")) {
+				fscanf(fp, "%s", cmd);
+				eval(&dataStack, &loopStack, list, cmd);
+			}
+			fclose(fp);
+			if (!str_in_arr(argc, argv, "--shell")) {
+				exit(1);
+			}
 		}
-		fclose(fp);
-		if (str_in_arr(argc, argv, "-q")) {
+		else {
+			printf("error: %s - no such file!\n", argv[1]);
 			exit(1);
 		}
 	}
