@@ -52,9 +52,9 @@ The number gets returned as a result of popping it.
 
 Operands can pop numbers from the stack and interact with them. For example,
 
-`1 2 +`
+`.. 1 2 +`
 
-would push `1`, then push `2`, then pop them both and add them. It will then push the result onto the stack. The stack now looks like this:
+would clear the stack, push `1`, then push `2`, then pop them both and add them. It will then push the result onto the stack. The stack now looks like this:
 
 `[ 3 ]`
 
@@ -104,9 +104,9 @@ That's stack theory.
 13. `**`
     * Pops all the elements from the stack and multiplies them; pushes result.
 14.
-    * `!<varnum>`
+    1. `!<varnum>`
         * Pop element from stack; set `variables[<varnum>]` to popped value.
-    * `&<varnum>`
+    2. `&<varnum>`
         * Push `variables[<varnum>]` to the stack.
 15. `wover`
     * a = pop(); b = pop(); push(b); push(a); push(b);
