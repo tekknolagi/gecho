@@ -8,23 +8,23 @@ FIRST
 
 1. `make CC=<compiler of choice>`
     * You can use whatever C compiler you want, defaults to `cc`
-2. `sudo make install`
-    * Moves it to `/usr/bin/`
+2. `sudo make install`.
+    * Moves it to `/usr/bin/`.
 
 SECOND
 
-1. `sudo make go`
-    * Just makes and cleans up and moves it to `/usr/bin/` for you. Assumes `cc` is installed.
+1. `sudo make go CC=<compiler of choice>`
+    * Just makes and cleans up and moves it to `/usr/bin/` for you. Compiler defaults to `cc`.
 
 THIRD
 
-1. `sudo make asm`
-    * Translates to assembly and then assembles it.
+1. `sudo make asm CC=<compiler of choice>`
+    * Translates to assembly and then assembles it. Compiler defaults to `cc`.
 
 FOURTH
 
-1. `sudo make go-asm`
-   * Compiles into assembler then installs it in `/usr/bin/`
+1. `sudo make go-asm CC=<compiler of choice>`
+   * Compiles into assembler then installs it in `/usr/bin/`. Compiler defaults to `cc`.
 
 # Stack Theory
 
