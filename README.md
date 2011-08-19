@@ -103,11 +103,10 @@ That's stack theory.
     * Pushes `<num>` to the stack.
 13. `**`
     * Pops all the elements from the stack and multiplies them; pushes result.
-14.
-    - `!<varnum>`
-        * Pop element from stack; set `variables[<varnum>]` to popped value.
-    - `&<varnum>`
-        * Push `variables[<varnum>]` to the stack.
+14. `!<varnum>`
+    * Pop element from stack; set `variables[<varnum>]` to popped value.
+15. `&<varnum>`
+    * Push `variables[<varnum>]` to the stack.
 15. `wover`
     * a = pop(); b = pop(); push(b); push(a); push(b);
     * ( a1 a2 -- a1 a2 a1)
