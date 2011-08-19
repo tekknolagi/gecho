@@ -50,6 +50,18 @@ would push `1`, then push `2`, then pop them both and add them. It will then pus
 
 That's stack theory.
 
+# The Interpreter
+
+SHELL
+    * just run `gecho` (or `./gecho`)
+
+FILE READ
+	* run `gecho <filename>` (or `./gecho <filename>`)
+
+FILE READ THEN SHELL
+    * run `gecho <filename> --shell` (or `./gecho <filename> --shell`)
+
+
 # Commands
 
 1. `+`
