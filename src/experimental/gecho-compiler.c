@@ -1,11 +1,11 @@
 double a, b, c, ind, con;
 #define MODETOP 3
 #define PKGNAME "gecho"
-#define VERSION 0.3
+#define VERSION 0.2
 #include "functions.h"
 int cmds;
 //This is the eval function.
-int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
+int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], FILE *fp) {
 	//Holds an error message.
 	char msg[30];
 	//printf("cmd: %s\n", cmd);
@@ -155,7 +155,7 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			if (loopStack->index <= loopStack->control) {
 				for (c = 0; c < loopStack->bufsize; c++) {
 					//printf("%s\n", loopStack->buffer[c]);
-					eval(dataStack, loopStack, list, loopStack->buffer[(int) c]);
+					eval(dataStack, loopStack, list, loopStack->buffer[(int) c], fp);
 				}
 			}
 			else {
@@ -198,7 +198,10 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 
 //REPL
 int main(int argc, char *argv[]) {
+	printf("%s %.1f on %s\n\n", PKGNAME, VERSION, OPSYS);
+
 	FILE *fp;
+	FILE *toc;
 
 	//Initializing dataStack
 	stackT dataStack;
@@ -220,27 +223,13 @@ int main(int argc, char *argv[]) {
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2] = "00";
 	cmds = 0;
-	if (argc > 1) {
-		fp = fopen(argv[1], "r");
-		while (strcmp(cmd, "end")) {
-			fscanf(fp, "%s", cmd);
-			eval(&dataStack, &loopStack, list, cmd);
-		}
-		fclose(fp);
-		if (str_in_arr(argc, argv, "-q")) {
-			exit(1);
-		}
+	fp = fopen(argv[1], "r");
+	toc = fopen(argv[2], "w+");
+	fprintf(toc, "#include \"header.h\"");
+	while (strcmp(cmd, "end")) {
+		fscanf(fp, "%s", cmd);
+		eval(&dataStack, &loopStack, list, cmd, toc);
 	}
-
-	printf("%s %.1f on %s\n\n", PKGNAME, VERSION, OPSYS);
-
-
-	while(1) {
-		scanf("%s", cmd);
-		if (!strcmp(cmd, "quit") || !strcmp(cmd, "exit")) {
-			printf("\nbye\n");
-			break;
-		}
-		eval(&dataStack, &loopStack, list, cmd);
-	}
+	fclose(fp);
+	fclose(toc);
 }

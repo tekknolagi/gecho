@@ -98,8 +98,8 @@ That's stack theory.
     * Pop all elements of stack and prints ASCII characters that correspond to decimal.
 20. `/`
     * Pop top two elements from stack; divide lower element by upper element.
-21. `@`
-    * Ah, we have modes now. Modes are announced with `@`. `@<mode>` toggles `<mode>`.
+21. `@<mode>`
+    * Toggles `<mode>`.
 22. `mode`
     * Prints a list of all enabled modes.
 23. `modes`

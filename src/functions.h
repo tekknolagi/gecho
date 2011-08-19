@@ -1,5 +1,13 @@
 #include "stack.h"
 
+int str_in_arr(int argc, char *argv[], char *match) {
+	int i;
+	for (i = 0; i < argc; i++)
+		if (!strcmp(match, argv[i]))
+			return 1;
+	return 0;
+}
+
 //Easier error management.
 void error(char* msg) {
 	printf("error: %s\n", msg);
