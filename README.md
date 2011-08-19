@@ -52,13 +52,13 @@ That's stack theory.
 
 # The Interpreter
 
-SHELL
+1. SHELL
     * just run `gecho` (or `./gecho`)
 
-FILE READ
+2. FILE READ
 	* run `gecho <filename>` (or `./gecho <filename>`)
 
-FILE READ THEN SHELL
+3. FILE READ THEN SHELL
     * run `gecho <filename> --shell` (or `./gecho <filename> --shell`)
 
 
