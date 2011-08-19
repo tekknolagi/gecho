@@ -5,12 +5,6 @@ typedef enum {
   false, true
 } bool;
 
-//Not currently implemented, but used for variable tables.
-typedef struct {
-  const char *key;
-  int value;
-} variable;
-
 //Has an index, control, and can hold all the commands passed inside a loop.
 typedef struct {
   int index;
@@ -22,6 +16,6 @@ typedef struct {
 
 //Mode string and an enabled flag. This language makes good use of a modes table.
 typedef struct {
-  char mode[30];
+  char mode[DIM2];
   bool enabled;
 } mode;

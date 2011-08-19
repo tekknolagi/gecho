@@ -1,14 +1,17 @@
 double a, b, c, ind, con;
+int var_index;
 #define MODETOP 3
 #define PKGNAME "gecho"
 #define VERSION 0.3
 #include "functions.h"
 int cmds;
+int top;
+double variables[RES_SIZE];
+
 //This is the eval function.
-int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
+	int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
 	//Holds an error message.
 	char msg[30];
-	//printf("cmd: %s\n", cmd);
 	//Checks if the first digit is a number, and if so, pushes it.
 	if ((cmd[0] == '-') && (((cmd[1] >= '0') && (cmd[1] <= '9')) || cmd[1] == '.')) {
 		StackPush(dataStack, atof(cmd));
@@ -28,6 +31,23 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			if (a) {
 				printf("--%s %s--\n", cmd, is_enabled(list, cmd)?"ON":"OFF");
 			}
+		}
+		
+		else if ((cmd[0] == '!') && (strlen(cmd) > 1)) {
+			var_index = atoi(cmd+1);
+			printf("ind: %d\n", var_index);
+			if (dataStack->top >= 0) {
+				variables[var_index] = StackPop(dataStack);
+			}
+			else {
+				error("stack is empty!");
+			}
+		}
+
+		else if ((cmd[0] == '&') && (strlen(cmd) > 1)) {
+			var_index = atoi(cmd+1);
+			printf("ind: %d\n", var_index);
+			StackPush(dataStack, variables[var_index]);
 		}
 
 		//If the user wants to see the modes enabled.
@@ -218,8 +238,6 @@ int main(int argc, char *argv[]) {
 	loopStack.bufsize = 0;
 	loopStack.save = false;
 	//Variables. Will implement with a & prefix to access and a ! prefix to store.
-	//TableInit();
-	//int top = 0;
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2] = "00";
 	cmds = 0;
