@@ -10,7 +10,10 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 	char msg[30];
 	//printf("cmd: %s\n", cmd);
 	//Checks if the first digit is a number, and if so, pushes it.
-	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
+	if ((cmd[0] == '-') && ((cmd[1] >= '0') && (cmd[1] <= '9'))) {
+		StackPush(dataStack, atof(cmd));
+	}
+	else if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
 		StackPush(dataStack, atof(cmd));
 	}
 	else {
