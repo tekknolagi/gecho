@@ -18,7 +18,7 @@ SECOND
 
 # Stack Theory
 
-Think of a stack of books. It starts of empty.
+Think of a stack of books. It starts off empty.
 
 `[ ]`
 
