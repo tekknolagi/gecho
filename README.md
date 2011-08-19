@@ -16,6 +16,16 @@ SECOND
 1. `sudo make go`
     * Just makes and cleans up and moves it to `/usr/bin/` for you. Assumes `cc` is installed.
 
+THIRD
+
+1. `sudo make asm`
+    * Translates to assembly and then assembles it.
+
+FOURTH
+
+1. `sudo make go-asm`
+   * Compiles into assembler then installs it in `/usr/bin/`
+
 # Stack Theory
 
 Think of a stack of books. It starts off empty.
@@ -56,10 +66,12 @@ That's stack theory.
     * just run `gecho` (or `./gecho`)
 
 2. FILE READ
-	* run `gecho <filename>` (or `./gecho <filename>`)
+    * run `gecho <filename>` (or `./gecho <filename>`)
+    * MUST have `END` at end of file!
 
 3. FILE READ THEN SHELL
     * run `gecho <filename> --shell` (or `./gecho <filename> --shell`)
+    * MUST have `END` at end of file!
 
 #### Whitespace does not matter!
 
