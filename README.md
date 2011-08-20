@@ -18,13 +18,8 @@ SECOND
 
 THIRD
 
-1. `sudo make asm CC=<compiler of choice>`
-    * Compiles into assembly and then assembles it. Compiler defaults to `cc`.
-
-FOURTH
-
-1. `sudo make go-asm CC=<compiler of choice>`
-   * Compiles into assembler then installs it in `/usr/bin/`. Compiler defaults to `cc`.
+1. `sudo make do-all CC=<compiler of choice>`
+    * Compiles and installs both interpreter and compiler. Compiler defaults to `cc`.
 
 # Stack Theory
 
@@ -72,6 +67,11 @@ That's stack theory.
 3. FILE READ THEN SHELL
     * run `gecho <filename> --shell` (or `./gecho <filename> --shell`)
     * MUST have `END` at end of file!
+
+4. COMPILE GECHO
+    * run `gechoc <filename>`
+    * run `<compiler of choice> <filename> -o <filename>`
+    * run `<filename>`
 
 #### Whitespace does not matter!
 
