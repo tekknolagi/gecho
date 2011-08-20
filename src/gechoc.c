@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
 	//Variables. Will implement with a & prefix to access and a ! prefix to store.
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2] = "00";
-	char filepath[50];
+	char filepath[100];
 	cmds = 0;
 	if (argc > 1) {
 		if (str_in_arr(argc, argv, "-v") || str_in_arr(argc, argv, "--version")) {
@@ -228,7 +228,7 @@ int main(int argc, char *argv[]) {
 		fp = fopen(argv[1], "r");
 		sprintf(filepath, "%s.c", argv[1]);
 		toc = fopen(filepath, "w+");
-		fprintf(toc, "#include <header.h>\n");
+		fprintf(toc, "#include <gecho/header.h>\n");
 		if (fp != NULL) {
 			while (strcmp(cmd, "end")) {
 				fscanf(fp, "%s", cmd);

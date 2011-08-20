@@ -19,7 +19,12 @@ go-asm:
 	rm -rf *.s
 gechoc:
 	$(CC) src/gechoc.c -o gechoc
-	cp src/*.h /usr/include/
+	-mkdir /usr/include/gecho/
+	cp src/*.h /usr/include/gecho/
 install-gechoc:
 	mv gechoc /usr/bin/
 	make clean
+do-all:
+	sudo make go
+	sudo make gechoc
+	sudo make install-gechoc
