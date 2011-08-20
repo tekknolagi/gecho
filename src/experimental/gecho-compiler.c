@@ -1,17 +1,23 @@
 double a, b, c, ind, con;
+int var_index;
 #define MODETOP 3
 #define PKGNAME "gecho"
-#define VERSION 0.2
+#define VERSION 0.3
 #include "functions.h"
 int cmds;
+int top;
+double variables[RES_SIZE];
+
 //This is the eval function.
-int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], FILE *fp) {
+	int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], FILE *toc) {
 	//Holds an error message.
 	char msg[30];
-	//printf("cmd: %s\n", cmd);
 	//Checks if the first digit is a number, and if so, pushes it.
-	if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
-		StackPush(dataStack, atof(cmd));
+	if ((cmd[0] == '-') && (((cmd[1] >= '0') && (cmd[1] <= '9')) || cmd[1] == '.')) {
+		fprintf(toc, "StackPush(dataStack, %f);\n", atof(cmd));
+	}
+	else if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
+		fprintf(toc, "StackPush(dataStack, %f);\n", atof(cmd));
 	}
 	else {
 		//Converts the command to all lowercase.
@@ -23,183 +29,175 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
 			a = toggle(list, lookup(list, cmd));
 			if (a) {
-				printf("--%s %s--\n", cmd, is_enabled(list, cmd)?"ON":"OFF");
+				fprintf(toc, "printf(\"--%s %s--\n\");\n", cmd, is_enabled(list,cmd)?"ON":"OFF");
+			}
+		}
+		
+		else if ((cmd[0] == '!') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
+			var_index = atoi(cmd+1);
+			//printf("ind: %d\n", var_index);
+			if (dataStack->top >= 0) {
+				variables[var_index] = StackPop(dataStack);
+			}
+			else {
+				fprintf(toc, "error(\"stack is empty!\")\n;");
 			}
 		}
 
-		//If the user wants to see the modes enabled.
-		else if (!strcmp(cmd, "mode")) {
-			for (a = 0; a < MODETOP; a++) {
-				if (list[(int) a].enabled) {
-					printf("%s   ", list[(int) a].mode);
-				}
-			}
-			printf("\n");
-		}
-
-		//If the user wants to see all the modes, complete with if they are enabled.
-		else if (!strcmp(cmd, "modes")) {
-			for (a = 0; a < MODETOP; a++) {
-				printf("%s:%d   ", list[(int) a].mode, is_enabled(list, list[(int) a].mode));
-			}
-			printf("\n");
+		else if ((cmd[0] == '&') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
+			var_index = atoi(cmd+1);
+			//printf("ind: %d\n", var_index);
+			fprintf(toc, "StackPush(dataStack, %f);\n", variables[var_index]);
 		}
 
 		else if (!strcmp(cmd, "+")) {
-			plus(dataStack);
+			fprintf(toc, "plus(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "++")) {
-			plusplus(dataStack);
+			fprintf(toc, "plusplus(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "**")) {
-			mulmul(dataStack);
+			fprintf(toc, "mulmul(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, ".")) {
-			showtop(dataStack);
+			fprintf(toc, "showtop(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "*")) {
-			mul(dataStack);
+			fprintf(toc, "mul(dataStack)\n");
 		}
 
 		else if (!strcmp(cmd, "..")) {
-			delstack(dataStack);
+			fprintf(toc, "delstack(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "show")) {
-			show(dataStack);
+			fprintf(toc, "show(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "-")) {
-			sub(dataStack);
+			fprintf(toc, "sub(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "swap")) {
-			swap(dataStack);
+			fprintf(toc, "swap(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "dup")) {
-			duplicate(dataStack, 0);
+			fprintf(toc, "duplicate(dataStack, 0);\n");
 		}
 
 		else if(!strcmp(cmd, "jump")) {
-			jump(dataStack);
+			fprintf(toc, "jump(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "range")) {
-			range(dataStack);
+			fprintf(toc, "range(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "drop") || !strcmp(cmd, "pop")) {
-			drop(dataStack, true);
+			fprintf(toc, "drop(dataStack, true);\n");
 		}
 
 		else if (!strcmp(cmd, "over")) {
-			duplicate(dataStack, 1);
+			fprintf(toc, "duplicate(dataStack, 1);\n");
 		}
 
 		else if (!strcmp(cmd, "wover")) {
-			duplicate(dataStack, 2);
+			fprintf(toc, "duplicate(dataStack, 2);\n");
 		}
 
 		else if (!strcmp(cmd, "top")) {
-			StackPush(dataStack, dataStack->top);
+			fprintf(toc, "StackPush(dataStack, dataStack->top);\n");
 		}
 
 		else if (!strcmp(cmd, "outascii")) {
-			outascii(dataStack);
+			fprintf(toc, "outascii(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "allascii")) {
-			allascii(dataStack);
+			fprintf(toc, "allascii(dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "/")) {
-			divide(dataStack);
+			fprintf(toc, "divide(dataStack);");
 		}
 
 		//Prints total commands. Used with @tracker
 		else if (!strcmp(cmd,"tot")) {
-			printf("tot: %d\n", cmds);
+			fprintf(toc, "printf(\"tot: %d\n\");\n", cmds);
 		}
 
 		//Resets number of commands. Used with @tracker
 		else if (!strcmp(cmd, "reset")) {
-			cmds = 0;
+			fprintf(toc, "cmds = 0;\n");
 		}
 
 		//Starting a loop. Interpreted as a word. Saves the index and control, starts saving words to evaluate later.
 		else if (!strcmp(cmd, "[")) {
 			if (dataStack->top < 1) {
-				error("not enough frames!");
+				fprintf(toc, "error(\"not enough frames!\");\n");
 			}
 			else {
-				loopStack->index = (int) StackPop(dataStack);
-				loopStack->control = (int) StackPop(dataStack) + 1;
+				fprintf(toc, "loopStack->index = (int) StackPop(dataStack);\nloopStack->control = (int) StackPop(dataStack) + 1;\n");
 			}
-			loopStack->save = true;
+			fprintf(toc, "loopStack->save = true;\n");
 		}
 
 		//Pushes the index to the dataStack.
 		else if (!strcmp(cmd, "i")) {
-			StackPush(dataStack, loopStack->index);
+			fprintf(toc, "StackPush(dataStack, loopStack->index);");
 		}
 
 		//Increments the index, iterates over the commands if the index < control, otherwise resets the loopStack, and stops saving words.
 		else if (strcmp(cmd, "]") == 0) {
-			loopStack->index += 1;
+			fprintf(toc, "loopStack->index += 1;\n");
 			//printf("ind %d\ncon %d\n", loopStack->index, loopStack->control);
 			if (loopStack->index <= loopStack->control) {
 				for (c = 0; c < loopStack->bufsize; c++) {
 					//printf("%s\n", loopStack->buffer[c]);
-					eval(dataStack, loopStack, list, loopStack->buffer[(int) c], fp);
+					eval(dataStack, loopStack, list, loopStack->buffer[(int) c], toc);
 				}
 			}
 			else {
-				loopStack->index = 0;
-				loopStack->control = 0;
-				memset(loopStack->buffer, '\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);
-				loopStack->bufsize = 0;
-				loopStack->save = false;
+				fprintf(toc, "loopStack->index = 0;\nloopStack->control = 0;\nmemset(loopStack->buffer, '\\0', sizeof(loopStack->buffer) * RES_SIZE * DIM2);\nloopStack->bufsize = 0;\nloopStack->save = false;\n");
 			}
 		}
 
 		//If the command is unrecognized and not a mode setting.
 		else {
 			if ((cmd[0] != '@') && strcmp(cmd, "end")) {
-				sprintf(msg, "%s - unknown command!", cmd);
-				error(msg);
+				fprintf(toc, "sprintf(msg, \"%s - unknown command!\");\n", cmd);
+				fprintf(toc, "error(msg);\n");
 			}
 		}
 
 		//If in a loop, saves words. LOOK OUT. EVALUATES THE WORDS IN AN ENDLESS RECURSION. SAVES/EVALUATES THEN ADDS IT TO THE BUFFER. FIX!
 		if (loopStack->save && strcmp(cmd, "[")) {
-			*loopStack->buffer[loopStack->bufsize++] = *cmd;
+			fprintf(toc, "*loopStack->buffer[loopStack->bufsize++] = *cmd;\n");
 		}
 	}
 
 	//If not setting the mode, do whatever it is the modes do at the end of the eval() process.
 	if (cmd[0] != '@') {
-		if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset")) {
-			printf("%s | ", cmd);
-			StackShow(dataStack);
+		if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset") && strcmp(cmd, "end")) {
+			fprintf(toc, "printf(\"%s | \");", cmd);
+			fprintf(toc, "StackShow(dataStack);\n");
 		}
 		if (is_enabled(list, "@tracker") && strcmp(cmd, "tot") && strcmp(cmd, "reset")) {
-			cmds++;
+			fprintf(toc, "cmds++;\n");
 		}
 		if (!is_enabled(list, "@tracker") && (cmds != 0)) {
-			cmds = 0;
+			fprintf(toc, "cmds = 0;\n");
 		}
 	}
 }
 
 //REPL
 int main(int argc, char *argv[]) {
-	printf("%s %.1f on %s\n\n", PKGNAME, VERSION, OPSYS);
-
 	FILE *fp;
 	FILE *toc;
 
@@ -218,18 +216,28 @@ int main(int argc, char *argv[]) {
 	loopStack.bufsize = 0;
 	loopStack.save = false;
 	//Variables. Will implement with a & prefix to access and a ! prefix to store.
-	//TableInit();
-	//int top = 0;
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2] = "00";
 	cmds = 0;
-	fp = fopen(argv[1], "r");
-	toc = fopen(argv[2], "w+");
-	fprintf(toc, "#include \"header.h\"");
-	while (strcmp(cmd, "end")) {
-		fscanf(fp, "%s", cmd);
-		eval(&dataStack, &loopStack, list, cmd, toc);
+	if (argc > 1) {
+		if (str_in_arr(argc, argv, "-v") || str_in_arr(argc, argv, "--version")) {
+			printf("%s %.1f on %s\n", PKGNAME, VERSION, OPSYS);
+			exit(1);
+		}
+		fp = fopen(argv[1], "r");
+		sprintf(argv[2], "%s.c", argv[1]);
+		toc = fopen(argv[2], "w+");
+		if (fp != NULL) {
+			while (strcmp(cmd, "end")) {
+				fscanf(fp, "%s", cmd);
+				eval(&dataStack, &loopStack, list, cmd, toc);
+			}
+			fclose(fp);
+			fclose(toc);
+		}
+		else {
+			printf("error: %s - no such file!\n", argv[1]);
+			exit(1);
+		}
 	}
-	fclose(fp);
-	fclose(toc);
 }
