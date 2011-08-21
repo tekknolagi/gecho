@@ -144,6 +144,8 @@ That's stack theory.
     * a = pop(); b = pop(); push(b^a);
 30. `mod`
     * a = pop(); b = pop(); push(b%a);
+31. `pi`
+    * Pushes a good approximation of pi to the stack.
 
 
 # Examples
@@ -182,6 +184,10 @@ That's stack theory.
 15. `1 2 / .` == `0.5`
 
 16. `@transparent` == shows stack after every command
+
+17. `45 tan .` == `1.00`
+
+18. `pi 2 * cos .` == `0.99` (truncated, not rounded)
 
 # Modes
 
