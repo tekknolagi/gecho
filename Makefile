@@ -1,5 +1,5 @@
 all:
-	$(CC) src/gecho.c -o gecho
+	$(CC) src/gecho.c -o gecho -lm
 clean:
 	-rm -f gecho *~ gechoc
 install:
@@ -10,7 +10,7 @@ go:
 	make
 	sudo make install
 asm:
-	$(CC) src/gecho.c -o gecho.s -S
+	$(CC) src/gecho.c -o gecho.s -S -lm
 	$(CC) gecho.s -o gecho
 go-asm:
 	sudo make asm CC=$(CC)
@@ -18,7 +18,7 @@ go-asm:
 	sudo make clean
 	rm -rf *.s
 gechoc:
-	$(CC) src/gechoc.c -o gechoc
+	$(CC) src/gechoc.c -o gechoc -lm
 	rm -rf /usr/include/gecho/
 	mkdir /usr/include/gecho/
 	cp src/*.h /usr/include/gecho/

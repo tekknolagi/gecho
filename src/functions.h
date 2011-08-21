@@ -265,3 +265,62 @@ int is_enabled(mode *list, char *mode) {
 	}
 	return list[lookup(list, mode)].enabled; 
 }
+
+void powers(stackT *dataStack) {
+	if (dataStack->top < 1) {
+		StackPush(dataStack, 1.0);
+		powers(dataStack);
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, pow(a, b));
+	}
+}
+
+void modulus(stackT *dataStack) {
+	if (dataStack->top  < 1) {
+		StackPush(dataStack, 1.0);
+		modulus(dataStack);
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, (int) a % (int)b);
+	}
+}
+
+double deg2rad(double degrees) {
+	return (M_PI/180)*degrees;
+}
+
+double rad2deg(double radians) {
+	return (180/M_PI)*radians;
+}
+
+void tangent(stackT *dataStack) {
+	if (dataStack->top < 0) {
+		error("stack is empty!");
+	}
+	else {
+		StackPush(dataStack, tan(deg2rad(StackPop(dataStack))));
+	}
+}
+
+void sine(stackT *dataStack) {
+	if (dataStack->top < 0) {
+		error("stack is empty!");
+	}
+	else {
+		StackPush(dataStack, sin(deg2rad(StackPop(dataStack))));
+	}
+}
+
+void cosine(stackT *dataStack) {
+	if (dataStack->top < 0) {
+		error("stack is empty!");
+	}
+	else {
+		StackPush(dataStack, cos(deg2rad(StackPop(dataStack))));
+	}
+}

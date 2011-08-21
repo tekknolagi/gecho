@@ -48,6 +48,30 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			}
 		}
 
+		else if (!strcmp(cmd, "pow")) {
+			powers(dataStack);
+		}
+
+		else if (!strcmp(cmd, "mod")) {
+			modulus(dataStack);
+		}
+
+		else if (!strcmp(cmd, "pi")) {
+			StackPush(dataStack, M_PI);
+		}
+
+		else if (!strcmp(cmd, "tan")) {
+			tangent(dataStack);
+		}
+
+		else if (!strcmp(cmd, "sin")) {
+			sine(dataStack);
+		}
+
+		else if (!strcmp(cmd, "cos")) {
+			cosine(dataStack);
+		}
+
 		else if ((cmd[0] == '&') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
 			var_index = atoi(cmd+1);
 			printf("ind: %d\n", var_index);

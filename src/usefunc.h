@@ -8,6 +8,11 @@
 #include <math.h>
 #include <stdlib.h>
 #include <float.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846264338327
+#endif
+
 #define DIM2 30
 #define RES_SIZE 100000
 #define VAR_SIZE 100
