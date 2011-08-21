@@ -2,7 +2,7 @@ double a, b, c, ind, con;
 int var_index;
 #define MODETOP 3
 #define PKGNAME "gecho"
-#define VERSION 0.3
+#define VERSION 0.4
 #include "functions.h"
 int cmds;
 int top;
@@ -13,10 +13,10 @@ double variables[RES_SIZE];
 	//Holds an error message.
 	char msg[30];
 	//Checks if the first digit is a number, and if so, pushes it.
-	if ((cmd[0] == '-') && (((cmd[1] >= '0') && (cmd[1] <= '9')) || cmd[1] == '.')) {
+	if ((cmd[0] == '-') && (isdigit(cmd[1]) || cmd[1] == '.')) {
 		fprintf(toc, "StackPush(&dataStack, %f);\n", atof(cmd));
 	}
-	else if ((cmd[0] >= '0') && (cmd[0] <= '9')) {
+	else if (isdigit(cmd[0])) {
 		fprintf(toc, "StackPush(&dataStack, %f);\n", atof(cmd));
 	}
 	else {
