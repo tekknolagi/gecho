@@ -14,6 +14,10 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 	//Holds an error message.
 	char msg[30];
 	//Checks if the first digit is a number, and if so, pushes it.	
+	if (dataStack->contents[dataStack->top] > DBL_MAX-10) {
+		error("number too big!");
+		exit(1);
+	}
 	if ((cmd[0] == '-') && (isdigit(cmd[1]) || cmd[1] == '.')) {
 		StackPush(dataStack, atof(cmd));
 	}

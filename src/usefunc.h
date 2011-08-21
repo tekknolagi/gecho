@@ -7,6 +7,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
+#include <float.h>
 #define DIM2 30
 #define RES_SIZE 100000
 #define VAR_SIZE 100

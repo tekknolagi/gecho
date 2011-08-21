@@ -64,6 +64,7 @@ void mul(stackT *dataStack) {
 		b = StackPop(dataStack);
 		a = StackPop(dataStack);
 		StackPush(dataStack, a*b);
+		printf("%.0f * %.0f\n", a, b);
 	}
 }
 
