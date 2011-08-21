@@ -1,6 +1,6 @@
 #include "stack.h"
 
-int str_in_arr(int argc, char *argv[], char *match) {
+bool str_in_arr(int argc, char *argv[], char *match) {
 	int i;
 	for (i = 0; i < argc; i++)
 		if (!strcmp(match, argv[i]))
@@ -219,7 +219,7 @@ void divide(stackT *dataStack) {
 	else {
 		b = StackPop(dataStack);
 		a = StackPop(dataStack);
-		StackPush(dataStack, (double) a/b);
+		StackPush(dataStack, a/b);
 	}
 }
 

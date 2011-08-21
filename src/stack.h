@@ -5,7 +5,6 @@ typedef struct {
 	double *contents;
 	int maxSize;
 	int top;
-	char *mode;
 } stackT;
 
 //Initializes the stack, checking for enough memory.
@@ -63,7 +62,7 @@ void StackShow(stackT *stackP) {
 		printf("[ ]\n");
 	}
 	else if (stackP->top == 0) {
-		printf("[ %d ]\n", (int) stackP->contents[0]);
+		printf("[ %.0f ]\n", stackP->contents[0]);
 	}
 	else if (stackP->top > 0) {
 		int i;
