@@ -8,6 +8,16 @@ bool str_in_arr(int argc, char *argv[], char *match) {
 	return 0;
 }
 
+bool char_in_arr(char tosearch, char arr[]) {
+	int i = 0;
+	for(; i < strlen(arr); i++) {
+		if (arr[i] == tosearch) {
+			return true;
+		}
+	}
+	return false;
+}
+
 //Easier error management.
 void error(char* msg) {
 	printf("error: %s\n", msg);

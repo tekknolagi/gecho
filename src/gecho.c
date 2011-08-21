@@ -7,16 +7,17 @@ int var_index;
 int cmds;
 int top;
 double variables[RES_SIZE];
+//bool incomment;
 
 //This is the eval function.
-	int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
+int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
 	//Holds an error message.
 	char msg[30];
-	//Checks if the first digit is a number, and if so, pushes it.
+	//Checks if the first digit is a number, and if so, pushes it.	
 	if ((cmd[0] == '-') && (isdigit(cmd[1]) || cmd[1] == '.')) {
 		StackPush(dataStack, atof(cmd));
 	}
-	else if (isdigit(cmd[0])) {
+	else if (isdigit(cmd[0]) /*|| cmd[0] == '.'*/) {
 		StackPush(dataStack, atof(cmd));
 	}
 	else {
@@ -24,7 +25,6 @@ double variables[RES_SIZE];
 		for(c = 0; c < strlen(cmd); c++) {
 			cmd[(int) c] = tolower(cmd[(int) c]);
 		}
-
 		//If it's a mode change...toggle it.
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
 			a = toggle(list, lookup(list, cmd));
@@ -222,6 +222,8 @@ double variables[RES_SIZE];
 //REPL
 int main(int argc, char *argv[]) {
 	FILE *fp;
+
+	//incomment = 0;
 
 	//Initializing dataStack
 	stackT dataStack;

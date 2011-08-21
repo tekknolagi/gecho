@@ -67,7 +67,7 @@ double variables[RES_SIZE];
 		}
 
 		else if (!strcmp(cmd, "*")) {
-			fprintf(toc, "mul(&dataStack)\n");
+			fprintf(toc, "mul(&dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "..")) {
