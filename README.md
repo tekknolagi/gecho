@@ -134,6 +134,16 @@ That's stack theory.
     * For use with `@tracker`. Prints number of commands so far. Does not count as a command.
 25. `reset`
     * Resets the command count. For use with `@tracker`. Does not count as a command.
+26. `tan`
+    * Pops one element from the stack (degrees!) computes `tan(x)`
+27. `sin`
+    * Pops one element from the stack and computes `sin(x)`
+28. `cos`
+    * Pops one element from the stack and computes `cos(x)`
+29. `pow`
+    * a = pop(); b = pop(); push(b^a);
+30. `mod`
+    * a = pop(); b = pop(); push(b%a);
 
 
 # Examples
