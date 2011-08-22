@@ -2,9 +2,13 @@ gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
 # Install
 
+/*
 PRECURSOR
 
 1. Install libgmp. Doesn't matter how, just do it properly.
+*/
+
+Not yet. GMP coming soon!
 
 Four Options...
 
@@ -74,7 +78,7 @@ That's stack theory.
 
 4. COMPILE GECHO
     * run `gechoc <filename>`
-    * run `<compiler of choice> <filename> -o <filename>`
+    * run `<compiler of choice> <filename> -o <filename> -lm`
     * run `<filename>`
 
 #### Whitespace does not matter!
@@ -146,6 +150,8 @@ That's stack theory.
     * a = pop(); b = pop(); push(b%a);
 31. `pi`
     * Pushes a good approximation of pi to the stack.
+32. `read`
+    * Reads user input. Only really useful with file reading/compiling. Pops one element from the stack and reads that number of numbers, and pushes them to the stack. 
 
 
 # Examples
@@ -188,6 +194,8 @@ That's stack theory.
 17. `45 tan .` == `1.00`
 
 18. `pi 2 * cos .` == `0.99` (truncated, not rounded)
+
+19. `3 read` == reads 3 numbers and pops them to the stack
 
 # Modes
 

@@ -50,6 +50,34 @@ double variables[RES_SIZE];
 			fprintf(toc, "StackPush(&dataStack, %f);\n", variables[var_index]);
 		}
 
+                else if (!strcmp(cmd, "pow")) {
+                        fprintf(toc, "powers(&dataStack);\n");
+                }
+
+                else if (!strcmp(cmd, "mod")) {
+                        fprintf(toc, "modulus(&dataStack);");
+                }
+
+                else if (!strcmp(cmd, "pi")) {
+                        fprintf(toc, "StackPush(&dataStack, %f);\n", M_PI);
+                }
+
+                else if (!strcmp(cmd, "tan")) {
+                        fprintf(toc, "tangent(&dataStack);\n");
+                }
+
+                else if (!strcmp(cmd, "sin")) {
+                        fprintf(toc, "sine(&dataStack);\n");
+                }
+
+                else if (!strcmp(cmd, "cos")) {
+                        fprintf(toc, "cosine(&dataStack);\n");
+                }
+
+                else if (!strcmp(cmd, "read")) {
+                        fprintf(toc, "userin(&dataStack);\n");
+                }
+
 		else if (!strcmp(cmd, "+")) {
 			fprintf(toc, "plus(&dataStack);\n");
 		}

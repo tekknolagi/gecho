@@ -266,6 +266,14 @@ int is_enabled(mode *list, char *mode) {
 	return list[lookup(list, mode)].enabled; 
 }
 
+double dopow(double a, double b) {
+	int i;
+	for (i = 0; i < b; i++) {
+		a *= a;
+	}
+	return a;
+}
+
 void powers(stackT *dataStack) {
 	if (dataStack->top < 1) {
 		StackPush(dataStack, 1.0);
@@ -322,5 +330,22 @@ void cosine(stackT *dataStack) {
 	}
 	else {
 		StackPush(dataStack, cos(deg2rad(StackPop(dataStack))));
+	}
+}
+
+void userin(stackT *dataStack) {
+	char cmd[20];
+	if (dataStack->top < 0) {
+		StackPush(dataStack, (double) 1);
+		userin(dataStack);
+	}
+	else {
+		a = StackPop(dataStack);
+		while (a > 0) {
+			printf("%d: ", (int) a);
+			scanf("%s", cmd);
+			StackPush(dataStack, atof(cmd));
+			a--;
+		}
 	}
 }
