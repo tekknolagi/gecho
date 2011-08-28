@@ -29,7 +29,7 @@ double variables[RES_SIZE];
 		if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
 			a = toggle(list, lookup(list, cmd));
 			if (a) {
-				fprintf(toc, "printf(\"--%s %s--\n\");\n", cmd, is_enabled(list,cmd)?"ON":"OFF");
+				fprintf(toc, "printf(\"--%s %s--\\n\");\n", cmd, is_enabled(list,cmd)?"ON":"OFF");
 			}
 		}
 		
