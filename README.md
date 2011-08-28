@@ -10,7 +10,7 @@ PRECURSOR
 
 Not yet. GMP coming soon!
 
-Four Options...
+Three Options...
 
 FIRST
 
