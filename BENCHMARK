@@ -1,0 +1,11 @@
+2*2 took:
+	.005s in gecho, interpreted
+	.003s in gecho, compiled
+	.072s in Python
+	.002s in C
+
+10! took:
+	.005s in gecho, interpreted
+	.003s in gecho, compiled
+	.070s in Python
+	.002s in C
