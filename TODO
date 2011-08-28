@@ -5,3 +5,8 @@
   - Lookahead words...needed for function definitions
 	- { } braces
   - recursion
+  - if statement
+  - Mac building - separate makefile or modification
+  - C config!! :D #IFDEF and shit
+  - GMP bignum
+  - stop @transparent for .. and .
