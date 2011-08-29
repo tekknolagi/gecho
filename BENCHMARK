@@ -1,11 +1,9 @@
-2*2 took:
-	.005s in gecho, interpreted
-	.003s in gecho, compiled
-	.072s in Python
+20! took:
+	.009s in gecho, interpreted
+	.005s in gecho, compiled
+	.826s in Python
 	.002s in C
 
-10! took:
-	.005s in gecho, interpreted
-	.003s in gecho, compiled
-	.070s in Python
-	.002s in C
+MEANING:
+		Interpreted: 92x faster than Python
+		Compiled: 165x faster than Python (interpreted)

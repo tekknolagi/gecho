@@ -1,3 +1,5 @@
+WARNING: `float` is imprecise, and shortly I will be moving everything over to bignum. Large numbers will come out incorrect! (ex. 170 factorial)
+
 gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
 # Install
@@ -9,6 +11,16 @@ PRECURSOR
 */
 
 Not yet. GMP coming soon!
+
+IF ON A MAC
+
+1. `./configure`
+   * Creates Makefile
+2. `sudo make do-all`
+   * Installs in /usr/bin/
+OR
+2. `sudo make CC=<compiler of choice>`
+    * Just compiles.
 
 Three Options...
 
