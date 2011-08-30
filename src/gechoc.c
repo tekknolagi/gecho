@@ -79,23 +79,23 @@ double variables[RES_SIZE];
                 }
 
 		else if (!strcmp(cmd, ">")) {
-			gt(dataStack);
+			fprintf(toc, "gt(&dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "<")) {
-			lt(dataStack);
+			fprintf(toc, "lt(&dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "=")) {
-			eqeq(dataStack);
+			fprintf(toc, "eqeq(&dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "<=")) {
-			lteq(dataStack);
+			fprintf(toc, "lteq(&dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, ">=")) {
-			gteq(dataStack);
+			fprintf(toc, "gteq(&dataStack);\n");
 		}
 
 		else if (!strcmp(cmd, "+")) {
