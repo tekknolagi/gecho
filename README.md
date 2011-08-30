@@ -14,12 +14,13 @@ Not yet. GMP coming soon!
 
 IF ON A MAC
 
-1. `./configure`
-   * Creates Makefile
-2. `sudo make do-all`
-   * Installs in /usr/bin/
+1. edit the Makefile (in `install` and `install-gechoc`
+    * change the locations to `/usr/bin/gecho-mac` and `/usr/bin/gechoc-mac` 
+2. compile with `sudo make do-all CC=<compiler of choice>`
+    * Done!
+
 OR
-2. `sudo make CC=<compiler of choice>`
+`sudo make CC=<compiler of choice>`
     * Just compiles.
 
 Three Options...
@@ -33,12 +34,12 @@ FIRST
 
 SECOND
 
-1. `sudo make go CC=<compiler of choice>`
+`sudo make go CC=<compiler of choice>`
     * Just makes and cleans up and moves it to `/usr/bin/` for you. Compiler defaults to `cc`.
 
 THIRD
 
-1. `sudo make do-all CC=<compiler of choice>`
+`sudo make do-all CC=<compiler of choice>`
     * Compiles and installs both interpreter and compiler. Compiler defaults to `cc`.
 
 # Stack Theory
