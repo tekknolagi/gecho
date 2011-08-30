@@ -164,6 +164,16 @@ That's stack theory.
     * Pushes a good approximation of pi to the stack.
 32. `read`
     * Reads user input. Only really useful with file reading/compiling. Pops one element from the stack and reads that number of numbers, and pushes them to the stack. 
+33. `<`
+    * b = pop(); a = pop(); push(`a < b`);
+34. `>`
+    * `a > b`
+35. `>=`
+    * `a >= b`
+36. `<=`
+    * `a <= b`
+37. `=`
+    * `a == b`
 
 
 # Examples

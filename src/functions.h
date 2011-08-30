@@ -349,3 +349,58 @@ void userin(stackT *dataStack) {
 		}
 	}
 }
+
+void gt(stackT *dataStack) {
+	if (dataStack->top < 1) {
+		error("nor enough frames!");
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, (double) a>b);
+	}
+}
+
+void lt(stackT *dataStack) {
+	if (dataStack->top < 1) {
+		error("not enough frames!");
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, (double) a<b);
+	}
+}
+
+void eqeq(stackT *dataStack) {
+	if (dataStack->top < 1) {
+		error("not enough frames!");
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, (double) a==b);
+	}
+}
+
+void gteq(stackT *dataStack) {
+	if (dataStack->top < 1) {
+		error("not enough frames!");
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, (double) a>=b);
+	}
+}
+
+void lteq(stackT *dataStack) {
+	if (dataStack->top < 1) {
+		error("not enough frames!");
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, (double) a<=b);
+	}
+}

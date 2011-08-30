@@ -17,9 +17,9 @@
 #define RES_SIZE 100000
 #define VAR_SIZE 100
 
-#if defined _WIN32 || defined _WIN64
-#define OPSYS "Windows"
-#endif
+//#if defined _WIN32 || defined _WIN64
+//#define OPSYS "Windows"
+//#endif
 
 #ifdef __unix__
 #define OPSYS "Unix"

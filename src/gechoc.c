@@ -2,7 +2,7 @@ double a, b, c, ind, con;
 int var_index;
 #define MODETOP 3
 #define PKGNAME "gecho"
-#define VERSION 0.4
+#define VERSION 0.5
 #include "functions.h"
 int cmds;
 int top;
@@ -16,7 +16,7 @@ double variables[RES_SIZE];
 	if ((cmd[0] == '-') && (isdigit(cmd[1]) || cmd[1] == '.')) {
 		fprintf(toc, "StackPush(&dataStack, %f);\n", atof(cmd));
 	}
-	else if (isdigit(cmd[0])) {
+	else if (isdigit(cmd[0]) || ((cmd[0] == '.') && isdigit(cmd[1]))) {
 		fprintf(toc, "StackPush(&dataStack, %f);\n", atof(cmd));
 	}
 	else {
@@ -77,6 +77,26 @@ double variables[RES_SIZE];
                 else if (!strcmp(cmd, "read")) {
                         fprintf(toc, "userin(&dataStack);\n");
                 }
+
+		else if (!strcmp(cmd, ">")) {
+			gt(dataStack);
+		}
+
+		else if (!strcmp(cmd, "<")) {
+			lt(dataStack);
+		}
+
+		else if (!strcmp(cmd, "=")) {
+			eqeq(dataStack);
+		}
+
+		else if (!strcmp(cmd, "<=")) {
+			lteq(dataStack);
+		}
+
+		else if (!strcmp(cmd, ">=")) {
+			gteq(dataStack);
+		}
 
 		else if (!strcmp(cmd, "+")) {
 			fprintf(toc, "plus(&dataStack);\n");
