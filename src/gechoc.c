@@ -231,7 +231,7 @@ double variables[RES_SIZE];
 
 	//If not setting the mode, do whatever it is the modes do at the end of the eval() process.
 	if (cmd[0] != '@') {
-		if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset") && strcmp(cmd, "end")) {
+		if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset") && strcmp(cmd, "end") && strcmp(cmd, ".") && strcmp(cmd, "..")) {
 			fprintf(toc, "printf(\"%s | \");", cmd);
 			fprintf(toc, "StackShow(&dataStack);\n");
 		}
