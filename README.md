@@ -78,6 +78,8 @@ That's stack theory.
 
 # The Interpreter
 
+####If on a Mac, just replace `gecho` with `gecho-mac` and `gechoc` with `gechoc-mac`
+
 1. SHELL
     * just run `gecho` (or `./gecho`)
 
