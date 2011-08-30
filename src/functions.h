@@ -25,7 +25,7 @@ void error(char* msg) {
 
 //Easier return management.
 void ret(double msg) {
-	printf(">  %.2f\n", msg);
+	printf("%.2f\n", msg);
 }
 
 //Adds two numbers. If only one is on the stack, adds 0 to it.
@@ -117,7 +117,7 @@ void delstack(stackT *dataStack) {
 
 //Pretty-prints the stack.
 void show(stackT *dataStack) {
-	printf(">  ");
+	printf("");
 	StackShow(dataStack);
 }
 
@@ -203,7 +203,7 @@ void outascii(stackT *dataStack) {
 		error("not enough frames!");
 	}
 	else {
-		printf(">  %c\n", (unsigned char) StackPop(dataStack));
+		printf("%c\n", (unsigned char) StackPop(dataStack));
 	}
 }
 
@@ -213,7 +213,7 @@ void allascii(stackT *dataStack) {
 		error("not enough frames!");
 	}
 	else {
-		printf(">  ");
+		printf("");
 		for (a = 0; a < dataStack->top+1; a++) {
 			printf("%c", (unsigned char) dataStack->contents[(int) a]);
 		}
