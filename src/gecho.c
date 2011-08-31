@@ -1,7 +1,5 @@
 double a, b, c, ind, con;
 int var_index;
-#define MODETOP 3
-#define CONSTOP 5
 #define PKGNAME "gecho"
 #define VERSION 0.5
 #include "functions.h"
@@ -34,9 +32,13 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 		}
 
 		else if (cmd[0] == '#') {
-			printf("cmd+1: %s\n", cmd+1);
-			if (c_lookup(cons, cmd) != -1) {
-				StackPush(dataStack, cons[c_lookup(cons, cmd)].value);
+			if (strlen(cmd) > 1) {
+				if (c_lookup(cons, cmd) != -1) {
+					StackPush(dataStack, cons[c_lookup(cons, cmd)].value);
+				}
+			}
+			else {
+				error("not enough frames!");
 			}
 		}
 
@@ -50,7 +52,6 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 		
 		else if ((cmd[0] == '!') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
 			var_index = atoi(cmd+1);
-			printf("ind: %d\n", var_index);
 			if (dataStack->top >= 0) {
 				variables[var_index] = StackPop(dataStack);
 			}
@@ -152,7 +153,7 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 		}
 
 		else if (!strcmp(cmd, "show")) {
-			show(dataStack);
+			StackShowVert(dataStack);
 		}
 
 		else if (!strcmp(cmd, "-")) {

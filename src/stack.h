@@ -73,3 +73,20 @@ void StackShow(stackT *stackP) {
 		printf("%.0f ]\n", stackP->contents[stackP->top]);
 	}
 }
+
+void StackShowVert(stackT *stackP) {
+	if (stackP->top == -1) {
+		printf("-top-\n-end-\n");
+	}
+	else if (stackP->top == 0) {
+		printf("-top-\n%.0f\n-end-\n", stackP->contents[0]);
+	}
+	else if (stackP->top > 0) {
+		int i;
+		printf("-top-\n");
+		for (i = stackP->top; i >= 0; i--) {
+			printf("%.0f\n", stackP->contents[i]);
+		}
+		printf("-end-\n");
+	}
+}

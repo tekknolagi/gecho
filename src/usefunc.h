@@ -17,6 +17,9 @@
 #define RES_SIZE 100000
 #define VAR_SIZE 100
 
+#define MODETOP 3
+#define CONSTOP 5
+
 //#if defined _WIN32 || defined _WIN64
 //#define OPSYS "Windows"
 //#endif
