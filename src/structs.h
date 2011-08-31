@@ -19,3 +19,8 @@ typedef struct {
   char mode[DIM2];
   bool enabled;
 } mode;
+
+typedef struct {
+  char name[DIM2];
+  double value;
+} const_list;

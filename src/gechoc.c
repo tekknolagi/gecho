@@ -32,7 +32,6 @@ double variables[RES_SIZE];
 				fprintf(toc, "printf(\"--%s %s--\\n\");\n", cmd, is_enabled(list,cmd)?"ON":"OFF");
 			}
 		}
-		
 		else if ((cmd[0] == '!') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
 			var_index = atoi(cmd+1);
 			//printf("ind: %d\n", var_index);
@@ -261,6 +260,7 @@ int main(int argc, char *argv[]) {
 		{"@transparent", false},
 		{"@tracker", false},
 	};
+
 	loopStack.bufsize = 0;
 	loopStack.save = false;
 	//Variables. Will implement with a & prefix to access and a ! prefix to store.

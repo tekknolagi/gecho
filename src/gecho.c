@@ -1,6 +1,7 @@
 double a, b, c, ind, con;
 int var_index;
 #define MODETOP 3
+#define CONSTOP 5
 #define PKGNAME "gecho"
 #define VERSION 0.5
 #include "functions.h"
@@ -9,7 +10,7 @@ int top;
 double variables[RES_SIZE];
 
 //This is the eval function.
-int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]) {
+int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], const_list cons[CONSTOP]) {
 	//Holds an error message.
 	char msg[30];
 	//Checks if the first digit is a number, and if so, pushes it.	
@@ -31,6 +32,21 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 				printf("--%s %s--\n", cmd, is_enabled(list, cmd)?"ON":"OFF");
 			}
 		}
+
+		else if (cmd[0] == '#') {
+			printf("cmd+1: %s\n", cmd+1);
+			if (c_lookup(cons, cmd) != -1) {
+				StackPush(dataStack, cons[c_lookup(cons, cmd)].value);
+			}
+		}
+
+		else if (!strcmp(cmd, "and")) {
+			log_and(dataStack);
+		}
+
+		else if (!strcmp(cmd, "or")) {
+			log_or(dataStack);
+		}
 		
 		else if ((cmd[0] == '!') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
 			var_index = atoi(cmd+1);
@@ -49,10 +65,6 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 
 		else if (!strcmp(cmd, "mod")) {
 			modulus(dataStack);
-		}
-
-		else if (!strcmp(cmd, "pi")) {
-			StackPush(dataStack, M_PI);
 		}
 
 		else if (!strcmp(cmd, "tan")) {
@@ -225,7 +237,8 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			if (loopStack->index <= loopStack->control) {
 				for (c = 0; c < loopStack->bufsize; c++) {
 					//printf("%s\n", loopStack->buffer[c]);
-					eval(dataStack, loopStack, list, loopStack->buffer[(int) c]);
+					//FIX LAME EVAL
+					eval(dataStack, loopStack, list, loopStack->buffer[(int) c], cons);
 				}
 			}
 			else {
@@ -237,9 +250,9 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 			}
 		}
 
-		//If the command is unrecognized and not a mode setting.
+		//If the command is unrecognized and not a mode setting or constant.
 		else {
-			if ((cmd[0] != '@') && strcmp(cmd, "end")) {
+			if ((cmd[0] != '@') && strcmp(cmd, "end") && (cmd[0] != '#')) {
 				sprintf(msg, "%s - unknown command!", cmd);
 				error(msg);
 			}
@@ -285,6 +298,15 @@ int main(int argc, char *argv[]) {
 		{"@transparent", false},
 		{"@tracker", false},
 	};
+
+	 const_list cons[] = {
+                {"#t", 1},
+                {"#true", 1},
+                {"#f", 0},
+                {"#false", 0},
+		{"#pi", M_PI},
+        };
+
 	loopStack.bufsize = 0;
 	loopStack.save = false;
 	//Variables. Will implement with a & prefix to access and a ! prefix to store.
@@ -300,7 +322,7 @@ int main(int argc, char *argv[]) {
 		if (fp != NULL) {
 			while (strcmp(cmd, "end")) {
 				fscanf(fp, "%s", cmd);
-				eval(&dataStack, &loopStack, list, cmd);
+				eval(&dataStack, &loopStack, list, cmd, cons);
 			}
 			fclose(fp);
 			if (!str_in_arr(argc, argv, "--shell")) {
@@ -322,6 +344,6 @@ int main(int argc, char *argv[]) {
 			printf("\nbye\n");
 			break;
 		}
-		eval(&dataStack, &loopStack, list, cmd);
+		eval(&dataStack, &loopStack, list, cmd, cons);
 	}
 }

@@ -256,6 +256,15 @@ int lookup(mode *list, char *mode) {
 	return -1;
 }
 
+int c_lookup(const_list *list, char *const_name) {
+	for (a = 0; a < CONSTOP; a++) {
+		if (!strcmp(list[ (int) a].name, const_name)) {
+			return (int) a;
+		}
+	}
+	return -1;
+}
+
 //Checks whether a mode is enabled or not.
 int is_enabled(mode *list, char *mode) {
 	a = lookup(list, mode);
@@ -402,5 +411,27 @@ void lteq(stackT *dataStack) {
 		b = StackPop(dataStack);
 		a = StackPop(dataStack);
 		StackPush(dataStack, (double) a<=b);
+	}
+}
+
+void log_and(stackT *dataStack) {
+	if (dataStack->top < 1) {
+		error("not enough frames!");
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, a && b);
+	}
+}
+
+void log_or(stackT *dataStack) {
+	if (dataStack->top < 1) {
+		error("not enough frames!");
+	}
+	else {
+		b = StackPop(dataStack);
+		a = StackPop(dataStack);
+		StackPush(dataStack, a || b);
 	}
 }
