@@ -14,7 +14,7 @@ Not yet. GMP coming soon!
 
 IF ON A MAC
 
-1. edit the Makefile (in `install` and `install-gechoc`
+1. edit the Makefile (in `install` and `install-gechoc`)
     * change the locations to `/usr/bin/gecho-mac` and `/usr/bin/gechoc-mac` 
 2. compile with `sudo make do-all CC=<compiler of choice>`
     * Done!
@@ -163,8 +163,6 @@ That's stack theory.
     * a = pop(); b = pop(); push(b^a);
 30. `mod`
     * a = pop(); b = pop(); push(b%a);
-31. `pi`
-    * Pushes a good approximation of pi to the stack.
 32. `read`
     * Reads user input. Only really useful with file reading/compiling. Pops one element from the stack and reads that number of numbers, and pushes them to the stack. 
 33. `<`
@@ -177,7 +175,7 @@ That's stack theory.
     * `a <= b`
 37. `=`
     * `a == b`
-38. `'<word>'`
+38. `'<word>`
     * Push each character of `<word>` onto the stack.
 39. `<>`
     * Push ' ' to the stack.
@@ -206,8 +204,8 @@ That's stack theory.
 8. `1 5 range ** .` == `120`
 	** Factorial :)
 
-9. `3 4 5 ++ a` == `None`
-    ** Doesn't return anything; sets `a` to the sum of `3, 4, 5`
+9. `3 4 5 ++ !1` == `None`
+    ** Doesn't return anything; sets `globals[1]` to the sum of `3, 4, 5`
 
 10. `1 1 dup wover + dup wover + dup wover + show` == `[ 1, 1, 2, 3, 5 ]`
     ** Fibonacci :)
@@ -226,9 +224,11 @@ That's stack theory.
 
 17. `45 tan .` == `1.00`
 
-18. `pi 2 * cos .` == `0.99` (truncated, not rounded)
+18. `#pi 2 * cos .` == `0.99` (truncated, not rounded)
 
 19. `3 read` == reads 3 numbers and pops them to the stack
+
+20. `15 5 + 10 dup + = #t = .` == `((15+5) == (10+10)) == #t`?
 
 # Modes
 
@@ -238,3 +238,12 @@ That's stack theory.
     * Regular interpreter settings.
 3. `tracker`
     * After being enabled, counts the commands entered. Can be viewed with `tot`.
+
+# Constants
+
+1. `#t` == `#true`
+    * `1`
+2. `#f` == `#false`
+    * `0`
+3. `#pi`
+    * `3.14159265358979....`

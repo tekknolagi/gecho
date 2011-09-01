@@ -285,20 +285,7 @@ int main(int argc, char *argv[]) {
 	loopstack loopStack;
 
 	//Initializing modes list
-	mode list[] = {
-		{"@default", true},
-		{"@transparent", false},
-		{"@tracker", false},
-	};
-
-	const_list cons[] = {
-		{"#t", 1},
-		{"#true", 1},
-		{"#f", 0},
-		{"#false", 0},
-		{"#pi", M_PI},		
-	};
-
+	#include "con_mod.h"
 	loopStack.bufsize = 0;
 	loopStack.save = false;
 	//Variables. Will implement with a & prefix to access and a ! prefix to store.
