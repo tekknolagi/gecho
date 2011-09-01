@@ -18,6 +18,19 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 	else if (isdigit(cmd[0]) || ((cmd[0] == '.') && isdigit(cmd[1]))) {
 		fprintf(toc, "StackPush(&dataStack, %f);\n", atof(cmd));
 	}
+	else if (!strcmp(cmd, "<>")) {
+		fprintf(toc, "StackPush(&dataStack, (int) \' \');\n");
+	}
+	else if ((cmd[0] == '\'') || (cmd[0] == '`')) {
+		if (strlen(cmd) > 1) {
+			for (a = 1; a < strlen(cmd); a++) {
+				fprintf(toc, "StackPush(&dataStack, (int) \'%c\');\n", cmd[(int) a]);
+			}
+		}
+		else {
+			fprintf(toc, "error(\"not a valid char/string!\");\n");
+		}
+	}
 	else {
 		//Converts the command to all lowercase.
 		for(c = 0; c < strlen(cmd); c++) {
@@ -34,11 +47,11 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 		else if (cmd[0] == '#') {
 			if (strlen(cmd) > 1) {
 				if (c_lookup(cons, cmd) != -1) {
-					StackPush(dataStack, cons[c_lookup(cons, cmd)].value);
+					fprintf(toc, "StackPush(dataStack, cons[c_lookup(cons, cmd)].value);\n");
 				}
 			}
 			else {
-				error("not enough frames!");
+				fprintf(toc, "error(\"not enough frames!\");\n");
 			}
 		}
 

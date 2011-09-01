@@ -18,6 +18,20 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 	else if (isdigit(cmd[0]) || ((cmd[0] == '.') && isdigit(cmd[1]))) {
 		StackPush(dataStack, atof(cmd));
 	}
+	else if (!strcmp(cmd, "<>")) {
+		StackPush(dataStack, (int) ' ');
+	}
+	else if ((cmd[0] == '\'') || (cmd[0] == '`')) {
+		if (strlen(cmd) > 1) {
+			for (a = 1; a < strlen(cmd); a++) {
+				StackPush(dataStack, (int) cmd[(int) a]);
+			}
+		}
+		else {
+			error("not a valid char/string!");
+		}
+	}
+	
 	else {
 		//Converts the command to all lowercase.
 		for(c = 0; c < strlen(cmd); c++) {

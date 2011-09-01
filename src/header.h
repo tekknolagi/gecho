@@ -9,4 +9,5 @@ stackT dataStack;
 StackInit(&dataStack, RES_SIZE);
 char cmd[DIM2] = "00";
 cmds = 0;
+//char msg[30];
 

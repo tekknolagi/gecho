@@ -177,6 +177,14 @@ That's stack theory.
     * `a <= b`
 37. `=`
     * `a == b`
+38. `'<word>'`
+    * Push each character of `<word>` onto the stack.
+39. `<>`
+    * Push ' ' to the stack.
+40. `and`
+    * Push `a && b` to the stack.
+41. `or`
+    * Push `a || b` to the stack.
 
 
 # Examples
