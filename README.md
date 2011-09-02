@@ -18,7 +18,8 @@ IF ON A MAC
     * CC defaults to `cc` and INAME/CNAME default to `gecho` and `gechoc`, respectively
 
 OR
-`sudo make CC=<compiler of choice>`
+
+1. `sudo make CC=<compiler of choice>`
     * Just compiles.
 
 Three Options...
