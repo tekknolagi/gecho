@@ -4,8 +4,6 @@ gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
 # Install
 
-Not yet. GMP coming soon!
-
 IF ON A MAC
 
 1. compile with `sudo make do-all CC=<compiler of choice> INAME=<what you want gecho to be called> CNAME=<what you want gechoc to be called>`
