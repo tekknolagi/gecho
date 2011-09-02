@@ -15,7 +15,7 @@ Not yet. GMP coming soon!
 IF ON A MAC
 
 1. compile with `sudo make do-all CC=<compiler of choice> INAME=<what you want gecho to be called> CNAME=<what you want gechoc to be called>`
-    * CC defaults to `cc` and INAME/CNAME default to `gecho` and `gechoc
+    * CC defaults to `cc` and INAME/CNAME default to `gecho` and `gechoc`, respectively
 
 OR
 `sudo make CC=<compiler of choice>`
