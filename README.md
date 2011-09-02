@@ -4,12 +4,6 @@ gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
 # Install
 
-/*
-PRECURSOR
-
-1. Install libgmp. Doesn't matter how, just do it properly.
-*/
-
 Not yet. GMP coming soon!
 
 IF ON A MAC
