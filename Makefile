@@ -3,29 +3,21 @@ all:
 clean:
 	-rm -f gecho *~ gechoc
 install:
-	mv gecho /usr/bin/
+	mv gecho /usr/bin/$(INAME)
 	make clean
 go:
 	make clean
 	make
-	sudo make install
-asm:
-	$(CC) src/gecho.c -o gecho.s -S -lm
-	$(CC) gecho.s -o gecho
-go-asm:
-	sudo make asm CC=$(CC)
-	sudo make install
-	sudo make clean
-	rm -rf *.s
+	sudo make install INAME=$(INAME)
 gechoc:
 	$(CC) src/gechoc.c -o gechoc -lm
 	rm -rf /usr/include/gecho/
 	mkdir /usr/include/gecho/
 	cp src/*.h /usr/include/gecho/
 install-gechoc:
-	mv gechoc /usr/bin/
+	mv gechoc /usr/bin/$(CNAME)
 	make clean
 do-all:
-	sudo make go CC=$(CC)
+	sudo make go CC=$(CC) INAME=$(INAME)
 	sudo make gechoc CC=$(CC)
-	sudo make install-gechoc
+	sudo make install-gechoc CNAME=$(CNAME)
