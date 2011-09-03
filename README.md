@@ -246,4 +246,4 @@ That's stack theory.
 2. `-v`
     * Just print the version information.
 3. `-s`
-    * Can enter shell mode after evaluating the file.
+    * Can enter shell mode after evaluating the file. Also suppresses the version and package name.
