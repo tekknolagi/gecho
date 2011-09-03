@@ -238,3 +238,12 @@ That's stack theory.
     * `0`
 3. `#pi`
     * `3.14159265358979....`
+
+# Flags
+
+1. `-e`
+    * Skip the version and "bye" message. If passing something to gecho, end it with "exit" so it doesn't evaluate endlessly.
+2. `-v`
+    * Just print the version information.
+3. `-s`
+    * Can enter shell mode after evaluating the file.

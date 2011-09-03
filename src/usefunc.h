@@ -8,6 +8,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <float.h>
+#include <unistd.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846264338327
@@ -19,10 +20,6 @@
 
 #define MODETOP 3
 #define CONSTOP 5
-
-//#if defined _WIN32 || defined _WIN64
-//#define OPSYS "Windows"
-//#endif
 
 #ifdef __unix__
 #define OPSYS "Unix"

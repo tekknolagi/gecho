@@ -62,11 +62,11 @@ void StackShow(stackT *stackP) {
 		printf("[ ]\n");
 	}
 	else if (stackP->top == 0) {
-		printf("~[ %.2f ]\n", stackP->contents[0]);
+		printf("[ %.2f ]\n", stackP->contents[0]);
 	}
 	else if (stackP->top > 0) {
 		int i;
-		printf("~[ ");
+		printf("[ ");
 		for (i = 0; i < stackP->top; i++) {
 			printf("%.2f, ", stackP->contents[i]);
 		}
@@ -79,13 +79,13 @@ void StackShowVert(stackT *stackP) {
 		printf("-top-\n-end-\n");
 	}
 	else if (stackP->top == 0) {
-		printf("-top-\n~%.2f\n-end-\n", stackP->contents[0]);
+		printf("-top-\n%.2f\n-end-\n", stackP->contents[0]);
 	}
 	else if (stackP->top > 0) {
 		int i;
 		printf("-top-\n");
 		for (i = stackP->top; i >= 0; i--) {
-			printf("~%.2f\n", stackP->contents[i]);
+			printf("%.2f\n", stackP->contents[i]);
 		}
 		printf("-end-\n");
 	}

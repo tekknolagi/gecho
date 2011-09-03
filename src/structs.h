@@ -20,7 +20,17 @@ typedef struct {
   bool enabled;
 } mode;
 
+//Constants!
 typedef struct {
   char name[DIM2];
   double value;
 } const_list;
+
+//Flag values :)
+typedef struct {
+  int version;
+  int eval;
+  int shell;
+  int f;
+  char *fn;
+} flags;

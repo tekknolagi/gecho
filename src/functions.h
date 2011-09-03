@@ -87,7 +87,7 @@ void showtop(stackT *dataStack) {
 		error("stack is empty!");
 	}
 	else {
-		printf("~%.2f\n", dataStack->contents[dataStack->top]);
+		printf("%.2f\n", dataStack->contents[dataStack->top]);
 	}
 }
 
