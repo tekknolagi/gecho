@@ -10,5 +10,7 @@ const_list cons[] = {
 	{"#f", 0},
 	{"#false", 0},
 	{"#pi", M_PI},
+	{"#e", M_E},
+	{"#phi", M_PHI},
 };
 

@@ -237,7 +237,11 @@ That's stack theory.
 2. `#f` == `#false`
     * `0`
 3. `#pi`
-    * `3.14159265358979....`
+    * the value `pi`
+4. `#e`
+    * the value `e`
+5. `#phi`
+    * the value `phi`
 
 # Flags
 
