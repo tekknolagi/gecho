@@ -21,3 +21,9 @@ do-all:
 	sudo make go CC=$(CC) INAME=$(INAME)
 	sudo make gechoc CC=$(CC)
 	sudo make install-gechoc CNAME=$(CNAME)
+mac-intel:
+	make CC=$(CC)
+	sudo make gechoc CC=$(CC)
+	mv gecho precompiled/mac_intel/
+	mv gechoc precompiled/mac_intel/
+	make clean
