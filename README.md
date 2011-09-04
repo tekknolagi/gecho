@@ -25,12 +25,12 @@ FIRST
 
 SECOND
 
-`sudo make go CC=<compiler of choice>`
+1. `sudo make go CC=<compiler of choice>`
     * Just makes and cleans up and moves it to `/usr/bin/` for you. Compiler defaults to `cc`.
 
 THIRD
 
-`sudo make do-all CC=<compiler of choice>`
+1. `sudo make do-all CC=<compiler of choice>`
     * Compiles and installs both interpreter and compiler. Compiler defaults to `cc`.
 
 # Stack Theory
