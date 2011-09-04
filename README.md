@@ -75,11 +75,11 @@ That's stack theory.
     * just run `gecho` (or `./gecho`)
 
 2. FILE READ
-    * run `gecho <filename>` (or `./gecho <filename>`)
+    * run `gecho -f <filename>` (or `./gecho -f <filename>`)
     * MUST have `END` at end of file!
 
 3. FILE READ THEN SHELL
-    * run `gecho <filename> --shell` (or `./gecho <filename> --shell`)
+    * run `gecho -fs <filename>` (or `./gecho -fs <filename>`)
     * MUST have `END` at end of file!
 
 4. COMPILE GECHO

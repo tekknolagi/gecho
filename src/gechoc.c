@@ -285,10 +285,10 @@ int main(int argc, char *argv[]) {
 	loopstack loopStack;
 
 	//Initializing modes list
-	#include "con_mod.h"
+	#include "structdef.h"
 	loopStack.bufsize = 0;
 	loopStack.save = false;
-	//Variables. Will implement with a & prefix to access and a ! prefix to store.
+
 	StackInit(&dataStack, RES_SIZE);
 	char cmd[DIM2] = "00";
 	char filepath[100];
