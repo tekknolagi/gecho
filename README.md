@@ -193,13 +193,13 @@ That's stack theory.
 7. `0 10 range 3 jump` == `4`
 
 8. `1 5 range ** .` == `120`
-	** Factorial :)
+    * Factorial :)
 
 9. `3 4 5 ++ !1` == `None`
-    ** Doesn't return anything; sets `globals[1]` to the sum of `3, 4, 5`
+    * Doesn't return anything; sets `globals[1]` to the sum of `3, 4, 5`
 
 10. `1 1 dup wover + dup wover + dup wover + show` == `[ 1, 1, 2, 3, 5 ]`
-    ** Fibonacci :)
+    * Fibonacci :)
 
 11. `1 2 3 4 show drop show` == `[1, 2, 3, 4], [1, 2, 3]`
 
