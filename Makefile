@@ -1,5 +1,5 @@
 all:
-	$(CC) src/gecho.c -o gecho -lm
+	$(CC) src/gecho.c -o gecho -lm -Wall
 clean:
 	-rm -f gecho *~ gechoc
 install:
@@ -10,7 +10,7 @@ go:
 	make
 	sudo make install INAME=$(INAME)
 gechoc:
-	$(CC) src/gechoc.c -o gechoc -lm
+	$(CC) src/gechoc.c -o gechoc -lm -Wall
 	rm -rf /usr/include/gecho/
 	mkdir /usr/include/gecho/
 	cp src/*.h /usr/include/gecho/

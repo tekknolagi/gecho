@@ -59,7 +59,7 @@ The number gets returned as a result of popping it.
 
 Operands can pop numbers from the stack and interact with them. For example,
 
-`.. 1 2 +`
+`dels 1 2 +`
 
 would clear the stack, push `1`, then push `2`, then pop them both and add them. It will then push the result onto the stack. The stack now looks like this:
 
@@ -99,7 +99,7 @@ That's stack theory.
     * Prints the top element in the stack.
 4. `*`
     * Pops two elements from the stack, multiplies them, and pushes the result.
-5. `..`
+5. `dels`
     * Pops all elements from the stack.
 6. `show`
     * Pretty prints the stack.
@@ -184,7 +184,7 @@ That's stack theory.
 
 3. `1 2 3 * .` == `6`
 
-4. `1 2 3 4 .. show` == `[ ]`
+4. `1 2 3 4 dels show` == `[ ]`
 
 5. `1 2 dup show` == `[ 1, 2, 2 ]`
 

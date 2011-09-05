@@ -8,7 +8,7 @@ int top;
 double variables[RES_SIZE];
 
 //This is the eval function.
-int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], const_list cons[CONSTOP]) {
+void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], const_list cons[CONSTOP]) {
   //Holds an error message.
   char msg[30];
   //Checks if the first digit is a number, and if so, pushes it.	
@@ -161,7 +161,7 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
       mul(dataStack);
     }
 
-    else if (!strcmp(cmd, "..")) {
+    else if (!strcmp(cmd, "dels")) {
       delstack(dataStack);
     }
 
@@ -297,7 +297,6 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 int main(int argc, char *argv[]) {
   flags flagl;
   FILE *fp;
-  FILE *tmp;
 
   //Initializing dataStack
   stackT dataStack;
@@ -394,4 +393,5 @@ int main(int argc, char *argv[]) {
     }
     eval(&dataStack, &loopStack, list, cmd, cons);
   }
+  return 0;
 }
