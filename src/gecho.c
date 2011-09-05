@@ -120,7 +120,6 @@ int eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[]
 
     else if ((cmd[0] == '&') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
       var_index = atoi(cmd+1);
-      printf("ind: %d\n", var_index);
       StackPush(dataStack, variables[var_index]);
     }
 
