@@ -1,5 +1,7 @@
 double a, b, c, ind, con;
 #include "functions.h"
+#ifndef HEADER_H_
+#define HEADER_H_
 int cmds;
 int main() {
 stackT dataStack;
@@ -11,3 +13,4 @@ char cmd[DIM2] = "00";
 cmds = 0;
 //char msg[30];
 
+#endif

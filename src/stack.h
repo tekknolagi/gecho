@@ -1,4 +1,6 @@
 #include "structs.h"
+#ifndef STACK_H_
+#define STACK_H_
 
 //Stack struct.
 typedef struct {
@@ -90,3 +92,5 @@ void StackShowVert(stackT *stackP) {
 		printf("-end-\n");
 	}
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef USEFUNC_H
+#define USEFUNC_H
+
 #include <stdio.h>
 //#include <gmp.h>
 #include <limits.h>
@@ -39,4 +42,6 @@
 
 #ifndef OPSYS
 #define OPSYS "unsupported system"
+#endif
+
 #endif

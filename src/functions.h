@@ -1,4 +1,6 @@
 #include "stack.h"
+#ifndef FUNCTIONS_H_
+#define FUNCTIONS_H_
 
 bool str_in_arr(int argc, char *argv[], char *match) {
   int i;
@@ -433,3 +435,4 @@ void log_or(stackT *dataStack) {
     StackPush(dataStack, a || b);
   }
 }
+#endif

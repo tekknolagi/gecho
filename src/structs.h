@@ -1,4 +1,6 @@
 #include "usefunc.h"
+#ifndef STRUCTS_H_
+#define STRUCTS_H_
 
 //Booleans are useful.
 typedef enum {
@@ -34,3 +36,5 @@ typedef struct {
   int f;
   char *fn;
 } flags;
+
+#endif

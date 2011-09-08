@@ -1,3 +1,5 @@
+#ifndef STRUCTDEF_H_
+#define STRUCTDEF_H_
 mode list[] = {
 	{"@default", true},
 	{"@transparent", false},
@@ -14,3 +16,4 @@ const_list cons[] = {
 	{"#phi", M_PHI},
 };
 
+#endif
