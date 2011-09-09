@@ -3,6 +3,7 @@ int var_index;
 #define PKGNAME "gecho"
 #define VERSION 0.5
 #include "functions.h"
+#include "functions.h"
 int cmds;
 int top;
 double variables[RES_SIZE];

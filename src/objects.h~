@@ -1,0 +1,5 @@
+typedef enum {CHAR, STRING, BOOLEAN, FIXNUM, SYMBOL, EOF_OBJECT} object_type;
+
+typedef struct object {
+
+} o
