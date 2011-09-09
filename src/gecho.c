@@ -267,7 +267,7 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
 
     //If the command is unrecognized and not a mode setting or constant.
     else {
-      if ((cmd[0] != '@') && strcmp(cmd, "end") && (cmd[0] != '#')) {
+      if ((cmd[0] != '@') && (cmd[0] != '#')) {
 	sprintf(msg, "%s - unknown command!", cmd);
 	error(msg);
       }
@@ -281,7 +281,7 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
 
   //If not setting the mode, do whatever it is the modes do at the end of the eval() process.
   if (cmd[0] != '@') {
-    if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset") && strcmp(cmd, "end") && strcmp(cmd, ".") && strcmp(cmd, "..")) {
+    if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset") && strcmp(cmd, ".") && strcmp(cmd, "dels")) {
       printf("%s | ", cmd);
       StackShow(dataStack);
     }
@@ -363,8 +363,7 @@ int main(int argc, char *argv[]) {
     if (!flagl.eval && flagl.f) {
       fp = fopen(flagl.fn, "r");
       if (fp != NULL) {
-	while (strcmp(cmd, "end")) {
-	  fscanf(fp, "%s", cmd);
+	while (fscanf(fp, "%s", cmd) != EOF) {
 	  eval(&dataStack, &loopStack, list, cmd, cons);
 	}
 	fclose(fp);

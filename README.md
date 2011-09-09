@@ -76,11 +76,9 @@ That's stack theory.
 
 2. FILE READ
     * run `gecho -f <filename>` (or `./gecho -f <filename>`)
-    * MUST have `END` at end of file!
 
 3. FILE READ THEN SHELL
-    * run `gecho -fs <filename>` (or `./gecho -fs <filename>`)
-    * MUST have `END` at end of file!
+    * run `gecho -sf <filename>` (or `./gecho -sf <filename>`)
 
 4. COMPILE GECHO
     * run `gechoc <filename>`
