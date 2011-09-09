@@ -243,6 +243,8 @@ That's stack theory.
 
 # Flags
 
+1. `-f`
+    * Input file to compile/read. Must come after another flag. (e.g. `-fs` won't work but `-sf` will)
 1. `-e`
     * Skip the version and "bye" message. If passing something to gecho, end it with "exit" so it doesn't evaluate endlessly.
 2. `-v`
