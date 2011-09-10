@@ -9,8 +9,6 @@ double variables[RES_SIZE];
 
 //This is the eval function.
 void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], FILE *toc, const_list cons[CONSTOP]) {
-  //Holds an error message.
-  //char msg[30];
   //Checks if the first digit is a number, and if so, pushes it.
   if ((cmd[0] == '-') && (isdigit(cmd[1]) || cmd[1] == '.')) {
     fprintf(toc, "StackPush(&dataStack, %f);\n", atof(cmd));
@@ -19,12 +17,12 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     fprintf(toc, "StackPush(&dataStack, %f);\n", atof(cmd));
   }
   else if (!strcmp(cmd, "<>")) {
-    fprintf(toc, "StackPush(&dataStack, (int) \' \');\n");
+    fprintf(toc, "StackPush(&charStack, (int) \' \');\n");
   }
   else if ((cmd[0] == '\'') || (cmd[0] == '`')) {
     if (strlen(cmd) > 1) {
       for (a = 1; a < strlen(cmd); a++) {
-	fprintf(toc, "StackPush(&dataStack, (int) \'%c\');\n", cmd[(int) a]);
+	fprintf(toc, "StackPush(&charStack, (int) \'%c\');\n", cmd[(int) a]);
       }
     }
     else {
@@ -192,11 +190,11 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     }
 
     else if (!strcmp(cmd, "outascii")) {
-      fprintf(toc, "outascii(&dataStack);\n");
+      fprintf(toc, "outascii(&charStack);\n");
     }
 
-    else if (!strcmp(cmd, "allascii")) {
-      fprintf(toc, "allascii(&dataStack);\n");
+    else if (!strcmp(cmd, "print")) {
+      fprintf(toc, "allascii(&charStack);\n");
     }
 
     else if (!strcmp(cmd, "/")) {

@@ -7,6 +7,7 @@ int var_index;
 int cmds;
 int top;
 double variables[RES_SIZE];
+stackT charStack;
 
 //This is the eval function.
 void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], const_list cons[CONSTOP]) {
@@ -20,12 +21,12 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     StackPush(dataStack, atof(cmd));
   }
   else if (!strcmp(cmd, "<>")) {
-    StackPush(dataStack, (int) ' ');
+    StackPush(&charStack, (int) ' ');
   }
   else if ((cmd[0] == '\'') || (cmd[0] == '`')) {
     if (strlen(cmd) > 1) {
       for (a = 1; a < strlen(cmd); a++) {
-	StackPush(dataStack, (int) cmd[(int) a]);
+	StackPush(&charStack, (int) cmd[(int) a]);
       }
     }
     else {
@@ -207,11 +208,11 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     }
 
     else if (!strcmp(cmd, "outascii")) {
-      outascii(dataStack);
+      outascii(&charStack);
     }
 
-    else if (!strcmp(cmd, "allascii")) {
-      allascii(dataStack);
+    else if (!strcmp(cmd, "print")) {
+      allascii(&charStack);
     }
 
     else if (!strcmp(cmd, "/")) {
@@ -353,6 +354,7 @@ int main(int argc, char *argv[]) {
   loopStack.save = false;
   //Variables. Will implement with a & prefix to access and a ! prefix to store.
   StackInit(&dataStack, RES_SIZE);
+  StackInit(&charStack, RES_SIZE);
   char cmd[DIM2] = "00";
   cmds = 0;
   if (argc > 1) {
