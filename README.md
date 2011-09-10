@@ -128,7 +128,7 @@ That's stack theory.
     * Push the index of the top of the stack to the stack.
 18. `outascii`
     * Pop top element of stack and print ASCII character that corresponds to decimal.
-19. `allascii`
+19. `print`
     * Pop all elements of stack and prints ASCII characters that correspond to decimal.
 20. `/`
     * Pop top two elements from stack; divide lower element by upper element.
