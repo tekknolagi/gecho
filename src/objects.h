@@ -109,3 +109,9 @@ object *sub_proc(object *arg0, object *arg1) {
 object mul_proc(object *arg0, object *arg2) {
 	return make_fixnum(arg0.fixnum.value*arg1.fixnum.value);
 }
+
+object div_proc(object *arg0, object *arg2) {
+	return make_fixnum(arg0.fixnum.value/arg2.fixnum.value);
+}
+
+
