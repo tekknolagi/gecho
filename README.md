@@ -205,10 +205,6 @@ That's stack theory.
 
 12. `1 2 3 top .` == `2`
 
-13. `97 97 25 + range allascii` == `abc...z`
-
-14. `97 98 99 outascii outascii outascii` == `cba`
-
 15. `1 2 / .` == `0.5`
 
 16. `@transparent` == shows stack after every command
@@ -220,6 +216,8 @@ That's stack theory.
 19. `3 read` == reads 3 numbers and pops them to the stack
 
 20. `15 5 + 10 dup + = #t = .` == `((15+5) == (10+10)) == #t`?
+
+21. `'Hello, <> 'world! print` == `Hello, world!`
 
 # Modes
 
