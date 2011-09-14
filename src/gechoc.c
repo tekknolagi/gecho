@@ -6,9 +6,20 @@ int var_index;
 int cmds;
 int top;
 double variables[RES_SIZE];
+int which;
+
+void next() {
+  if (which < NUM_STACKS) which++;
+  else which = 0;
+}
+
+void back() {
+  if (which > 0) which--;
+  else which = NUM_STACKS-1;
+}
 
 //This is the eval function.
-void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], FILE *toc, const_list cons[CONSTOP]) {
+void eval(stackT dataStack[], loopstack *loopStack, mode list[MODETOP], char cmd[], FILE *toc, const_list cons[CONSTOP]) {
   //Checks if the first digit is a number, and if so, pushes it.
   if ((cmd[0] == '-') && (isdigit(cmd[1]) || cmd[1] == '.')) {
     fprintf(toc, "StackPush(&dataStack, %f);\n", atof(cmd));
@@ -62,6 +73,14 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
 
     else if (!strcmp(cmd, "or")) {
       log_or(dataStack);
+    }
+
+    else if (!strcmp(cmd, "next")) {
+      next();
+    }
+
+    else if (!strcmp(cmd, "back")) {
+      back();
     }
 
     else if ((cmd[0] == '!') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
@@ -279,8 +298,10 @@ int main(int argc, char *argv[]) {
   FILE *fp;
   FILE *toc;
 
+  which = 0;
+
   //Initializing dataStack
-  stackT dataStack;
+  stackT dataStack[NUM_STACKS];
 
   //Initializing loop stack
   loopstack loopStack;
@@ -290,7 +311,8 @@ int main(int argc, char *argv[]) {
   loopStack.bufsize = 0;
   loopStack.save = false;
 
-  StackInit(&dataStack, RES_SIZE);
+	for (a = 0; a < NUM_STACKS; a++)
+  		StackInit(&dataStack[(int) a], RES_SIZE);
   char cmd[DIM2] = "00";
   char filepath[100];
   cmds = 0;
@@ -305,7 +327,7 @@ int main(int argc, char *argv[]) {
     fprintf(toc, "#include <gecho/header.h>\n");
     if (fp != NULL) {
       while (fscanf(fp, "%s", cmd) != EOF) {
-	eval(&dataStack, &loopStack, list, cmd, toc, cons);
+	eval(dataStack, &loopStack, list, cmd, toc, cons);
       }
       fclose(fp);
       fprintf(toc, "}");

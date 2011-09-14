@@ -8,17 +8,28 @@ int cmds;
 int top;
 double variables[RES_SIZE];
 stackT charStack;
+int which;
+
+void next() {
+  if (which < NUM_STACKS) which++;
+  else which = 0;
+}
+
+void back() {
+  if (which > 0) which--;
+  else which = NUM_STACKS-1;
+}
 
 //This is the eval function.
-void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[], const_list cons[CONSTOP]) {
+void eval(stackT dataStack[], loopstack *loopStack, mode list[MODETOP], char cmd[], const_list cons[CONSTOP]) {
   //Holds an error message.
   char msg[30];
   //Checks if the first digit is a number, and if so, pushes it.	
   if ((cmd[0] == '-') && (isdigit(cmd[1]) || cmd[1] == '.')) {
-    StackPush(dataStack, atof(cmd));
+    StackPush(&dataStack[which], atof(cmd));
   }
   else if (isdigit(cmd[0]) || ((cmd[0] == '.') && isdigit(cmd[1]))) {
-    StackPush(dataStack, atof(cmd));
+    StackPush(&dataStack[which], atof(cmd));
   }
   else if (!strcmp(cmd, "<>")) {
     StackPush(&charStack, (int) ' ');
@@ -53,7 +64,7 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     else if (cmd[0] == '#') {
       if (strlen(cmd) > 1) {
 	if (c_lookup(cons, cmd) != -1) {
-	  StackPush(dataStack, cons[c_lookup(cons, cmd)].value);
+	  StackPush(&dataStack[which], cons[c_lookup(cons, cmd)].value);
 	}
       }
       else {
@@ -62,17 +73,17 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     }
 
     else if (!strcmp(cmd, "and")) {
-      log_and(dataStack);
+      log_and(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "or")) {
-      log_or(dataStack);
+      log_or(&dataStack[which]);
     }
 		
     else if ((cmd[0] == '!') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
       var_index = atoi(cmd+1);
-      if (dataStack->top >= 0) {
-	variables[var_index] = StackPop(dataStack);
+      if (&dataStack[which].top >= 0) {
+	variables[var_index] = StackPop(&dataStack[which]);
       }
       else {
 	error("stack is empty!");
@@ -80,52 +91,52 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     }
 
     else if (!strcmp(cmd, "pow")) {
-      powers(dataStack);
+      powers(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "mod")) {
-      modulus(dataStack);
+      modulus(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "tan")) {
-      tangent(dataStack);
+      tangent(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "sin")) {
-      sine(dataStack);
+      sine(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "cos")) {
-      cosine(dataStack);
+      cosine(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "read")) {
-      userin(dataStack);
+      userin(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, ">")) {
-      gt(dataStack);
+      gt(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "<")) {
-      lt(dataStack);
+      lt(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "=")) {
-      eqeq(dataStack);
+      eqeq(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "<=")) {
-      lteq(dataStack);
+      lteq(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, ">=")) {
-      gteq(dataStack);
+      gteq(&dataStack[which]);
     }
 
     else if ((cmd[0] == '&') && (strlen(cmd) > 1) && (cmd[1] >= '-') && (cmd[1] <= '9')) {
       var_index = atoi(cmd+1);
-      StackPush(dataStack, variables[var_index]);
+      StackPush(&dataStack[which], variables[var_index]);
     }
 
     //If the user wants to see the modes enabled.
@@ -147,67 +158,75 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     }
 
     else if (!strcmp(cmd, "+")) {
-      plus(dataStack);
+      plus(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "++")) {
-      plusplus(dataStack);
+      plusplus(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "**")) {
-      mulmul(dataStack);
+      mulmul(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, ".")) {
-      showtop(dataStack);
+      showtop(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "*")) {
-      mul(dataStack);
+      mul(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "dels")) {
-      delstack(dataStack);
+      delstack(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "show")) {
-      StackShow(dataStack);
+      StackShow(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "-")) {
-      sub(dataStack);
+      sub(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "swap")) {
-      swap(dataStack);
+      swap(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "dup")) {
-      duplicate(dataStack, 0);
+      duplicate(&dataStack[which], 0);
     }
 
     else if(!strcmp(cmd, "jump")) {
-      jump(dataStack);
+      jump(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "range")) {
-      range(dataStack);
+      range(&dataStack[which]);
     }
 
     else if (!strcmp(cmd, "drop") || !strcmp(cmd, "pop")) {
-      drop(dataStack, true);
+      drop(&dataStack[which], true);
     }
 
     else if (!strcmp(cmd, "over")) {
-      duplicate(dataStack, 1);
+      duplicate(&dataStack[which], 1);
     }
 
     else if (!strcmp(cmd, "wover")) {
-      duplicate(dataStack, 2);
+      duplicate(&dataStack[which], 2);
     }
 
     else if (!strcmp(cmd, "top")) {
-      StackPush(dataStack, dataStack->top);
+      StackPush(&dataStack[which], dataStack[which].top);
+    }
+
+    else if (!strcmp(cmd, "next")) {
+      next();
+    }
+
+    else if (!strcmp(cmd, "back")) {
+      back();
     }
 
     else if (!strcmp(cmd, "outascii")) {
@@ -219,7 +238,7 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     }
 
     else if (!strcmp(cmd, "/")) {
-      divide(dataStack);
+      divide(&dataStack[which]);
     }
 
     //Prints total commands. Used with @tracker
@@ -234,19 +253,19 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
 
     //Starting a loop. Interpreted as a word. Saves the index and control, starts saving words to evaluate later.
     else if (!strcmp(cmd, "[")) {
-      if (dataStack->top < 1) {
+      if (dataStack[which].top < 1) {
 	error("not enough frames!");
       }
       else {
-	loopStack->index = (int) StackPop(dataStack);
-	loopStack->control = (int) StackPop(dataStack) + 1;
+	loopStack->index = (int) StackPop(&dataStack[which]);
+	loopStack->control = (int) StackPop(&dataStack[which]) + 1;
       }
       loopStack->save = true;
     }
 
     //Pushes the index to the dataStack.
     else if (!strcmp(cmd, "i")) {
-      StackPush(dataStack, loopStack->index);
+      StackPush(&dataStack[which], loopStack->index);
     }
 
     //Increments the index, iterates over the commands if the index < control, otherwise resets the loopStack, and stops saving words.
@@ -257,7 +276,7 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
 	for (c = 0; c < loopStack->bufsize; c++) {
 	  //printf("%s\n", loopStack->buffer[c]);
 	  //FIX LAME EVAL
-	  eval(dataStack, loopStack, list, loopStack->buffer[(int) c], cons);
+	  eval(&dataStack[which], loopStack, list, loopStack->buffer[(int) c], cons);
 	}
       }
       else {
@@ -287,7 +306,7 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
   if (cmd[0] != '@') {
     if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset") && strcmp(cmd, ".") && strcmp(cmd, "dels") && strcmp(cmd, "nil")) {
       printf("%s | ", cmd);
-      StackShow(dataStack);
+      StackShow(&dataStack[which]);
     }
     if (is_enabled(list, "@tracker") && strcmp(cmd, "tot") && strcmp(cmd, "reset")) {
       cmds++;
@@ -303,8 +322,10 @@ int main(int argc, char *argv[]) {
   flags flagl;
   FILE *fp;
 
+  which = 0;
+
   //Initializing dataStack
-  stackT dataStack;
+  stackT dataStack[NUM_STACKS];
 
   //Initializing loop stack
   loopstack loopStack;
@@ -355,8 +376,10 @@ int main(int argc, char *argv[]) {
 
   loopStack.bufsize = 0;
   loopStack.save = false;
-  //Variables. Will implement with a & prefix to access and a ! prefix to store.
-  StackInit(&dataStack, RES_SIZE);
+  
+  for (a = 0; a < NUM_STACKS; a++)
+    StackInit(&dataStack[(int) a], RES_SIZE);
+
   StackInit(&charStack, RES_SIZE);
   char cmd[DIM2] = "00";
   cmds = 0;
@@ -369,7 +392,7 @@ int main(int argc, char *argv[]) {
       fp = fopen(flagl.fn, "r");
       if (fp != NULL) {
 	while (fscanf(fp, "%s", cmd) != EOF) {
-	  eval(&dataStack, &loopStack, list, cmd, cons);
+	  eval(dataStack, &loopStack, list, cmd, cons);
 	}
 	fclose(fp);
 	if (!flagl.shell) {
@@ -396,7 +419,7 @@ int main(int argc, char *argv[]) {
       }
       break;
     }
-    eval(&dataStack, &loopStack, list, cmd, cons);
+    eval(dataStack, &loopStack, list, cmd, cons);
   }
   return 0;
 }

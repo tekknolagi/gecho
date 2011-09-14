@@ -4,12 +4,13 @@ double a, b, c, ind, con;
 #define HEADER_H_
 int cmds;
 int main() {
-stackT dataStack;
+stackT dataStack[NUM_STACKS];
 stackT charStack;
 //loopstack loopStack;
 //loopStack.bufsize = 0;
 //loopStack.save = false;
-StackInit(&dataStack, RES_SIZE);
+ for (cmds = 0; cmds < NUM_STACKS; cmds++)
+   StackInit(&dataStack[NUM_STACKS], RES_SIZE);
 StackInit(&charStack, RES_SIZE);
 char cmd[DIM2] = "00";
 cmds = 0;

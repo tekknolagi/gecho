@@ -28,6 +28,7 @@
 #define DIM2 30
 #define RES_SIZE 100000
 #define VAR_SIZE 100
+#define NUM_STACKS 3
 
 #define MODETOP 3
 #define CONSTOP 7

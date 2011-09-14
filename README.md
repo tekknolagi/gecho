@@ -174,6 +174,10 @@ That's stack theory.
     * Push `a || b` to the stack.
 42. `nil`
     * Does absolutely nothing.
+43. `next`
+    * Moves to the next stack (out of 3). Starts at stack 0.
+44. `back`
+    * Moves one stack back (out of 3) in a cycle. If it goes past 0, it will cycle to stack 3.
 
 
 # Examples
