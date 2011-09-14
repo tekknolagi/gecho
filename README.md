@@ -172,6 +172,8 @@ That's stack theory.
     * Push `a && b` to the stack.
 41. `or`
     * Push `a || b` to the stack.
+42. `nil`
+    * Does absolutely nothing.
 
 
 # Examples

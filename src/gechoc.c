@@ -34,8 +34,11 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
     for(c = 0; c < strlen(cmd); c++) {
       cmd[(int) c] = tolower(cmd[(int) c]);
     }
+
+    if (!strcmp(cmd, "nil"));
+
     //If it's a mode change...toggle it.
-    if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
+    else if ((cmd[0] == '@') && (strlen(cmd) > 1)) {
       a = toggle(list, lookup(list, cmd));
       if (a) {
 	fprintf(toc, "printf(\"--%s %s--\\n\");\n", cmd, is_enabled(list,cmd)?"ON":"OFF");
@@ -258,7 +261,7 @@ void eval(stackT *dataStack, loopstack *loopStack, mode list[MODETOP], char cmd[
 
   //If not setting the mode, do whatever it is the modes do at the end of the eval() process.
   if (cmd[0] != '@') {
-    if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset")  && strcmp(cmd, ".") && strcmp(cmd, "..")) {
+    if (is_enabled(list, "@transparent") && strcmp(cmd, "show") && strcmp(cmd, "tot") && strcmp(cmd, "reset")  && strcmp(cmd, ".") && strcmp(cmd, "dels") && strcmp(cmd, "nil")) {
       fprintf(toc, "printf(\"%s | \");", cmd);
       fprintf(toc, "StackShow(&dataStack);\n");
     }
