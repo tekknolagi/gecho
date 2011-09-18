@@ -178,6 +178,8 @@ That's stack theory.
     * Moves to the next stack (out of 3). Starts at stack 0.
 44. `back`
     * Moves one stack back (out of 3) in a cycle. If it goes past 0, it will cycle to stack 3.
+45. `mv`
+    * Moves the top element from the current stack to the next stack. To COPY, use `dup mv`.
 
 
 # Examples

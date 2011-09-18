@@ -222,6 +222,8 @@ void eval(stackT dataStack[], loopstack *loopStack, mode list[MODETOP], char cmd
       fprintf(toc, "allascii(&charStack);\n");
     }
 
+
+
     else if (!strcmp(cmd, "/")) {
       fprintf(toc, "divide(&dataStack[which]);");
     }
@@ -236,11 +238,7 @@ void eval(stackT dataStack[], loopstack *loopStack, mode list[MODETOP], char cmd
       fprintf(toc, "cmds = 0;\n");
     }
 
-else if (!strcmp(cmd, "mv")) {
-	a = StackPop(&dataStack[which]);
-	next();
-	StackPush(&dataStack[which], a);
-}
+
 
     //Starting a loop. Interpreted as a word. Saves the index and control, starts saving words to evaluate later.
     else if (!strcmp(cmd, "[")) {

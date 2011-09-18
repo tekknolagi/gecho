@@ -3,20 +3,19 @@ int var_index;
 #define PKGNAME "gecho"
 #define VERSION 0.5
 #include "functions.h"
-#include "functions.h"
 int cmds;
 int top;
 double variables[RES_SIZE];
 stackT charStack;
-int which;
+char *WORD;
 
 void next() {
-  if (which < NUM_STACKS) which++;
+  if (which < NUM_STACKS-1) which++;
   else which = 0;
 }
 
 void back() {
-  if (which > 0) which--;
+  if (which >= 1) which--;
   else which = NUM_STACKS-1;
 }
 
@@ -237,8 +236,19 @@ void eval(stackT dataStack[], loopstack *loopStack, mode list[MODETOP], char cmd
       allascii(&charStack);
     }
 
+    else if (!strcmp(cmd, "mv")) {
+      a = StackPop(&dataStack[which]);
+      next();
+      StackPush(&dataStack[which], a);
+    }
+
     else if (!strcmp(cmd, "/")) {
       divide(&dataStack[which]);
+    }
+
+    else if (cmd[0] == '{') {
+      printf("return val: %d\n", sscanf(cmd, "{%s}", WORD));
+      printf("body: %s\n", WORD);
     }
 
     //Prints total commands. Used with @tracker

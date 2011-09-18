@@ -2,6 +2,8 @@
 #ifndef STACK_H_
 #define STACK_H_
 
+int which;
+
 //Stack struct.
 typedef struct {
 	double *contents;
@@ -61,14 +63,14 @@ double StackPop(stackT *stackP) {
 //Pretty-prints the stack.
 void StackShow(stackT *stackP) {
 	if (stackP->top == -1) {
-		printf("[ ]\n");
+	  printf("%d [ ]\n", which);
 	}
 	else if (stackP->top == 0) {
-		printf("[ %.2f ]\n", stackP->contents[0]);
+	  printf("%d [ %.2f ]\n", which, stackP->contents[0]);
 	}
 	else if (stackP->top > 0) {
 		int i;
-		printf("[ ");
+		printf("%d [ ", which);
 		for (i = 0; i < stackP->top; i++) {
 			printf("%.2f, ", stackP->contents[i]);
 		}
