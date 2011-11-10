@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define  int(x) *((int *) x)
+
+int main(int argc, char **argv) {
+	void *a[2];
+
+	if (argc <= 1) {
+	  char *b = "hello";
+	  a[1] = calloc(strlen(b), sizeof(char));
+	  a[1] = strncpy(a[1], b, strlen(b));
+	}
+	else {
+	  a[1] = calloc(strlen(argv[1]), sizeof(char));
+	  a[1] = strncpy(a[1], argv[1], strlen(argv[1]));
+	}
+
+	a[0] = calloc(1, sizeof(int));
+	int(a[0]) = strlen(a[1]);
+
+	printf("%d\n", int(a[0]));
+	printf("%s\n", a[1]);
+	free(a[1]);
+}
