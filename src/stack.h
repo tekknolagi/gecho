@@ -63,18 +63,18 @@ double StackPop(stackT *stackP) {
 //Pretty-prints the stack.
 void StackShow(stackT *stackP) {
 	if (stackP->top == -1) {
-	  printf("%d [ ]\n", which);
+	  printf(BLUE "%d" PURPLE " [ ]\n" DEFAULT, which);
 	}
 	else if (stackP->top == 0) {
-	  printf("%d [ %.2f ]\n", which, stackP->contents[0]);
+	  printf(BLUE "%d" PURPLE " [ %.2f ]\n" DEFAULT, which, stackP->contents[0]);
 	}
 	else if (stackP->top > 0) {
 		int i;
-		printf("%d [ ", which);
+		printf(BLUE "%d" PURPLE " [ ", which);
 		for (i = 0; i < stackP->top; i++) {
 			printf("%.2f, ", stackP->contents[i]);
 		}
-		printf("%.2f ]\n", stackP->contents[stackP->top]);
+		printf("%.2f ]\n" DEFAULT, stackP->contents[stackP->top]);
 	}
 }
 

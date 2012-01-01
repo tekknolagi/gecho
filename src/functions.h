@@ -22,12 +22,12 @@ bool char_in_arr(char tosearch, char arr[]) {
 
 //Easier error management.
 void error(char* msg) {
-  printf("error: %s\n", msg);
+  printf(RED "error:" YELLOW " %s\n" DEFAULT, msg);
 }
 
 //Easier return management.
 void ret(double msg) {
-  printf("%.2f\n", msg);
+  printf(PURPLE "%.2f\n" DEFAULT, msg);
 }
 
 //Adds two numbers. If only one is on the stack, adds 0 to it.
@@ -89,7 +89,7 @@ void showtop(stackT *dataStack) {
     error("stack is empty!");
   }
   else {
-    printf("%.2f\n", dataStack->contents[dataStack->top]);
+    printf(PURPLE "%.2f\n" DEFAULT, dataStack->contents[dataStack->top]);
   }
 }
 
@@ -204,7 +204,7 @@ void outascii(stackT *dataStack) {
     error("not enough frames!");
   }
   else {
-    printf("%c\n", (unsigned char) StackPop(dataStack));
+    printf(PURPLE "%c\n" DEFAULT, (unsigned char) StackPop(dataStack));
   }
 }
 
@@ -214,11 +214,13 @@ void allascii(stackT *dataStack) {
     error("not enough frames!");
   }
   else {
+	  printf(PURPLE);
     for (a = 0; a < dataStack->top+1; a++) {
       printf("%c", (unsigned char) dataStack->contents[(int) a]);
     }
     printf("\n");
     delstack(dataStack);
+	printf(DEFAULT);
   }
 }
 
@@ -249,7 +251,7 @@ int toggle(mode *list, int index) {
 //Finds the index of a particular mode.
 int lookup(mode *list, char *mode) {
   for (a = 0; a < MODETOP; a++) {
-    if (!strcmp(list[ (int) a].mode, mode)) {
+    if (!strcmp(list[(int) a].mode, mode)) {
       return (int) a;
     }
   }
@@ -269,7 +271,7 @@ int c_lookup(const_list *list, char *const_name) {
 int is_enabled(mode *list, char *mode) {
   a = lookup(list, mode);
   if (a < 0) {
-    printf("error: is_enabled error: %s -  no such mode!", mode);
+    printf(RED "error: " YELLOW "is_enabled error: %s -  no such mode!" DEFAULT, mode);
     return 0;
   }
   return list[lookup(list, mode)].enabled; 
@@ -351,7 +353,7 @@ void userin(stackT *dataStack) {
   else {
     a = StackPop(dataStack);
     while (a > 0) {
-      printf("%d: ", (int) a);
+      printf(PURPLE "%d: " DEFAULT, (int) a);
       scanf("%s", cmd);
       StackPush(dataStack, atof(cmd));
       a--;
@@ -361,7 +363,7 @@ void userin(stackT *dataStack) {
 
 void gt(stackT *dataStack) {
   if (dataStack->top < 1) {
-    error("nor enough frames!");
+    error("not enough frames!");
   }
   else {
     b = StackPop(dataStack);

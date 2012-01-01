@@ -12,6 +12,12 @@
 #include <stdlib.h>
 #include <float.h>
 #include <unistd.h>
+#include <iso646.h>
+#define YELLOW  "\e[1;33m"
+#define PURPLE  "\e[1;35m"
+#define BLUE    "\e[1;34m"
+#define RED     "\e[1;31m"
+#define DEFAULT "\e[0m"
 
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795028

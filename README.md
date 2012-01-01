@@ -53,7 +53,7 @@ One can also take off (or `pop`) elements from the stack.
 
 `[ 12, 4, 8 ]`
 
-`> 3.00`
+`3.00`
 
 The number gets returned as a result of popping it.
 
@@ -224,6 +224,8 @@ That's stack theory.
 20. `15 5 + 10 dup + = #t = .` == `((15+5) == (10+10)) == #t`?
 
 21. `'Hello, <> 'world! print` == `Hello, world!`
+
+22. `1 2 + show next 3 4 + show back mv + show` => Adds 1+2 on the first stack, shows it, adds 3+4 on the next stack, shows it, moves the top item on the first stack to the second stack, then adds 7 and 3 together to make 10.
 
 # Modes
 

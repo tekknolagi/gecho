@@ -1,7 +1,7 @@
 double a, b, c, ind, con;
 int var_index;
 #define PKGNAME "gecho"
-#define VERSION 0.5
+#define VERSION 0.6
 #include "functions.h"
 int cmds;
 int top;

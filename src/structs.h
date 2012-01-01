@@ -30,6 +30,7 @@ typedef struct {
 
 //Flag values :)
 typedef struct {
+  int help;
   int version;
   int eval;
   int shell;
