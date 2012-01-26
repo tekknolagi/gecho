@@ -1,10 +1,12 @@
+# gecho
+
 WARNING: `float` is imprecise, and shortly I will be moving everything over to bignum. Large numbers will come out incorrect! (ex. 170 factorial)
 
 gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
-# Install
+## Install
 
-IF ON A MAC
+##IF ON A MAC
 
 1. compile with `sudo make do-all CC=<compiler of choice> INAME=<what you want gecho to be called> CNAME=<what you want gechoc to be called>`
     * CC defaults to `cc` and INAME/CNAME default to `gecho` and `gechoc`, respectively
@@ -14,26 +16,26 @@ OR
 1. `sudo make CC=<compiler of choice>`
     * Just compiles.
 
-Three Options...
+## Three Options...
 
-FIRST
+### FIRST
 
 1. `make CC=<compiler of choice>`
     * You can use whatever C compiler you want, defaults to `cc`
 2. `sudo make install`.
     * Moves it to `/usr/bin/`.
 
-SECOND
+### SECOND
 
 1. `sudo make go CC=<compiler of choice>`
     * Just makes and cleans up and moves it to `/usr/bin/` for you. Compiler defaults to `cc`.
 
-THIRD
+### THIRD
 
 1. `sudo make do-all CC=<compiler of choice>`
     * Compiles and installs both interpreter and compiler. Compiler defaults to `cc`.
 
-# Stack Theory
+## Stack Theory
 
 Think of a stack of books. It starts off empty.
 
@@ -67,9 +69,9 @@ would clear the stack, push `1`, then push `2`, then pop them both and add them.
 
 That's stack theory.
 
-# The Interpreter
+## The Interpreter
 
-####If on a Mac, just replace `gecho` with `gecho-mac` and `gechoc` with `gechoc-mac`
+#### If on a Mac, just replace `gecho` with `gecho-mac` and `gechoc` with `gechoc-mac`
 
 1. SHELL
     * just run `gecho` (or `./gecho`)
@@ -87,7 +89,7 @@ That's stack theory.
 
 #### Whitespace does not matter!
 
-# Commands
+## Commands
 
 1. `+`
     * Pops two elements from the stack, adds them together, and pushes the result.
@@ -181,8 +183,41 @@ That's stack theory.
 45. `mv`
     * Moves the top element from the current stack to the next stack. To COPY, use `dup mv`.
 
+## Modes
 
-# Examples
+1. `transparent`
+    * Shows the stack after every command.
+2. `default`
+    * Regular interpreter settings.
+3. `tracker`
+    * After being enabled, counts the commands entered. Can be viewed with `tot`.
+
+## Constants
+
+1. `#t` == `#true`
+    * `1`
+2. `#f` == `#false`
+    * `0`
+3. `#pi`
+    * the value `pi`
+4. `#e`
+    * the value `e`
+5. `#phi`
+    * the value `phi`
+
+## Command-line Flags
+
+1. `-f`
+    * Input file to compile/read. Must come after another flag. (e.g. `-fs` won't work but `-sf` will)
+1. `-e`
+    * Skip the version and "bye" message. If passing something to gecho, end it with "exit" so it doesn't evaluate endlessly.
+2. `-v`
+    * Just print the version information.
+3. `-s`
+    * Can enter shell mode after evaluating the file. Also suppresses the version and package name.
+
+
+## Examples
 
 1. `1 2 3 + .` == `5`
 
@@ -226,36 +261,3 @@ That's stack theory.
 21. `'Hello, <> 'world! print` == `Hello, world!`
 
 22. `1 2 + show next 3 4 + show back mv + show` => Adds 1+2 on the first stack, shows it, adds 3+4 on the next stack, shows it, moves the top item on the first stack to the second stack, then adds 7 and 3 together to make 10.
-
-# Modes
-
-1. `transparent`
-    * Shows the stack after every command.
-2. `default`
-    * Regular interpreter settings.
-3. `tracker`
-    * After being enabled, counts the commands entered. Can be viewed with `tot`.
-
-# Constants
-
-1. `#t` == `#true`
-    * `1`
-2. `#f` == `#false`
-    * `0`
-3. `#pi`
-    * the value `pi`
-4. `#e`
-    * the value `e`
-5. `#phi`
-    * the value `phi`
-
-# Flags
-
-1. `-f`
-    * Input file to compile/read. Must come after another flag. (e.g. `-fs` won't work but `-sf` will)
-1. `-e`
-    * Skip the version and "bye" message. If passing something to gecho, end it with "exit" so it doesn't evaluate endlessly.
-2. `-v`
-    * Just print the version information.
-3. `-s`
-    * Can enter shell mode after evaluating the file. Also suppresses the version and package name.
