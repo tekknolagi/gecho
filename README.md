@@ -6,7 +6,7 @@ gecho is somewhat similar to FORTH. It will probably become less so as it grows.
 
 ## Install
 
-##IF ON A MAC
+### IF ON A MAC
 
 1. compile with `sudo make do-all CC=<compiler of choice> INAME=<what you want gecho to be called> CNAME=<what you want gechoc to be called>`
     * CC defaults to `cc` and INAME/CNAME default to `gecho` and `gechoc`, respectively
